@@ -12,14 +12,14 @@
 		
 	- Sélectionne la tach eprioritaire
 	- Crée une nvle branch e depuis dev
-	- Tu impélment les modifs
-	- Tu commit à chaque type de modif 
-	- Tu push quand t'as une fonctionnalité
+	-  impélmenter les modifs
+	- committer à chaque type de modif 
+	- pusher quand t'as une fonctionnalité
         - Ty Crée une Pull request 
-	- Tu review la pull request
-	- T'exécute tes test aautomatisés
-	- Tu envioie en staging
-	- Tu merge en prod après validation
+	- faire review la pull request
+	- exécute tes test automatisés
+	- envioyer en staging
+	-  merge en prod après validation
 
 7) faire une rétrospective du sprint
 
