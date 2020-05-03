@@ -1,0 +1,26 @@
+contraintes techniques
+
+-Langue multilingue
+-chat
+-système de notification
+-blog
+-media, photo
+-agenda
+-systeme de localisation
+-facturation
+-gestion d'accès
+-respect de la vie privée
+-protection des data et encryption (sécurité)
+-validation des donnés pour les formulaires
+-serveur de fichiers
+
+
+postman pour tester des requets http
+curl
+
+youtask gerer les taches via phpstorm
+
+github pour gerer le flow
+
+
+
