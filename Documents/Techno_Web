@@ -1,0 +1,79 @@
+
+Backend: 
+	- PHP:
+		- Laravel
+			- Lumen
+		- Symfony
+			- Flex
+			- Api-platform
+			
+	- NodeJS:
+		- Express
+		- Next
+		- Nuxt
+		- Gatsby
+	- Python:
+		- Flask
+		- Django
+
+____________________________
+
+Front:
+	- JS:
+		- Vue
+		- JQuery
+		- React
+		- Angular
+
+
+	- CSS:
+		- Bootstrap 
+		- Bulma
+		- Tailwind
+	
+
+____________________________
+
+VCS: 
+	- GitHub
+	- Gitlab
+	- Atlassian
+
+
+____________________________
+
+Db
+	- Sql
+		- MariasB
+		- Oracle Mysql
+		- PostgreSQL
+		- Sybase
+		- Microsoft SQL Server
+	- NoSQL
+		- Redis
+		- Mongo
+		- Elasticsearch
+
+___________________________
+
+Srv Web: 
+	- Apache
+	
+	- Nginx
+	
+___________________________
+
+CI:	
+	- CircleCi
+	- Travis 
+	- Jenkins
+
+__________________________
+
+Hebergement:
+
+	- VPS
+	- OVH
+	- Netlify 
+	- AWS
+	- Kubernate

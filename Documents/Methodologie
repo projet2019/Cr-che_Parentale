@@ -1,0 +1,26 @@
+1) Lister Les besoins
+
+2) Concrétise avec des User stories
+
+3) SChéma entité association
+
+4) Trier et prioriser les stories
+
+5) Sélectionner des stories pr un sptrint
+
+6) Réaliser le sprint
+		
+	- Sélectionne la tach eprioritaire
+	- Crée une nvle branch e depuis dev
+	-  impélmenter les modifs
+	- committer à chaque type de modif 
+	- pusher quand t'as une fonctionnalité
+        - Ty Crée une Pull request 
+	- faire review la pull request
+	- exécute tes test automatisés
+	- envioyer en staging
+	-  merge en prod après validation
+
+7) faire une rétrospective du sprint
+
+8) echange avec les dirrérents acteurs du projet 
