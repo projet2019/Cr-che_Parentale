@@ -1,0 +1,1261 @@
+﻿<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>GFO</title>
+        <style  type="text/css"> 
+
+            body{
+                color:#505050;
+                font-family:Helvetica, Arial, sans-serif;
+                font-size:14px;
+                line-height:125%;
+            }
+
+             @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr { 
+    display: block; 
+  }
+  
+  /* Hide table headers (but not display: none;, for accessibility) */
+
+  
+ 
+  
+  td { 
+    /* Behave  like a "row" */
+    border: none;
+    
+    position: relative;
+    
+  }
+        #templateColumns{
+            width:100% !important;
+        }
+
+        .templateColumnContainer{
+            display:block !important;
+            width:100% !important;
+        }
+
+        .columnImage{
+            height:auto !important;
+            max-width:480px !important;
+            width:100% !important;
+        }
+
+        .leftColumnContent{
+            font-size:16px !important;
+            line-height:125% !important;
+        }
+
+        .rightColumnContent{
+            font-size:16px !important;
+            line-height:125% !important;
+        }
+    }
+
+
+            .headerContainer { position: relative; margin: .5em; }
+            /* STRUCTURE */
+            #pagewrap {
+                padding: 5px;
+                width: 960px;
+                margin: 20px auto;
+            }
+
+
+            #tabgfolive {
+                width: 270px;
+                float: left;
+                padding: 5px 15px;
+            }
+
+            #tabaidspan {
+                width: 270px; /* Account for margins + border values */
+                float: left;
+                padding: 5px 15px;
+                margin: 0px 5px 5px 5px;
+            }
+
+            #tabcontactgfo {
+                width: 270px;
+                padding: 5px 15px;
+                float: left;
+            }
+
+
+            .leftColumn, .rightColumn{ padding: 1.25em; }
+            .rightColumn{ margin-bottom: .5em; }
+            /* MEDIA QUERIES */
+            @media screen and (min-width: 47.5em ) {
+                .leftColumn { margin-right: 19.5em; }
+
+                .rightColumn { position: absolute; top: 0; right: 0; width:70%; }   
+            }
+            /************************************************************************************
+            MEDIA QUERIES
+            *************************************************************************************/
+            /* for 980px or less */
+            @media screen and (max-width: 980px) {
+
+                #pagewrap {
+                    width: 94%;
+                }
+                #tabgfolive {
+                    width: 33%;
+                    padding: 1% 4%;
+                }
+                #tabaidspan {
+                    width: 33%;
+                    padding: 1% 4%;
+                    margin: 0px 0px 5px 5px;
+                    float: right;
+                }
+
+                #tabcontactgfo {
+                    clear: both;
+                    padding: 1% 4%;
+                    width: auto;
+                    float: none;
+                }
+
+            }
+
+            /* for 700px or less */
+            @media screen and (max-width: 600px) {
+
+                #tabgfolive {
+                    width: auto;
+                    float: none;
+                }
+
+                #tabaidspan {
+                    width: auto;
+                    float: none;
+                    margin-left: 0px;
+                }
+
+                #tabcontactgfo {
+                    width: auto;
+                    float: none;
+                }
+
+            }
+
+            /* for 480px or less */
+            @media screen and (max-width: 480px) {
+
+                body{font-size:16px !important;
+                     font-size: 2vmin;}
+                h1 {
+                    font-size: 2em;
+                }
+                #tabcontactgfo {
+                    /* display: none; */
+                }
+                .topheaderContainer {
+                    height: 395px !important;
+                }
+                .contents{
+                    margin-top: 70px !important;
+                }
+
+            }
+
+
+            #tabgfolive {
+
+            }
+            #tabcontactgfo {
+
+            }
+            #tabgfolive, #tabaidspan, #tabcontactgfo {
+                margin-bottom: 5px;
+            }
+
+            @media 
+            only screen and (max-width: 760px),
+            (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+            }
+            @media only screen and (max-width: 800px) {
+
+                #flip-scroll .cf:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+                #flip-scroll * html .cf { zoom: 1; }
+                #flip-scroll *:first-child+html .cf { zoom: 1; }
+
+                #flip-scroll table { width: 100%; border-collapse: collapse; border-spacing: 0; }
+
+                #flip-scroll th,
+                #flip-scroll td { margin: 0; vertical-align: top; 
+                }
+                #flip-scroll th { text-align: left; }
+
+                #flip-scroll table { display: block; position: relative; width: 100%; }
+                #flip-scroll thead { display: block; float: left; }
+                #flip-scroll tbody { display: block; width: auto; position: relative; overflow-x: auto; white-space: nowrap; }
+                #flip-scroll thead tr { display: block; }
+                #flip-scroll th { display: block; text-align: right; }
+                #flip-scroll tbody tr { display: inline-block; vertical-align: top; }
+                #flip-scroll td { display: block; min-height: 1.25em; text-align: left; }
+
+
+                /* sort out borders */
+
+                #flip-scroll th { border-bottom: 0; border-left: 0; }
+                #flip-scroll td { border-left: 0; border-right: 0; border-bottom: 0; }
+                #flip-scroll tbody tr { border-left: 1px solid #babcbf; }
+                #flip-scroll th:last-child,
+                #flip-scroll td:last-child { border-bottom: 1px solid #babcbf; }
+            }
+
+            @media screen and (-webkit-min-device-pixel-ratio:0) {  
+
+                #body_div { width: 960px;}  
+            } 
+
+            .container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+  float: left;
+}
+.col-xs-12 {
+  width: 100%;
+}
+.col-xs-11 {
+  width: 91.66666667%;
+}
+.col-xs-10 {
+  width: 83.33333333%;
+}
+.col-xs-9 {
+  width: 75%;
+}
+.col-xs-8 {
+  width: 66.66666667%;
+}
+.col-xs-7 {
+  width: 58.33333333%;
+}
+.col-xs-6 {
+  width: 50%;
+}
+.col-xs-5 {
+  width: 41.66666667%;
+}
+.col-xs-4 {
+  width: 33.33333333%;
+}
+.col-xs-3 {
+  width: 25%;
+}
+.col-xs-2 {
+  width: 16.66666667%;
+}
+.col-xs-1 {
+  width: 8.33333333%;
+}
+.col-xs-pull-12 {
+  right: 100%;
+}
+.col-xs-pull-11 {
+  right: 91.66666667%;
+}
+.col-xs-pull-10 {
+  right: 83.33333333%;
+}
+.col-xs-pull-9 {
+  right: 75%;
+}
+.col-xs-pull-8 {
+  right: 66.66666667%;
+}
+.col-xs-pull-7 {
+  right: 58.33333333%;
+}
+.col-xs-pull-6 {
+  right: 50%;
+}
+.col-xs-pull-5 {
+  right: 41.66666667%;
+}
+.col-xs-pull-4 {
+  right: 33.33333333%;
+}
+.col-xs-pull-3 {
+  right: 25%;
+}
+.col-xs-pull-2 {
+  right: 16.66666667%;
+}
+.col-xs-pull-1 {
+  right: 8.33333333%;
+}
+.col-xs-pull-0 {
+  right: auto;
+}
+.col-xs-push-12 {
+  left: 100%;
+}
+.col-xs-push-11 {
+  left: 91.66666667%;
+}
+.col-xs-push-10 {
+  left: 83.33333333%;
+}
+.col-xs-push-9 {
+  left: 75%;
+}
+.col-xs-push-8 {
+  left: 66.66666667%;
+}
+.col-xs-push-7 {
+  left: 58.33333333%;
+}
+.col-xs-push-6 {
+  left: 50%;
+}
+.col-xs-push-5 {
+  left: 41.66666667%;
+}
+.col-xs-push-4 {
+  left: 33.33333333%;
+}
+.col-xs-push-3 {
+  left: 25%;
+}
+.col-xs-push-2 {
+  left: 16.66666667%;
+}
+.col-xs-push-1 {
+  left: 8.33333333%;
+}
+.col-xs-push-0 {
+  left: auto;
+}
+.col-xs-offset-12 {
+  margin-left: 100%;
+}
+.col-xs-offset-11 {
+  margin-left: 91.66666667%;
+}
+.col-xs-offset-10 {
+  margin-left: 83.33333333%;
+}
+.col-xs-offset-9 {
+  margin-left: 75%;
+}
+.col-xs-offset-8 {
+  margin-left: 66.66666667%;
+}
+.col-xs-offset-7 {
+  margin-left: 58.33333333%;
+}
+.col-xs-offset-6 {
+  margin-left: 50%;
+}
+.col-xs-offset-5 {
+  margin-left: 41.66666667%;
+}
+.col-xs-offset-4 {
+  margin-left: 33.33333333%;
+}
+.col-xs-offset-3 {
+  margin-left: 25%;
+}
+.col-xs-offset-2 {
+  margin-left: 16.66666667%;
+}
+.col-xs-offset-1 {
+  margin-left: 8.33333333%;
+}
+.col-xs-offset-0 {
+  margin-left: 0%;
+}
+@media (min-width: 768px) {
+  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+    float: left;
+  }
+  .col-sm-12 {
+    width: 100%;
+  }
+  .col-sm-11 {
+    width: 91.66666667%;
+  }
+  .col-sm-10 {
+    width: 83.33333333%;
+  }
+  .col-sm-9 {
+    width: 75%;
+  }
+  .col-sm-8 {
+    width: 66.66666667%;
+  }
+  .col-sm-7 {
+    width: 58.33333333%;
+  }
+  .col-sm-6 {
+    width: 50%;
+  }
+  .col-sm-5 {
+    width: 41.66666667%;
+  }
+  .col-sm-4 {
+    width: 33.33333333%;
+  }
+  .col-sm-3 {
+    width: 25%;
+  }
+  .col-sm-2 {
+    width: 16.66666667%;
+  }
+  .col-sm-1 {
+    width: 8.33333333%;
+  }
+  .col-sm-pull-12 {
+    right: 100%;
+  }
+  .col-sm-pull-11 {
+    right: 91.66666667%;
+  }
+  .col-sm-pull-10 {
+    right: 83.33333333%;
+  }
+  .col-sm-pull-9 {
+    right: 75%;
+  }
+  .col-sm-pull-8 {
+    right: 66.66666667%;
+  }
+  .col-sm-pull-7 {
+    right: 58.33333333%;
+  }
+  .col-sm-pull-6 {
+    right: 50%;
+  }
+  .col-sm-pull-5 {
+    right: 41.66666667%;
+  }
+  .col-sm-pull-4 {
+    right: 33.33333333%;
+  }
+  .col-sm-pull-3 {
+    right: 25%;
+  }
+  .col-sm-pull-2 {
+    right: 16.66666667%;
+  }
+  .col-sm-pull-1 {
+    right: 8.33333333%;
+  }
+  .col-sm-pull-0 {
+    right: auto;
+  }
+  .col-sm-push-12 {
+    left: 100%;
+  }
+  .col-sm-push-11 {
+    left: 91.66666667%;
+  }
+  .col-sm-push-10 {
+    left: 83.33333333%;
+  }
+  .col-sm-push-9 {
+    left: 75%;
+  }
+  .col-sm-push-8 {
+    left: 66.66666667%;
+  }
+  .col-sm-push-7 {
+    left: 58.33333333%;
+  }
+  .col-sm-push-6 {
+    left: 50%;
+  }
+  .col-sm-push-5 {
+    left: 41.66666667%;
+  }
+  .col-sm-push-4 {
+    left: 33.33333333%;
+  }
+  .col-sm-push-3 {
+    left: 25%;
+  }
+  .col-sm-push-2 {
+    left: 16.66666667%;
+  }
+  .col-sm-push-1 {
+    left: 8.33333333%;
+  }
+  .col-sm-push-0 {
+    left: auto;
+  }
+  .col-sm-offset-12 {
+    margin-left: 100%;
+  }
+  .col-sm-offset-11 {
+    margin-left: 91.66666667%;
+  }
+  .col-sm-offset-10 {
+    margin-left: 83.33333333%;
+  }
+  .col-sm-offset-9 {
+    margin-left: 75%;
+  }
+  .col-sm-offset-8 {
+    margin-left: 66.66666667%;
+  }
+  .col-sm-offset-7 {
+    margin-left: 58.33333333%;
+  }
+  .col-sm-offset-6 {
+    margin-left: 50%;
+  }
+  .col-sm-offset-5 {
+    margin-left: 41.66666667%;
+  }
+  .col-sm-offset-4 {
+    margin-left: 33.33333333%;
+  }
+  .col-sm-offset-3 {
+    margin-left: 25%;
+  }
+  .col-sm-offset-2 {
+    margin-left: 16.66666667%;
+  }
+  .col-sm-offset-1 {
+    margin-left: 8.33333333%;
+  }
+  .col-sm-offset-0 {
+    margin-left: 0%;
+  }
+}
+@media (min-width: 992px) {
+  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    float: left;
+  }
+  .col-md-12 {
+    width: 100%;
+  }
+  .col-md-11 {
+    width: 91.66666667%;
+  }
+  .col-md-10 {
+    width: 83.33333333%;
+  }
+  .col-md-9 {
+    width: 75%;
+  }
+  .col-md-8 {
+    width: 66.66666667%;
+  }
+  .col-md-7 {
+    width: 58.33333333%;
+  }
+  .col-md-6 {
+    width: 50%;
+  }
+  .col-md-5 {
+    width: 41.66666667%;
+  }
+  .col-md-4 {
+    width: 33.33333333%;
+  }
+  .col-md-3 {
+    width: 25%;
+  }
+  .col-md-2 {
+    width: 16.66666667%;
+  }
+  .col-md-1 {
+    width: 8.33333333%;
+  }
+  .col-md-pull-12 {
+    right: 100%;
+  }
+  .col-md-pull-11 {
+    right: 91.66666667%;
+  }
+  .col-md-pull-10 {
+    right: 83.33333333%;
+  }
+  .col-md-pull-9 {
+    right: 75%;
+  }
+  .col-md-pull-8 {
+    right: 66.66666667%;
+  }
+  .col-md-pull-7 {
+    right: 58.33333333%;
+  }
+  .col-md-pull-6 {
+    right: 50%;
+  }
+  .col-md-pull-5 {
+    right: 41.66666667%;
+  }
+  .col-md-pull-4 {
+    right: 33.33333333%;
+  }
+  .col-md-pull-3 {
+    right: 25%;
+  }
+  .col-md-pull-2 {
+    right: 16.66666667%;
+  }
+  .col-md-pull-1 {
+    right: 8.33333333%;
+  }
+  .col-md-pull-0 {
+    right: auto;
+  }
+  .col-md-push-12 {
+    left: 100%;
+  }
+  .col-md-push-11 {
+    left: 91.66666667%;
+  }
+  .col-md-push-10 {
+    left: 83.33333333%;
+  }
+  .col-md-push-9 {
+    left: 75%;
+  }
+  .col-md-push-8 {
+    left: 66.66666667%;
+  }
+  .col-md-push-7 {
+    left: 58.33333333%;
+  }
+  .col-md-push-6 {
+    left: 50%;
+  }
+  .col-md-push-5 {
+    left: 41.66666667%;
+  }
+  .col-md-push-4 {
+    left: 33.33333333%;
+  }
+  .col-md-push-3 {
+    left: 25%;
+  }
+  .col-md-push-2 {
+    left: 16.66666667%;
+  }
+  .col-md-push-1 {
+    left: 8.33333333%;
+  }
+  .col-md-push-0 {
+    left: auto;
+  }
+  .col-md-offset-12 {
+    margin-left: 100%;
+  }
+  .col-md-offset-11 {
+    margin-left: 91.66666667%;
+  }
+  .col-md-offset-10 {
+    margin-left: 83.33333333%;
+  }
+  .col-md-offset-9 {
+    margin-left: 75%;
+  }
+  .col-md-offset-8 {
+    margin-left: 66.66666667%;
+  }
+  .col-md-offset-7 {
+    margin-left: 58.33333333%;
+  }
+  .col-md-offset-6 {
+    margin-left: 50%;
+  }
+  .col-md-offset-5 {
+    margin-left: 41.66666667%;
+  }
+  .col-md-offset-4 {
+    margin-left: 33.33333333%;
+  }
+  .col-md-offset-3 {
+    margin-left: 25%;
+  }
+  .col-md-offset-2 {
+    margin-left: 16.66666667%;
+  }
+  .col-md-offset-1 {
+    margin-left: 8.33333333%;
+  }
+  .col-md-offset-0 {
+    margin-left: 0%;
+  }
+}
+@media (min-width: 1200px) {
+  .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+    float: left;
+  }
+  .col-lg-12 {
+    width: 100%;
+  }
+  .col-lg-11 {
+    width: 91.66666667%;
+  }
+  .col-lg-10 {
+    width: 83.33333333%;
+  }
+  .col-lg-9 {
+    width: 75%;
+  }
+  .col-lg-8 {
+    width: 66.66666667%;
+  }
+  .col-lg-7 {
+    width: 58.33333333%;
+  }
+  .col-lg-6 {
+    width: 50%;
+  }
+  .col-lg-5 {
+    width: 41.66666667%;
+  }
+  .col-lg-4 {
+    width: 33.33333333%;
+  }
+  .col-lg-3 {
+    width: 25%;
+  }
+  .col-lg-2 {
+    width: 16.66666667%;
+  }
+  .col-lg-1 {
+    width: 8.33333333%;
+  }
+  .col-lg-pull-12 {
+    right: 100%;
+  }
+  .col-lg-pull-11 {
+    right: 91.66666667%;
+  }
+  .col-lg-pull-10 {
+    right: 83.33333333%;
+  }
+  .col-lg-pull-9 {
+    right: 75%;
+  }
+  .col-lg-pull-8 {
+    right: 66.66666667%;
+  }
+  .col-lg-pull-7 {
+    right: 58.33333333%;
+  }
+  .col-lg-pull-6 {
+    right: 50%;
+  }
+  .col-lg-pull-5 {
+    right: 41.66666667%;
+  }
+  .col-lg-pull-4 {
+    right: 33.33333333%;
+  }
+  .col-lg-pull-3 {
+    right: 25%;
+  }
+  .col-lg-pull-2 {
+    right: 16.66666667%;
+  }
+  .col-lg-pull-1 {
+    right: 8.33333333%;
+  }
+  .col-lg-pull-0 {
+    right: auto;
+  }
+  .col-lg-push-12 {
+    left: 100%;
+  }
+  .col-lg-push-11 {
+    left: 91.66666667%;
+  }
+  .col-lg-push-10 {
+    left: 83.33333333%;
+  }
+  .col-lg-push-9 {
+    left: 75%;
+  }
+  .col-lg-push-8 {
+    left: 66.66666667%;
+  }
+  .col-lg-push-7 {
+    left: 58.33333333%;
+  }
+  .col-lg-push-6 {
+    left: 50%;
+  }
+  .col-lg-push-5 {
+    left: 41.66666667%;
+  }
+  .col-lg-push-4 {
+    left: 33.33333333%;
+  }
+  .col-lg-push-3 {
+    left: 25%;
+  }
+  .col-lg-push-2 {
+    left: 16.66666667%;
+  }
+  .col-lg-push-1 {
+    left: 8.33333333%;
+  }
+  .col-lg-push-0 {
+    left: auto;
+  }
+  .col-lg-offset-12 {
+    margin-left: 100%;
+  }
+  .col-lg-offset-11 {
+    margin-left: 91.66666667%;
+  }
+  .col-lg-offset-10 {
+    margin-left: 83.33333333%;
+  }
+  .col-lg-offset-9 {
+    margin-left: 75%;
+  }
+  .col-lg-offset-8 {
+    margin-left: 66.66666667%;
+  }
+  .col-lg-offset-7 {
+    margin-left: 58.33333333%;
+  }
+  .col-lg-offset-6 {
+    margin-left: 50%;
+  }
+  .col-lg-offset-5 {
+    margin-left: 41.66666667%;
+  }
+  .col-lg-offset-4 {
+    margin-left: 33.33333333%;
+  }
+  .col-lg-offset-3 {
+    margin-left: 25%;
+  }
+  .col-lg-offset-2 {
+    margin-left: 16.66666667%;
+  }
+  .col-lg-offset-1 {
+    margin-left: 8.33333333%;
+  }
+  .col-lg-offset-0 {
+    margin-left: 0%;
+  }
+}
+.clearfix:before,
+.clearfix:after,
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after,
+.container:after,
+.container-fluid:after,
+.row:after {
+  clear: both;
+}
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pull-right {
+  float: right !important;
+}
+.pull-left {
+  float: left !important;
+}
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.invisible {
+  visibility: hidden;
+}
+.text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.hidden {
+  display: none !important;
+}
+.affix {
+  position: fixed;
+}
+
+        </style>
+    </head>
+
+    <body>
+        <!-- End Piwik Code -->
+        <img src="http://www.aidspan.org/stats_t.php?ofm_news_letter_issue=${params['issue_number']}&user={user_hash}" style="border:0;width:0px;height:0px" alt="" />
+        <!-- End Piwik -->
+        <!--[if gte mso 9]>
+       <style> div{
+ border: #ffffff !important;  
+}
+p{
+ border: #ffffff !important;  
+} 
+        #tabgfolive, #tabaidspan, #tabcontactgfo {
+                border: 2px solid #1CBFFF !important;  
+            }
+   
+        </style>
+        <table cellpadding="0"   align="center"
+                      style='font-size:12.0pt;font-family:"Times New Roman", "Arial","sans-serif";width:960px;
+                      border: solid #1CBFFF 2.25pt;line-height: 120%'>
+       
+                   <tr>
+                       <td><![endif]-->  
+        <div   
+            style='font-size:12.0pt;font-family:"Times New Roman", "Arial","sans-serif";width:96%;max-width:960px; margin:0 auto;
+            border: solid #1CBFFF 2.25pt;line-height: 120%'> 
+                <div>
+                    <a name="top"></a> 
+                    <!--[if gte mso 9]><table cellpadding="0" style='width: 960px;font-family:"Arial","sans-serif";height: 150px;
+              border-bottom: solid #1CBFFF 2.25pt;margin-bottom:6.0pt;'>
+           <tr>
+       <td style="padding-left: 40px" width="25%"><![endif]-->
+       
+
+                    <div  style='width: 100%;font-family:"Arial","sans-serif";
+                          border-bottom: solid #1CBFFF 2.25pt;'>
+
+                          <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+<div class="row">
+  
+   <div class="col-md-3" style="padding-left: 30px; text-align: center;">
+  <img class="columnImage" width="200" src="http://www.aidspan.org/sites/all/themes/apw_sena/images/sena/newsletter_logo_fr.png" alt="Aidspan Logo"/>
+  </div>
+ <div class="col-md-7" style="text-align: center;">
+    <p style='margin-bottom:6.0pt;text-align:center'>
+                                    <b>
+                                        <span style='font-size:30.0pt;color:#FF831C;line-height: 120%;'>Observateur du Fonds mondial</span>                                    </b>                                </p>
+                                <p style='margin-bottom:6.0pt;text-align:center'>
+                                    <span style='font-size:18.0pt;font-variant:small-caps'>
+                                        LETTRE D'INFORMATION
+                                    </span>
+                                </p>
+                                <p style='margin-bottom:6.0pt;text-align:center'>
+                                    <span style='font-size:18.0pt'>
+                                        Numéro ${params['issue_number']}: ${params['issue_date']}
+                                    </span>
+                                </p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                    <!--[if gte mso 9]> </td></tr>
+                 </table><![endif]-->
+
+                    <div class="row" style='width: 100%;margin-bottom:25px;font-family:"Times New Roman", "Arial","sans-serif";'>
+                    <div class="col-md-12">
+                        <div style='text-align:center;margin-bottom: 5px;'>
+                            OFM est une lettre d'information indépendante sur le Fonds mondial.
+                        </div>
+                        <div style='text-align:center;margin-bottom: 5px;'>
+                            <p>Appli mobile disponible pour l’OFM et le GFO. Pour les utilisateurs Android, rechercher <a href="https://play.google.com/store/apps/details?id=org.aidspan.nesletter">GFO Newsletter</a> dans Google Play, et pour les utilisateurs   d’iOS, rechercher <a href="https://itunes.apple.com/ug/app/gfo-newsletter/id1442083625?mt=8">GFO Newsletter  </a> dans l’App Store.</p>
+                            <p>Pour télécharger les versions Word et PDF de ce numéro, cliquez
+                                <a href="http://www.aidspan.org/fr/node/${params['articles'][0][8]}?pk_campaign=email-attrib-Word-PDF-download&pk_kwd=ofm-issue-${params['issue_number']}"> ici</a>
+                            </p>
+                            <p>
+                                <a href="http://www.aidspan.org/fr/user/register?pk_campaign=email-attrib-new-fr-subscribe&pk_kwd=ofm-issue-${params['issue_number']}">Abonnez-vous</a> à l'OFM ou <a href="http://www.aidspan.org/fr/user?pk_campaign=email-attrib-add-fr-subscribe&pk_kwd=ofm-issue-${params['issue_number']}">ajoutez-le à votre abonnement.</a>
+                            </p>
+                      </div>
+                        <div style='font-size:10.0pt;text-align:center;margin-bottom: 5px;'>
+                            Si vous ne pouvez pas lire correctement cet email, peut-être parce que vous le lisez sur un téléphone mobile,
+                            <a href="http://www.aidspan.org/sites/default/files/gfo/${params['issue_number']}/French/${params['issue_path']}?pk_campaign=email-attrib-gfo-ofm-newsletter-web-html-view&pk_kwd=ofm-issue-${params['issue_number']}" target="_blank" class="piwik_download">  Affichez la page web.</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width: 100%;">
+
+
+                        <div class="row" style="width:100%;" align="center" >
+                            <!--[if gte mso 9]>  <table width="100%">
+                                 <tr>
+                                     <td width="33%"><![endif]-->
+                            <div class="col-md-3" style="display:inline-block">
+                                <!-- background:#1CBFFF; style="color: black;display:block"-->
+                                <div style='border: 4px solid #1CBFFF;margin-left: 20px;margin-right: 20px; margin-bottom:10px;font-family:"Arial","sans-serif";
+                                     padding:3.1pt 7.65pt 3.1pt 7.65pt;text-align:center;'>
+                                    <b><a  href="http://www.aidspan.org/fr/page/ofm-en-direct?pk_campaign=email-attrib-gfo-ofm-view&pk_kwd=ofm-issue-${params['issue_number']}" style="text-decoration: none;" target="_blank">OFM en direct >></a></b>
+                                </div></div>
+                            <!--[if gte mso 9]> </td>
+                            <td width="33%"><![endif]-->
+                            <div class="col-md-4" style="display:inline-block">
+                                <div style='border: 3px solid #1CBFFF;margin-left: 20px;margin-right: 20px; margin-bottom:10px;font-family:"Arial","sans-serif";
+                                     padding:3.1pt 7.65pt 3.1pt 7.65pt;text-align:center;'>
+                                    <b><a href="http://www.aidspan.org/fr?pk_campaign=email-attrib-web-view&pk_kwd=ofm-issue-${params['issue_number']}" style="text-decoration: none;" target="_blank">Site Aidspan >></a></b>
+                                </div></div>
+                            <!--[if gte mso 9]>   </td>
+                              <td width="33%"><![endif]-->
+                            <div class="col-md-3" style="display:inline-block">
+                                <div style='border: 4px solid #1CBFFF;margin-left: 20px;margin-right: 20px;font-family:"Arial","sans-serif";
+                                     padding:3.1pt 7.65pt 3.1pt 7.65pt;text-align:center;'>
+                                    <b><a href="http://www.aidspan.org/fr/page/contacter-lofm?pk_campaign=email-attrib-gfo-ofm-contactus-view&pk_kwd=ofm-issue-${params['issue_number']}" style="text-decoration: none;" target="_blank">Ecrivez-nous >></a></b>
+                                </div></div>
+                            <!--[if gte mso 9]>   </td>
+                          </tr>
+                      </table><![endif]-->
+                        </div>
+                        <br>
+                    </div>
+
+                    % if params['issue_note']:
+                    <div style='margin-right:22.7pt;margin-left:22.7pt;font-family:"Times New Roman", "Arial","sans-serif";'>
+                        ${params['issue_note']}
+                    </div>
+                    % endif
+
+                    <div  style="width: 98%;margin-left: 10px; margin-right: 10px;"> 
+                        <table cellpadding="10" style='height: 30px;background:#FF831C;width:100%;font-weight: bold;
+                               font-family:"Arial","sans-serif"'>
+                            <tr>
+                                <td>
+                                    AU SOMMAIRE:
+                                </td>
+                            </tr>
+                        </table>
+
+                        % for article in params['articles']:
+
+                        <p style='font-family:"Arial","sans-serif";font-size: 12.0pt'>
+                            % if True == params['is_full_newsletter']:
+                            <a href="#${article[0]}" style="text-decoration: none">${article[0]}. ${article[2]}: ${article[3]}</a>
+                            % endif
+                            
+                            % if False == params['is_full_newsletter']:
+                            <a href="http://www.aidspan.org/fr/node/${article[8]}" style="text-decoration: none">${article[0]}. ${article[2]}: ${article[3]}</a>
+                            % endif
+                        </p>
+                        <strong><div style='margin-left:21.3pt; margin-right:21.3pt; font-family:"Arial","sans-serif"; font-size:14px'>
+                          <p><strong><i>Par: 
+                      ${article[1]}</i></strong></div></strong>
+                            </p>
+
+                        <div style='margin-left:21.3pt;font-family:"Times New Roman", "Arial","sans-serif";'>
+                          <p>${article[6]}</p>
+                      </div>
+
+                        % if False == params['is_full_newsletter']:
+                        <div style='margin-left:21.3pt; margin-right:21.3pt; '> <a href="http://www.aidspan.org/fr/node/${article[8]}" style="text-decoration: none">En savoir plus...</a> </div>
+                        % endif
+                        
+                        % endfor
+
+                        % if params['live_articles'] and True == params['is_full_newsletter']:
+                        <div>&nbsp;</div>
+                        <div style='font-size: 11pt;font-family:"Arial","sans-serif";font-weight: bold;'>Voir plus bas, à la fin de cette lettre d'information, des <a href="#gfo-live-section">liens vers d'autres articles</a> disponibles sur le site web d'Aidspan.</div>
+                        <div>&nbsp;</div>
+                        % endif
+
+                        % if True == params['is_full_newsletter']:
+                        <table cellpadding="10" style='height: 30px;background:#FF831C;width:100%;font-weight: bold;
+                               font-family:"Arial","sans-serif"'>
+                            <tr>
+                                <td>
+                                    ARTICLES:
+                                </td>
+                            </tr>
+                        </table>
+
+                        % for article in params['articles']:
+
+                        % if 1 != article[0]:
+                        <p  style='margin-bottom:12.0pt;text-align: center;'>
+                            <b>
+                                <span style="text-align:center;font-size:13.0pt;color:#FF700C">
+                                    <!-- &#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;&#9167;-->
+                                    <!--+++++++++++++++++++++++++++++++++++++++++++++++ -->
+                                    <span>__________________________________________________________</span>
+                                </span>
+                            </b>
+                        </p>
+                        % endif
+
+                        <p style='text-align: center;font-family:"Arial","sans-serif";'>
+                            <b><span><a name="${article[0]}">${article[0]}. </a>${article[2]}: ${article[3]}</span></b>
+                        </p>
+
+                        <div style='width: 100%;font-weight: normal;border-bottom: 1px solid #EEEEEE;margin-bottom: 5px;font-size: 80%;'>
+                            ${article[1]}
+
+                            <span style="float: right;margin-top: -20px"> 
+                                ${article[10]}
+                            </span>
+                        </div>
+
+                        % if article[4]:
+                        <p style='font-family:"Arial","sans-serif";font-style: italic; text-align: center;'>
+                            ${article[4]}
+                        </p>
+                        % endif
+
+                        % if article[5]:
+                        <p style='font-size: 11pt;font-family:"Arial","sans-serif";font-weight: bold; text-align: center;'>
+                            ${article[5]}
+                        </p>
+                        % endif
+
+                        <div style='font-family:"Times New Roman", "Arial","sans-serif";'>${article[7]}</div>
+
+                        <p style='font-family:"Arial","sans-serif";font-size: 11pt;'>
+                            [Cet article a été publié le ${article[10]}.]
+                        </p>
+
+                        <div style='font-family:"Arial","sans-serif";font-size: 11pt;'>
+                            Pour commenter cet article, cliquez <a href="http://www.aidspan.org/fr/node/${article[8]}?pk_campaign=email-attrib-comment-click-article-${article[8]}&pk_kwd=ofm-issue-${params['issue_number']}#comment_section">ici.</a>
+                            % if article[9] > 0:
+                            <span>
+                                (Nombre de commentaires au ${params['publication_date']} = ${article[9]})
+                            </span>
+                            % endif
+                        </div>
+
+                        <p style="text-align:right">
+                            <span style="font-size:10.0pt"><a href="#top">HAUT</a></span>
+                        </p>
+                        % endfor
+
+                        <p style='margin-bottom:12.0pt;text-align:center;color:#FF700C'>
+                            <span>__________________________________________________________</span>
+                        </p>
+
+                        % endif
+                        
+                        % if params['live_articles']:
+                        <div>&nbsp;</div>
+                        <a name="gfo-live-section"></a>
+                        <table cellpadding="10" style='height: 30px;background:#FF831C;width:100%;font-weight: bold;
+                               font-family:"Arial","sans-serif"'>
+                            <tr>
+                                <td>
+                                    <span style="margin-left: 10px;font-weight: bold;">DISPONIBLE SUR <a href="http://www.aidspan.org/fr/page/ofm-en-direct?pk_campaign=email-attrib-gfo-ofm-live-view&pk_kwd=ofm-issue-${params['issue_number']}">OFM en direct</a>:</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <div>&nbsp;</div>
+
+                        <div style='margin-bottom:12.0pt;padding-bottom: 1em;font-family:"Times New Roman", "Arial","sans-serif";'>
+                            Les articles suivants ont été publiés dans la section 'OFM en direct' du site web d'Aidspan. Cliquez sur le titre d'un article pour y accéder. Tous ces articles ne sont pas nécessairement  reproduits dans la lettre d'information OFM.
+                        </div>
+
+                        % for live_article in params['live_articles']:
+                        <p style='font-family:"Arial","sans-serif";'>
+                            <b>${live_article[1]} : <a href="http://www.aidspan.org/node/${live_article[0]}?pk_campaign=email-attrib-article-live-view&pk_kwd=ofm-issue-${params['issue_number']}-article-${live_article[0]}">${live_article[2]}</a></b>
+                        </p>
+                        <div style='margin-left:21.3pt;margin-bottom:24.0pt;font-family:"Times New Roman", "Arial","sans-serif";'>${live_article[5]}</div>
+
+                        % endfor
+
+                        <p style='margin-bottom:12.0pt;text-align:center;color:#FF700C'>
+                            <span>__________________________________________________________</span>
+                        </p>
+
+                        % endif
+
+                        <!--<p style='margin-bottom:12.0pt;margin-bottom:12.0pt'>
+                            <b><span style='color:#FF700C'>END OF NEWSLETTER</span></b>
+                        </p>
+                        -->
+
+                        <div style='font-size:11.0pt;font-family:"Times New Roman", "Arial","sans-serif";'>
+                            <p>
+                          Ceci est  le numéro ${params['issue_number']} de la lettre d’information de l’Observateur du Fonds mondial (OFM). Pour nous faire parvenir des commentaires, des suggestions de sujets ou des remarques, vous pouvez écrire à la rédactrice en chef à l’adresse suivante :<u><a href="mailto:christelle.boulanger@aidspan.org.%20" target="_blank">christelle.boulanger@aidspan.org. </a></u>Pour vous abonner à l’OFM, rendez-vous sur <a href="http://www.aidspan.org/" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://www.aidspan.org/&source=gmail&ust=1560591610141000&usg=AFQjCNFhR26h5BD1xxb8BKmuiXdWPV3P3Q">www.aidspan.org. </a>Les articles sont également disponibles en anglais.</p>
+                            <p>La lettre d’information indépendante et gratuite de l’OFM couvre l’actualité du Fonds mondial de lutte contre le sida, la tuberculose et le paludisme et offre analyses, commentaires et opinions. <a href="http://www.theglobalfund.org/fr/" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://www.theglobalfund.org/fr/&source=gmail&ust=1560591610141000&usg=AFQjCNHUrn6_6UOjXvtF0iNfhEER9sXMhQ">(http://www.theglobalfund.org/fr/).</a></p>
+                            <p>Aidspan <a href="http://www.aidspan.org/" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://www.aidspan.org/&source=gmail&ust=1560591610141000&usg=AFQjCNFhR26h5BD1xxb8BKmuiXdWPV3P3Q">(www.aidspan.org</a>) est une ONG internationale basée à Nairobi, au Kenya, dont la mission est d’agir comme un observateur indépendant du Fonds mondial et de fournir des services qui peuvent profiter à tous les pays désireux d’obtenir un financement du Fonds et d’en faire un usage efficace. Aidspan se finance grâce aux subventions des gouvernements et des fondations. Aidspan n’accepte aucun financement de la part du Fonds mondial, ne fournit aucun travail rémunéré de consultance et son contenu est gratuit. </p>
+                            <p>Le Conseil d’administration et le personnel du Fonds mondial n’ont aucune influence sur le contenu de l’OFM ni sur aucune des autres publications d’Aidspan, et ne sont aucunement responsables de ces contenus.</p>
+                            <p>La lettre d’information de l’OFM est disponible en anglais et en français. </p>
+                            <p>Rédactrice  en  chef  de  l’OFM :  Christelle Boulanger <a href="mailto:(christelle.boulanger@aidspan.org" target="_blank">(christelle.boulanger@aidspan.org</a>).  Directrice exécutive d’Aidspan : Ida Hakizinka (<a href="mailto:ida.hakizinka@aidspan.org" target="_blank">ida.hakizinka@aidspan.org</a>).</p>
+                            <p>La reproduction des articles de la lettre d’information est autorisée avec la mention : « Source : lettre d’information de l’Observateur du Fonds mondial <a href="http://www.aidspan.org/gfo" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://www.aidspan.org/gfo&source=gmail&ust=1560591610141000&usg=AFQjCNFhqoboxXYDpsAC62jEV2rBa-y91A">(www.aidspan.org/gfo</a>), un service d’Aidspan ».</p>
+                            <p>Pour vous désabonner, cliquez <a href="http://www.aidspan.org/unsubscribe/10/gfo/%7Buser_hash%7Dcd5/ri/%7Bthrowoff2%7D/fy/%7Bthrowoff1%7D?pk_campaign=email-attrib-fr-unsubscribe&pk_kwd=ofm-issue-19">ici</a>. </p>
+                            
+                            <p>© 2020 Aidspan. Tous droits réservés.                              
+                            
+
+                            <p style="text-align:right">
+                                <!--<span style="font-size:10.0pt"><a href="#top">HAUT</a></span> -->
+                          </p> 
+
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        <!--[if gte mso 9]></td>
+                   </tr>
+               </table><![endif]-->
+
+    </body>
+
+</html>
