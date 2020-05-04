@@ -1,10 +1,4 @@
 
-# encoding: utf-8
-# vim: ai ts=4 sts=4 et sw=4
-
-##
-##
-##
 
 from coreapp.appmodel.models import EmailSchedule, Event
 from coreapp.service.base_service import BaseService

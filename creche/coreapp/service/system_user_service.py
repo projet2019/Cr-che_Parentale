@@ -3,8 +3,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 ##
-##
-##
+
 
 from coreapp.appmodel.models import Module, LoginAudit, WebUserDetail, WebUsers
 from coreapp.exception.critical_error import CriticalError

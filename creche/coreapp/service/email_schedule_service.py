@@ -1,10 +1,4 @@
-#
-# encoding: utf-8
-# vim
 
-##
-##
-##
 
 from coreapp.appmodel.models import EmailSchedule, Event
 from coreapp.service.base_service import BaseService

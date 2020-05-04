@@ -4,7 +4,7 @@
 
 ##
 ##
-##
+
 
 from coreapp.appmodel.models import EventType
 from coreapp.service.base_service import BaseService

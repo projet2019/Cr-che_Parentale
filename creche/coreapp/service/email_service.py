@@ -3,7 +3,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 ##
-##
+
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
