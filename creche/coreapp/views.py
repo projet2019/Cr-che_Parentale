@@ -4,7 +4,9 @@
 
 ##
 ##
-
+## @author UWANTWALI ZIGAMA Didier
+## d.zigama@pivotaccess.com/zigdidier@gmail.com
+##
 
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse

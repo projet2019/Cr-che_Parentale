@@ -4,6 +4,9 @@
 
 ##
 ##
+## @author UWANTWALI ZIGAMA Didier
+## d.zigama@pivotaccess.com/zigdidier@gmail.com
+##
 
 
 from django.conf.urls import url

@@ -4,7 +4,9 @@
 
 ##
 ##
-
+## @author UWANTWALI ZIGAMA Didier
+## d.zigama@pivotaccess.com/zigdidier@gmail.com
+##
 
 from coreapp.appmodel.models import EventType
 from coreapp.service.base_service import BaseService

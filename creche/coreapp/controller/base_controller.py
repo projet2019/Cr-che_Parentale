@@ -4,6 +4,9 @@
 
 ##
 ##
+## @author UWANTWALI ZIGAMA Didier
+## d.zigama@pivotaccess.com/zigdidier@gmail.com
+##
 
 from coreapp.util.export_util import ExportUtil
 from coreapp.exception.critical_error import CriticalError

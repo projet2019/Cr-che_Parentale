@@ -4,6 +4,8 @@
 
 ##
 ##
+## @author UWANTWALI ZIGAMA Didier
+## d.zigama@pivotaccess.com/zigdidier@gmail.com
 ##
 
 from coreapp.controller.base_controller import BaseController
