@@ -4,16 +4,16 @@
 
 ##
 ##
-## @author UWANTWALI ZIGAMA Didier
-## d.zigama@pivotaccess.com/zigdidier@gmail.com
+## @author Nadia
+## nadia@gmail.com/joel@gmail.com
 ##
 
 from coreapp.controller.base_controller import BaseController
 from coreapp.service.system_user_service import SystemUserService
+from coreapp.service.principal_service import PrincipalService, PRINCIPAL_ROLE
 from coreapp.util.app_util import json_encode
 from coreapp.util.export_util import ExportUtil
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 
 class SystemUserController(BaseController):
     pass
@@ -65,6 +65,21 @@ def listExport(request):
     return HttpResponse(json_encode(result),
                        content_type="application/json")
 
+def list_principals(request):
+    # TO-DO check if this user has a valid session
+    controller = SystemUserController()
+
+    try:
+        service = PrincipalService()
+
+        result = service.list(request.POST)
+
+    except Exception as e:
+        result = controller.handleException(e)
+
+    return HttpResponse(json_encode(result),
+                        content_type="application/json")
+
 def userLoggedOn(request):
     #TO-DO check if this user has a valid session
     controller = SystemUserController()
@@ -80,7 +95,7 @@ def userLoggedOn(request):
     return HttpResponse(json_encode(result),
                        content_type="application/json")
 
-@csrf_exempt
+
 def saveUser(request):
     #TO-DO check if this user has a valid session
     controller = SystemUserController()
@@ -132,6 +147,22 @@ def passwordChange(request):
 
     return HttpResponse(json_encode(result),
                        content_type="application/json")
+
+
+def savePrincipal(request):
+    # TO-DO check if this user has a valid session
+    controller = SystemUserController()
+
+    try:
+        service = PrincipalService()
+        service.save_principal(request.POST)
+        result = {'success': True, 'message': 'Principal details successfully saved. You can now view it.'}
+
+    except Exception as e:
+        result = controller.handleException(e)
+
+    return HttpResponse(json_encode(result),
+                        content_type="application/json")
 
 
     

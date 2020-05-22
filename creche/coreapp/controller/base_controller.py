@@ -4,8 +4,8 @@
 
 ##
 ##
-## @author UWANTWALI ZIGAMA Didier
-## d.zigama@pivotaccess.com/zigdidier@gmail.com
+## @author Nadia
+## nadia@gmail.com/joel@gmail.com
 ##
 
 from coreapp.util.export_util import ExportUtil
@@ -41,7 +41,8 @@ class BaseController:
         elif type(e) is CriticalError:
             self.appJsonObject['message'] = e.params['message']
         elif type(e) is IntegrityError:
-            self.appJsonObject['message'] = self.appDuplicateEntryMessage % e[1]
+            msg= eval(str(e))
+            self.appJsonObject['message'] = self.appDuplicateEntryMessage % msg[1]
         else:
             self.logger.exception(e)
             self.appJsonObject['message'] = self.appUnknownException

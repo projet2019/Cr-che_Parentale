@@ -4,33 +4,43 @@
 
 ##
 ##
-## @author UWANTWALI ZIGAMA Didier
-## d.zigama@pivotaccess.com/zigdidier@gmail.com
+## @author Nadia
+## nadia@gmail.com/joel@gmail.com
 ##
-
 
 from django.conf.urls import url
 from django.urls import path, include
 
-from coreapp import views
+from coreapp.views import home, login, forgotpass, signup, childreport, logout, dashboard, users, bills, parents
 
 ##Login
 from coreapp.controller.login_controller import authenticate
-from coreapp.controller.login_controller import index, signup
-from coreapp.controller.login_controller import logout
-from coreapp.controller.system_user_controller import saveUser as user_save, passwordForget as password_forget, passwordChange as password_change
+#from coreapp.controller.login_controller import logout
+#from coreapp.controller.system_user_controller import saveUser as user_save, passwordForget as password_forget, passwordChange as password_change
 
 
 
 urlpatterns = [
 	
-    url(r'^$', index),
-    url(r'^signup/$', signup),
-    url(r'^login/authenticate/', authenticate),
+    url(r'^$', home),
+    url(r'^signup/', signup),
+    url(r'^login/', login),
     url(r'^logout/', logout),
-    url(r'^systemUser/save/', user_save),
-    url(r'^systemUser/passwordForget/', password_forget),
-    url(r'^systemUser/passwordChange/', password_change),
+    url(r'^forgotpass/', forgotpass),
+    url(r'^childreport/', childreport),
+    url(r'^dashboard/', dashboard),
+    #url(r'^systemUser/save/', user_save),
+    #url(r'^systemUser/passwordForget/', password_forget),
+    #url(r'^systemUser/passwordChange/', password_change),
+    url(r'^user/', users),
+    url(r'^parent/', parents),
+    url(r'^child/', signup),
+    url(r'^report/', signup),
+    url(r'^content/', signup),
+    url(r'^bill/', bills),
+    url(r'^event/', signup),
+    url(r'^profile/', signup),
+
                        
     
 ]

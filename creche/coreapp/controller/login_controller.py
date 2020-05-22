@@ -4,13 +4,13 @@
 
 ##
 ##
-## @author UWANTWALI ZIGAMA Didier
-## d.zigama@pivotaccess.com/zigdidier@gmail.com
+## @author Nadia
+## nadia@gmail.com/joel@gmail.com
 ##
 
 from coreapp.controller.base_controller import BaseController
 from coreapp.util.app_util import json_encode
-from coreapp.appmodel.models import LoginAudit, WebUserDetail, WebUsers, Module
+from coreapp.appmodel.models import LoginAudit, WebUserDetail, WebUsers, Module, UserModule
 from datetime import datetime
 from django.db import connection
 from django.http import HttpResponse
@@ -20,7 +20,6 @@ from django.template.context import RequestContext
 from coreapp.util.password_hasher import PasswordHasher
 from django.db.models.signals import pre_delete
 from django.contrib.sessions.models import Session
-from django.views.decorators.csrf import csrf_exempt
 
 class LoginController(BaseController):
     pass
@@ -31,20 +30,6 @@ def sessionend_handler(sender, **kwargs):
 
 pre_delete.connect(sessionend_handler, sender=Session)
 
-def index(request):
-    #check if this user has a valid session
-    if request.session.get('user', 0):
-        return render_to_response('dashboard.html',
-                                  {},
-                                  context_instance=RequestContext(request))
-    else:
-        return render_to_response('index.html')
-        #return render_to_response('dashboard.html')
-
-def signup(request):
-    return render_to_response('signup.html')
-
-@csrf_exempt
 def authenticate(request):
     controller = LoginController()
 
@@ -80,7 +65,7 @@ def authenticate(request):
                 
                 #now check if they are allowed to use admin
                 user_detail = WebUserDetail.objects.get(user_id=user.uid)
-                if 0 == user_detail.can_use_admin:
+                if 0 == user_detail.can_use_admin and UserModule.objects.filter(system_user = user).count() <= 0:
                     resultmessage = 'Sorry, your profile does not have the appropriate privileges to use admin.'
                 #check the status of the user
                 else:
@@ -96,7 +81,8 @@ def authenticate(request):
                         
                         request.session['login_audit_id'] = audit.id
                         request.session['user'] = json_encode(user)
-                        request.session['user_detail'] = json_encode(WebUserDetail.objects.get(user_id=user.uid))
+                        request.session['user_detail'] = json_encode(user_detail.user_id)
+                        request.session['full_name'] = user_detail.full_name
                         #data.update({'user': request.session['user']})
                         data.update({'user_detail': request.session['user_detail']})
 
@@ -114,10 +100,10 @@ def authenticate(request):
                             module = Module.objects.get(id=module_id[0])
 
                             allowed_modules.append(json_encode({
-                                                   'text': module.display_name,
-                                                   'handler': module.handler,
-                                                   'icon': module.icon_file,
-                                                   'desc': module.description,
+                                                   "text": module.display_name,
+                                                   "handler": module.handler,
+                                                   "icon": module.icon_file,
+                                                   "desc": module.description,
                                                    }))
                             
                         request.session['allowed_modules'] = allowed_modules
@@ -135,7 +121,7 @@ def authenticate(request):
     return HttpResponse(json_encode({'success': auth, 'message': resultmessage, 'data': data}),
                         content_type="application/json")
 
-def logout(request):
+def user_logout(request):
     
     if request.session.get('user', 0):
         del request.session['user']
@@ -143,6 +129,13 @@ def logout(request):
         audit = LoginAudit.objects.get(pk=request.session.get('login_audit_id'))
         audit.logout_date = datetime.now()
         audit.save()
+        resultmessage = 'You have successfully logged out.'
+        return HttpResponse(json_encode({'success': True, 'message': resultmessage, 'data': {} }),
+                            content_type="application/json")
 
-    return HttpResponseRedirect('/')
+    return HttpResponse(json_encode({'success': False, 'message': "Logout failed, try again.", 'data': {}}),
+                        content_type="application/json")
+
+def get_module(handler):
+    return Module.objects.get(handler  = handler)
 

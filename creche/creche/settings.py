@@ -21,10 +21,17 @@ COREAPP_ROOT = os.path.join(BASE_DIR, 'coreapp')
 APPLICATION_SETTINGS = {
     'common': {
         'smtp_host': 'localhost',
-        'admin_to_email': 'creche@localhost',
-        'admin_from_email': 'admin@localhost',
+        'admin_to_email': 'joel@gmail.com',
+        'admin_from_email': 'zigama@localhost',
         'event_notification_from_email': 'noreply@localhost',
-        'local_repo': 'data-repo'
+        'local_repo': 'data-repo',
+        'creche_name':'Creche Parentale',
+        'creche_avenue': "Avenue de l'Espinette,16",
+        'creche_road':'1348 Louvain-La-Neuve',
+        'creche_telephone':'010235487',
+        'creche_email':'info@crecheparentale.com',
+        'creche_web':'crecheparentale.com',
+        'creche_zip':''
     },
     'development': {
 
@@ -52,7 +59,7 @@ SECRET_KEY = 'x)1il2bug2b8o-=((ifhit^-#k&5w!0=rpu%_6ar1j5akjg*3!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', '192.168.43.126']
 
 
 # Application definition
@@ -75,6 +82,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'coreapp.util.app_session_auth_middleware.AppSessionAuthMiddleware',
+]
+
+MIDDLEWARE_CLASSES = [
+
+    #'coreapp.util.app_session_auth_middleware.AppSessionAuthMiddleware',
 
 ]
 

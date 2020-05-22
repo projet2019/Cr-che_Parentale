@@ -1,11 +1,11 @@
-
+#!  /usr/bin/env python
 # encoding: utf-8
 # vim: ai ts=4 sts=4 et sw=4
 
 ##
 ##
-## @author UWANTWALI ZIGAMA Didier
-## d.zigama@pivotaccess.com/zigdidier@gmail.com
+## @author Nadia
+## nadia@gmail.com/joel@gmail.com
 ##
 
 from coreapp.appmodel.models import Module, LoginAudit, WebUserDetail, WebUsers
@@ -145,7 +145,7 @@ class SystemUserService(BaseService):
         params = postValues.copy()
         cursor = connection.cursor()
         record = None
-        
+
         if(params.get('id')):
             record = WebUsers.objects.get(pk=params.get('id'))
 
@@ -153,8 +153,8 @@ class SystemUserService(BaseService):
             if 'false' == params.get('status'):
                 record.status = False
         else:
-            email = params.get('email', '')
-            password = params.get('password', '')
+            email = params.get('user', '')
+            password = params.get('pass', '')
 
             #first thing to check is if the email already exists
             hasher = PasswordHasher()
@@ -165,13 +165,7 @@ class SystemUserService(BaseService):
                 #if this email already exists, inform the user of that and advice them accordingly
                 raise CriticalError({'message' : "The email '" + email + "' already exists in the system. Please use the email to login into the platform or request for a new password if you have forgotten it."})
             except WebUsers.DoesNotExist:
-                #get the UID
-                cursor.execute("SELECT (MAX(uid) + 1) FROM web_users")
-                uid = cursor.fetchone()
-                
-                #no user with such email, lets create the profile
-                record = WebUsers(uid=uid[0],
-                                  name=email,
+               record = WebUsers( name=email,
                                   pass_field=pwd,
                                   mail=email,
                                   access=0,
@@ -181,13 +175,16 @@ class SystemUserService(BaseService):
                                   uuid='',
                                   created=time.time())
                                                  
-                # TODO
-                # You can initialize common modules here
-                params['sign_in_module'] = 'true'
+               # TODO
+               # You can initialize common modules here
+               params['can_use_admin'] = 'true'
+               #params['can_use_admin'] = 'false'
+
         
         record.save()
 
         try:
+            #print(record.__dict__)
             user_detail = WebUserDetail.objects.get(user_id=record.uid)
             
             user_detail.can_use_admin = False
@@ -195,17 +192,28 @@ class SystemUserService(BaseService):
                 user_detail.can_use_admin = True
         except WebUserDetail.DoesNotExist:
             #create the user detail information
-            user_detail = WebUserDetail(user_id=record.uid, can_use_admin=True, alert_frequency='never', full_name=email)
+            #print("NO Detail")
+            user_detail = WebUserDetail(user_id=record.uid, can_use_admin=True, description = '',
+                                        alert_frequency='never', full_name=email)
+            #user_detail = WebUserDetail(user_id=record.uid, can_use_admin=False, description='',
+            #                            alert_frequency='never', full_name=email)
+            #print(user_detail.__dict__)
             
         user_detail.save()
-        
+
         cursor.execute("DELETE FROM user_module_perm WHERE system_user_id = " + str(record.uid))
         
-        if 'true' == params.get('sign_in_module'):
+        if 'true' == params.get('can_use_admin'):
             cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (1, record.uid))
-
-        if 'true' == params.get('admin_module'):
             cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (2, record.uid))
+            cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (3, record.uid))
+            cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (4, record.uid))
+            cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (5, record.uid))
+            cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (6, record.uid))
+            cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (7, record.uid))
+            cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (8, record.uid))
+        else:
+            cursor.execute('INSERT INTO user_module_perm (module_id, system_user_id) VALUES (%d, %d)' % (8, record.uid))
 
         cursor.close()
         
@@ -241,7 +249,7 @@ class SystemUserService(BaseService):
         user.save()
         
     def passwordForget(self, params):
-        email = params.get('email', '')
+        email = params.get('user', '')
         
         #first check to see if the email is in the database
         try:
@@ -261,7 +269,7 @@ class SystemUserService(BaseService):
             smtpObj = smtplib.SMTP(settings.APPLICATION_SETTINGS['common']['smtp_host'])
             
             msg = MIMEMultipart('alternative')
-            msg['From'] = 'admin@localhost'
+            msg['From'] = settings.APPLICATION_SETTINGS['common']['admin_from_email']
             msg['To'] = email
             msg['Subject'] = 'Creche Parentale reset confirmation'
             
@@ -270,7 +278,8 @@ class SystemUserService(BaseService):
             part = MIMEText(email_body, 'html', 'utf-8')
             msg.attach(part)
             
-            smtpObj.sendmail('Creche Parentale <admin@localhost>', email, msg.as_string())
+            smtpObj.sendmail('Creche Parentale <%s>' % settings.APPLICATION_SETTINGS['common']['admin_from_email'],
+                             email, msg.as_string())
             
             #go ahead to update the database with the new password
             user.pass_field = hashed_pwd
