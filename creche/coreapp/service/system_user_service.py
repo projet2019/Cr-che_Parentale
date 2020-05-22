@@ -195,7 +195,7 @@ class SystemUserService(BaseService):
             user_detail = WebUserDetail(user_id=record.uid, can_use_admin=True, description = '',
                                         alert_frequency='never', full_name=email)
             #user_detail = WebUserDetail(user_id=record.uid, can_use_admin=False, description = '',
-                                        alert_frequency='never', full_name=email)
+            #                            alert_frequency='never', full_name=email)
             #print(user_detail.__dict__)
             
         user_detail.save()
