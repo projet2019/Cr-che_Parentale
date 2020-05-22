@@ -15,15 +15,13 @@ from coreapp.util.app_util import json_encode
 from coreapp.util.export_util import ExportUtil
 from django.http import HttpResponse
 
-
 class SystemUserController(BaseController):
     pass
 
-
 def loginAudit(request):
-    # TO-DO check if this user has a valid session
+    #TO-DO check if this user has a valid session
     controller = SystemUserController()
-
+    
     try:
         service = SystemUserService()
 
@@ -33,13 +31,12 @@ def loginAudit(request):
         result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-                        content_type="application/json")
-
-
+                       content_type="application/json")
+                       
 def list(request):
-    # TO-DO check if this user has a valid session
+    #TO-DO check if this user has a valid session
     controller = SystemUserController()
-
+    
     try:
         service = SystemUserService()
 
@@ -49,11 +46,10 @@ def list(request):
         result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-                        content_type="application/json")
-
+                       content_type="application/json")
 
 def listExport(request):
-    # TO-DO check if this user has a valid session
+    #TO-DO check if this user has a valid session
     controller = SystemUserController()
 
     try:
@@ -67,8 +63,7 @@ def listExport(request):
         result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-                        content_type="application/json")
-
+                       content_type="application/json")
 
 def list_principals(request):
     # TO-DO check if this user has a valid session
@@ -85,75 +80,73 @@ def list_principals(request):
     return HttpResponse(json_encode(result),
                         content_type="application/json")
 
-
 def userLoggedOn(request):
-    # TO-DO check if this user has a valid session
+    #TO-DO check if this user has a valid session
     controller = SystemUserController()
 
     try:
         service = SystemUserService()
 
         user = service.userLoggedOn(request.session, request.POST)
-        result = {'success': True, 'data': user}
+        result = {'success': True, 'data' : user}
     except Exception as e:
         result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-                        content_type="application/json")
+                       content_type="application/json")
 
 
 def saveUser(request):
-    # TO-DO check if this user has a valid session
+    #TO-DO check if this user has a valid session
     controller = SystemUserController()
 
     try:
         service = SystemUserService()
 
         service.save(request.POST)
-
-        result = {'success': True, 'message': 'User details successfully updated. You can now login into the platform.'}
+            
+        result = {'success': True, 'message' : 'User details successfully updated. You can now login into the platform.'}
 
     except Exception as e:
         result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-                        content_type="application/json")
+                       content_type="application/json")
 
 
 def passwordForget(request):
-    # TO-DO check if this user has a valid session
+    #TO-DO check if this user has a valid session
     controller = SystemUserController()
 
     try:
         service = SystemUserService()
 
         service.passwordForget(request.POST)
-
-        result = {'success': True, 'message': 'The password reset instructions have been sent to your email address.'}
+            
+        result = {'success': True, 'message' : 'The password reset instructions have been sent to your email address.'}
 
     except Exception as e:
         result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-                        content_type="application/json")
-
+                       content_type="application/json")
 
 def passwordChange(request):
-    # TO-DO check if this user has a valid session
+    #TO-DO check if this user has a valid session
     controller = SystemUserController()
 
     try:
         service = SystemUserService()
 
         service.passwordChange(request.POST)
-
-        result = {'success': True, 'message': 'You have changed your password successfully.'}
+            
+        result = {'success': True, 'message' : 'You have changed your password successfully.'}
 
     except Exception as e:
         result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-                        content_type="application/json")
+                       content_type="application/json")
 
 
 def savePrincipal(request):
@@ -172,3 +165,4 @@ def savePrincipal(request):
                         content_type="application/json")
 
 
+    

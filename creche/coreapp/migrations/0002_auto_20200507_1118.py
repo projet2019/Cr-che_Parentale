@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-Nadia   ('coreapp', '0001_initial'),
+        ('coreapp', '0001_initial'),
     ]
 
     operations = [
-Nadia   migrations.AlterModelTable(
-NadiaNadia  name='composantrepas',
-NadiaNadia  table='patisserie',
-Nadia   ),
+        migrations.AlterModelTable(
+            name='composantrepas',
+            table='patisserie',
+        ),
     ]

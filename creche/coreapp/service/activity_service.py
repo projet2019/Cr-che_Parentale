@@ -4,7 +4,7 @@
 
 ##
 ##
-## @author   Joel
+## @author Nadia
 ## nadia@gmail.com/joel@gmail.com
 ##
 
@@ -18,63 +18,63 @@ from coreapp.exception.critical_error import CriticalError
 class ActivityService(BaseService):
 
     def __init__(self):
-Nadia   BaseService.__init__(self)
+        BaseService.__init__(self)
 
     def list(self, params):
 
-Nadia   sortLimitParams = self.setSortLimitParameters(params)
+        sortLimitParams = self.setSortLimitParameters(params)
 
-Nadia   filterObj = Q()
-Nadia   if params.get('searchName'):
-NadiaNadia  filterObj = filterObj & Q(name__icontains=params.get('searchName'))
-Nadia   if params.get('searchActivityId'):
-NadiaNadia  filterObj = filterObj & Q(id=params.get('searchActivityId'))
-Nadia   if params.get('searchPrice'):
-NadiaNadia  filterObj = filterObj & Q( price = params.get('searchPrice') )
-Nadia   if params.get('searchCategory'):
-NadiaNadia  filterObj = filterObj & Q( category = params.get('searchCategory') )
+        filterObj = Q()
+        if params.get('searchName'):
+            filterObj = filterObj & Q(name__icontains=params.get('searchName'))
+        if params.get('searchActivityId'):
+            filterObj = filterObj & Q(id=params.get('searchActivityId'))
+        if params.get('searchPrice'):
+            filterObj = filterObj & Q( price = params.get('searchPrice') )
+        if params.get('searchCategory'):
+            filterObj = filterObj & Q( category = params.get('searchCategory') )
 
-Nadia   result = ChildActivity.objects.filter(filterObj).order_by(sortLimitParams['dir'] + sortLimitParams['sort'])[
-NadiaNadiaNadia  sortLimitParams['start']: sortLimitParams['limit']]
-Nadia   count = ChildActivity.objects.filter(filterObj).count()
+        result = ChildActivity.objects.filter(filterObj).order_by(sortLimitParams['dir'] + sortLimitParams['sort'])[
+                 sortLimitParams['start']: sortLimitParams['limit']]
+        count = ChildActivity.objects.filter(filterObj).count()
 
-Nadia   records = []
-Nadia   for item in result:
+        records = []
+        for item in result:
 
-NadiaNadia  record = {}
-NadiaNadia  record['id'] = item.id
-NadiaNadia  record['activity'] = item.name.encode('utf-8')
-NadiaNadia  record['category'] = item.category.encode('utf-8')
-NadiaNadia  record['unit_price'] = item.unit_price
-NadiaNadia  records.append(record)
+            record = {}
+            record['id'] = item.id
+            record['activity'] = item.name.encode('utf-8')
+            record['category'] = item.category.encode('utf-8')
+            record['unit_price'] = item.unit_price
+            records.append(record)
 
-Nadia   return {'totalCount': count, 'records': records}
+        return {'totalCount': count, 'records': records}
 
     def listExport(self, params):
-Nadia   """Export the applicant data"""
+        """Export the applicant data"""
 
-Nadia   records = self.list(params)
+        records = self.list(params)
 
-Nadia   return self.decodeDataToExport(records, params.get('exportColumns'))
+        return self.decodeDataToExport(records, params.get('exportColumns'))
 
     def save_activity(self, postValues):
-Nadia   activity = None
-Nadia   params = postValues.copy()
-Nadia   if params.get("activity"):
-NadiaNadia  try:
-NadiaNadiaNadia activity = ChildActivity.objects.get(id=params.get('activity_id'))
-NadiaNadiaNadia activity.name = params.get('activity'),
-NadiaNadiaNadia activity.category = params.get('category'),
-NadiaNadiaNadia activity.unit_price = params.get('unit_price')
-NadiaNadia  except ChildActivity.DoesNotExist:
-NadiaNadiaNadia activity = ChildActivity(name=params.get('activity'),
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    category = params.get('category'),
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    unit_price=params.get('unit_price')
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    )
-NadiaNadia  try:
-NadiaNadiaNadia activity.save()
-NadiaNadia  except Exception:
-NadiaNadiaNadia raise CriticalError({'message': "Unkwon Error while saving activity '" + params.get(
-NadiaNadiaNadiaNadia'activity') + "'. Try again or contact system admin "})
+        activity = None
+        params = postValues.copy()
+        if params.get("activity"):
+            try:
+                activity = ChildActivity.objects.get(id=params.get('activity_id'))
+                activity.name = params.get('activity'),
+                activity.category = params.get('category'),
+                activity.unit_price = params.get('unit_price')
+            except ChildActivity.DoesNotExist:
+                activity = ChildActivity(name=params.get('activity'),
+                                            category = params.get('category'),
+                                            unit_price=params.get('unit_price')
+                                            )
+            try:
+                activity.save()
+            except Exception:
+                raise CriticalError({'message': "Unkwon Error while saving activity '" + params.get(
+                    'activity') + "'. Try again or contact system admin "})
 
-Nadia   return  activity
+        return  activity

@@ -4,13 +4,13 @@
 
 ##
 ##
-## @author   Joel
+## @author Nadia
 ## nadia@gmail.com/joel@gmail.com
 ##
 
 class CriticalError(Exception):
 
     def __init__(self, params):
-Nadia   self.params = params
-Nadia  
+        self.params = params
+       
 

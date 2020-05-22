@@ -2,41 +2,41 @@
 (function($) {
     'use strict';
     $.fn.prepopulate = function(dependencies, maxLength, allowUnicode) {
-Nadia   /*
-NadiaNadia  Depends on urlify.js
-NadiaNadia  Populates a selected field with the values of the dependent fields,
-NadiaNadia  URLifies and shortens the string.
-NadiaNadia  dependencies - array of dependent fields ids
-NadiaNadia  maxLength - maximum length of the URLify'd string
-NadiaNadia  allowUnicode - Unicode support of the URLify'd string
-Nadia   */
-Nadia   return this.each(function() {
-NadiaNadia  var prepopulatedField = $(this);
+        /*
+            Depends on urlify.js
+            Populates a selected field with the values of the dependent fields,
+            URLifies and shortens the string.
+            dependencies - array of dependent fields ids
+            maxLength - maximum length of the URLify'd string
+            allowUnicode - Unicode support of the URLify'd string
+        */
+        return this.each(function() {
+            var prepopulatedField = $(this);
 
-NadiaNadia  var populate = function() {
-NadiaNadiaNadia // Bail if the field's value has been changed by the user
-NadiaNadiaNadia if (prepopulatedField.data('_changed')) {
-NadiaNadiaNadiaNadiareturn;
-NadiaNadiaNadia }
+            var populate = function() {
+                // Bail if the field's value has been changed by the user
+                if (prepopulatedField.data('_changed')) {
+                    return;
+                }
 
-NadiaNadiaNadia var values = [];
-NadiaNadiaNadia $.each(dependencies, function(i, field) {
-NadiaNadiaNadiaNadiafield = $(field);
-NadiaNadiaNadiaNadiaif (field.val().length > 0) {
-NadiaNadiaNadiaNadia    values.push(field.val());
-NadiaNadiaNadiaNadia}
-NadiaNadiaNadia });
-NadiaNadiaNadia prepopulatedField.val(URLify(values.join(' '), maxLength, allowUnicode));
-NadiaNadia  };
+                var values = [];
+                $.each(dependencies, function(i, field) {
+                    field = $(field);
+                    if (field.val().length > 0) {
+                        values.push(field.val());
+                    }
+                });
+                prepopulatedField.val(URLify(values.join(' '), maxLength, allowUnicode));
+            };
 
-NadiaNadia  prepopulatedField.data('_changed', false);
-NadiaNadia  prepopulatedField.on('change', function() {
-NadiaNadiaNadia prepopulatedField.data('_changed', true);
-NadiaNadia  });
+            prepopulatedField.data('_changed', false);
+            prepopulatedField.on('change', function() {
+                prepopulatedField.data('_changed', true);
+            });
 
-NadiaNadia  if (!prepopulatedField.val()) {
-NadiaNadiaNadia $(dependencies.join(',')).on('keyup change focus', populate);
-NadiaNadia  }
-Nadia   });
+            if (!prepopulatedField.val()) {
+                $(dependencies.join(',')).on('keyup change focus', populate);
+            }
+        });
     };
 })(django.jQuery);

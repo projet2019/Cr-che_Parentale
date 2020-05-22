@@ -4,7 +4,7 @@
 
 ##
 ##
-## @author    
+## @author Nadia
 ## nadinecy@gmail.com
 ##
 
@@ -52,18 +52,18 @@ class CrecheChild(models.Model):
     names = models.CharField(max_length=200)
     date_of_birth = models.DateField(blank=True)
     group = models.CharField(max_length = 20,
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    choices = CHILD_CLASSES,
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    default = 'Petit'
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    )
+                                            choices = CHILD_CLASSES,
+                                            default = 'Petit'
+                                            )
     gender = models.CharField(max_length=20,
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   choices=GENDER,
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   default='Male'
-NadiaNadiaNadiaNadiaNadiaNadia)
+                                           choices=GENDER,
+                                           default='Male'
+                              )
 
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     class Meta:
-Nadia   db_table = u'kid'
+        db_table = u'kid'
 
 class CrecheParent(models.Model):
     id = models.AutoField(primary_key=True)
@@ -73,15 +73,15 @@ class CrecheParent(models.Model):
     full_address = models.TextField(blank=True)
     email = models.CharField(max_length=100, unique=True)
     relationship = models.CharField(
-NadiaNadiaNadiaNadiaNadiaNadiaNadia max_length = 20,
-NadiaNadiaNadiaNadiaNadiaNadiaNadia choices = PARENT_CHILD_RELATION,
-NadiaNadiaNadiaNadiaNadiaNadiaNadia default = 'Guardian'
-NadiaNadiaNadiaNadiaNadiaNadiaNadia )
+                                    max_length = 20,
+                                    choices = PARENT_CHILD_RELATION,
+                                    default = 'Guardian'
+                                    )
     children = models.ManyToManyField(CrecheChild, related_name="parents")
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     class Meta:
-Nadia   db_table = u'guardian'
+        db_table = u'guardian'
 
 class CrechePrincipal(models.Model):
     id = models.AutoField(primary_key=True)
@@ -91,21 +91,21 @@ class CrechePrincipal(models.Model):
     full_address = models.TextField(blank=True)
     email = models.CharField(max_length=100, unique=True)
     role = models.CharField(
-NadiaNadiaNadiaNadiaNadiaNadiaNadia max_length = 20,
-NadiaNadiaNadiaNadiaNadiaNadiaNadia choices = PRINCIPAL_ROLE,
-NadiaNadiaNadiaNadiaNadiaNadiaNadia default = 'Accueillante'
-NadiaNadiaNadiaNadiaNadiaNadiaNadia )
+                                    max_length = 20,
+                                    choices = PRINCIPAL_ROLE,
+                                    default = 'Accueillante'
+                                    )
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     class Meta:
-Nadia   db_table = u'principal'
+        db_table = u'principal'
 
 class ComposantRepas(models.Model):
     id = models.AutoField(primary_key=True)
     component_name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True, null=True)
     class Meta:
-Nadia   db_table = u'patisserie'
+        db_table = u'patisserie'
 
 class Repas(models.Model):
     id = models.AutoField(primary_key=True)
@@ -113,17 +113,17 @@ class Repas(models.Model):
     menu = models.ManyToManyField(ComposantRepas, related_name="components")
     unit_price = models.FloatField(blank=True, null=True)
     class Meta:
-Nadia   db_table = u'repas'
+        db_table = u'repas'
 
 class ChildActivity(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
     category = models.CharField(max_length = 20,
-NadiaNadiaNadiaNadiaNadiaNadia  choices = ACTIVITY_CATEGORY
-NadiaNadiaNadiaNadiaNadiaNadia  )
+                                choices = ACTIVITY_CATEGORY
+                                )
     unit_price = models.FloatField(blank=True, null=True)
     class Meta:
-Nadia   db_table = u'activity'
+        db_table = u'activity'
 
 class  DailyChildReport(models.Model):
     id = models.AutoField(primary_key=True)
@@ -135,7 +135,7 @@ class  DailyChildReport(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     day_price = models.FloatField(default=7.50)
     class Meta:
-Nadia   db_table = u'report'
+        db_table = u'report'
 
 class Bill(models.Model):
     id = models.AutoField(primary_key=True)
@@ -145,7 +145,7 @@ class Bill(models.Model):
     year = models.IntegerField(default=0)
     date_time = models.DateTimeField(auto_now_add=True)
     class Meta:
-Nadia   db_table = u'bill'
+        db_table = u'bill'
 
 class LoginAudit(models.Model):
     id = models.AutoField(primary_key=True)
@@ -155,7 +155,7 @@ class LoginAudit(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(blank=True, null=True)
     class Meta:
-Nadia   db_table = u'login_audit'
+        db_table = u'login_audit'
 
 class EventType(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -169,8 +169,8 @@ class EventType(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     class Meta:
-Nadia   db_table = u'event_type'
-Nadia   
+        db_table = u'event_type'
+        
 
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
@@ -182,7 +182,7 @@ class Event(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     class Meta:
-Nadia   db_table = u'event'
+        db_table = u'event'
 
 class SystemUserEventType(models.Model):
     id = models.AutoField(primary_key=True)
@@ -192,8 +192,8 @@ class SystemUserEventType(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     class Meta:
-Nadia   db_table = u'system_user_has_event_type'
-Nadia   unique_together = ['event_type_id', 'system_user_id']
+        db_table = u'system_user_has_event_type'
+        unique_together = ['event_type_id', 'system_user_id']
 
 class WebEmailAudit(models.Model):
     id = models.AutoField(primary_key=True)
@@ -205,7 +205,7 @@ class WebEmailAudit(models.Model):
     last_updated = models.DateTimeField(null=True, blank=True)
     email_body = models.TextField(blank=True)
     class Meta:
-Nadia   db_table = u'web_email_audit'
+        db_table = u'web_email_audit'
 
 class EmailSchedule(models.Model):
     id = models.AutoField(primary_key=True)
@@ -220,7 +220,7 @@ class EmailSchedule(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     class Meta:
-Nadia   db_table = u'email_schedule'
+        db_table = u'email_schedule'
 
 class Module(models.Model):
     id = models.AutoField(primary_key=True)
@@ -230,7 +230,7 @@ class Module(models.Model):
     icon_file = models.CharField(max_length=96)
     description = models.CharField(max_length=765)
     class Meta:
-Nadia   db_table = u'module'
+        db_table = u'module'
 
 class WebUsers(models.Model):
     uid = models.AutoField(primary_key=True)
@@ -251,7 +251,7 @@ class WebUsers(models.Model):
     picture = models.IntegerField()
     uuid = models.CharField(max_length=108)
     class Meta:
-Nadia   db_table = u'web_users'
+        db_table = u'web_users'
 
 class WebUserDetail(models.Model):
     id = models.AutoField(primary_key=True)
@@ -261,7 +261,7 @@ class WebUserDetail(models.Model):
     can_use_admin = models.IntegerField(default = False)
     alert_frequency = models.TextField(null=True, blank=True)
     class Meta:
-Nadia   db_table = u'web_user_detail'
+        db_table = u'web_user_detail'
 
 
 class UserModule(models.Model):
@@ -269,7 +269,7 @@ class UserModule(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
     system_user = models.ForeignKey(WebUsers, on_delete=models.CASCADE)
     class Meta:
-Nadia   db_table = u'user_module_perm'
+        db_table = u'user_module_perm'
 
 
 

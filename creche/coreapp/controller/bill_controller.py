@@ -4,7 +4,7 @@
 
 ##
 ##
-## @author   Joel
+## @author Nadia
 ## nadia@gmail.com/joel@gmail.com
 ##
 
@@ -26,45 +26,45 @@ def list(request):
     controller = BillController()
 
     try:
-Nadia   service = BillService()
+        service = BillService()
 
-Nadia   result = service.list(request.POST)
+        result = service.list(request.POST)
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 def list_activities(request):
     # TO-DO check if this user has a valid session
     controller = BillController()
 
     try:
-Nadia   service = ActivityService()
+        service = ActivityService()
 
-Nadia   result = service.list(request.POST)
+        result = service.list(request.POST)
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 def list_components(request):
     # TO-DO check if this user has a valid session
     controller = BillController()
 
     try:
-Nadia   service = ComposantService()
+        service = ComposantService()
 
-Nadia   result = service.list(request.POST)
+        result = service.list(request.POST)
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 
 def listExport(request):
@@ -72,17 +72,17 @@ def listExport(request):
     controller = BillController()
 
     try:
-Nadia   service = BillService()
+        service = BillService()
 
-Nadia   headers, records = service.listExport(request.GET)
+        headers, records = service.listExport(request.GET)
 
-Nadia   return ExportUtil.export(headers, records, request.GET['exportType'])
+        return ExportUtil.export(headers, records, request.GET['exportType'])
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 
 def saveBill(request):
@@ -90,62 +90,62 @@ def saveBill(request):
     controller = BillController()
 
     try:
-Nadia   service = BillService()
+        service = BillService()
 
-Nadia   service.save(request.POST)
+        service.save(request.POST)
 
-Nadia   result = {'success': True, 'message': 'Bill details successfully saved. You can now view it.'}
+        result = {'success': True, 'message': 'Bill details successfully saved. You can now view it.'}
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 def saveComponent(request):
     # TO-DO check if this user has a valid session
     controller = BillController()
 
     try:
-Nadia   service = ComposantService()
-Nadia   service.save_component(request.POST)
-Nadia   result = {'success': True, 'message': 'Component details successfully saved. You can now view it.'}
+        service = ComposantService()
+        service.save_component(request.POST)
+        result = {'success': True, 'message': 'Component details successfully saved. You can now view it.'}
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 def saveActivity(request):
     # TO-DO check if this user has a valid session
     controller = BillController()
 
     try:
-Nadia   service = ActivityService()
-Nadia   service.save_activity(request.POST)
-Nadia   result = {'success': True, 'message': 'Activity details successfully saved. You can now view it.'}
+        service = ActivityService()
+        service.save_activity(request.POST)
+        result = {'success': True, 'message': 'Activity details successfully saved. You can now view it.'}
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 def saveRepas(request):
     # TO-DO check if this user has a valid session
     controller = BillController()
 
     try:
-Nadia   service = RepasService()
-Nadia   service.register_repas(request.POST)
-Nadia   result = {'success': True, 'message': 'Repas details successfully saved. You can now view it.'}
+        service = RepasService()
+        service.register_repas(request.POST)
+        result = {'success': True, 'message': 'Repas details successfully saved. You can now view it.'}
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 
 

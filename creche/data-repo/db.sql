@@ -14,10 +14,6 @@ CREATE DATABASE  creche;
 ---010235487
 
 
-
-
-
-
 INSERT INTO module ( name, display_name, handler,icon_file, description) VALUES ('user_mgmt', 'User Management', '/user', 'users.png', 'Users' );
 
 INSERT INTO module ( name, display_name, handler,icon_file, description) VALUES ('parent_mgmt', 'Parent Management', '/parent', 'parents.png', 'Parents' );

@@ -2,21 +2,21 @@
 
 @media (max-width: 1024px) {
     [dir="rtl"] .colMS {
-Nadia   margin-right: 0;
+        margin-right: 0;
     }
 
     [dir="rtl"] #user-tools {
-Nadia   text-align: right;
+        text-align: right;
     }
 
     [dir="rtl"] #changelist .actions label {
-Nadia   padding-left: 10px;
-Nadia   padding-right: 0;
+        padding-left: 10px;
+        padding-right: 0;
     }
 
     [dir="rtl"] #changelist .actions select {
-Nadia   margin-left: 0;
-Nadia   margin-right: 15px;
+        margin-left: 0;
+        margin-right: 15px;
     }
 
     [dir="rtl"] .change-list .filtered .results,
@@ -24,39 +24,39 @@ Nadia   margin-right: 15px;
     [dir="rtl"] .filtered #toolbar,
     [dir="rtl"] .filtered div.xfull,
     [dir="rtl"] .filtered .actions {
-Nadia   margin-right: 0;
-Nadia   margin-left: 230px;
+        margin-right: 0;
+        margin-left: 230px;
     }
 
     [dir="rtl"] .inline-group ul.tools a.add,
     [dir="rtl"] .inline-group div.add-row a,
     [dir="rtl"] .inline-group .tabular tr.add-row td a {
-Nadia   padding: 8px 26px 8px 10px;
-Nadia   background-position: calc(100% - 8px) 9px;
+        padding: 8px 26px 8px 10px;
+        background-position: calc(100% - 8px) 9px;
     }
 
     [dir="rtl"] .related-widget-wrapper-link + .selector {
-Nadia   margin-right: 0;
-Nadia   margin-left: 15px;
+        margin-right: 0;
+        margin-left: 15px;
     }
 
     [dir="rtl"] .selector .selector-filter label {
-Nadia   margin-right: 0;
-Nadia   margin-left: 8px;
+        margin-right: 0;
+        margin-left: 8px;
     }
 
     [dir="rtl"] .object-tools li {
-Nadia   float: right;
+        float: right;
     }
 
     [dir="rtl"] .object-tools li + li {
-Nadia   margin-left: 0;
-Nadia   margin-right: 15px;
+        margin-left: 0;
+        margin-right: 15px;
     }
 
     [dir="rtl"] .dashboard .module table td a {
-Nadia   padding-left: 0;
-Nadia   padding-right: 16px;
+        padding-left: 0;
+        padding-right: 16px;
     }
 }
 
@@ -68,17 +68,17 @@ Nadia   padding-right: 16px;
     [dir="rtl"] .filtered #toolbar,
     [dir="rtl"] .filtered div.xfull,
     [dir="rtl"] .filtered .actions {
-Nadia   margin-left: 0;
+        margin-left: 0;
     }
 
     [dir="rtl"] .aligned .add-another,
     [dir="rtl"] .aligned .related-lookup,
     [dir="rtl"] .aligned .datetimeshortcuts {
-Nadia   margin-left: 0;
-Nadia   margin-right: 15px;
+        margin-left: 0;
+        margin-right: 15px;
     }
 
     [dir="rtl"] .aligned ul {
-Nadia   margin-right: 0;
+        margin-right: 0;
     }
 }

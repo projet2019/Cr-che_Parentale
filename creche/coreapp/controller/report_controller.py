@@ -4,7 +4,7 @@
 
 ##
 ##
-## @author   Joel
+## @author Nadia
 ## nadia@gmail.com/joel@gmail.com
 ##
 
@@ -24,61 +24,61 @@ def list_reports(request):
     controller = ParentController()
 
     try:
-Nadia   service = ReportService
+        service = ReportService
 
-Nadia   result = service.list(request.POST)
+        result = service.list(request.POST)
 
     except Exception as e:
-Nadia   print(e)
-Nadia   result = controller.handleException(e)
+        print(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 def listExport(request):
     # TO-DO check if this user has a valid session
     controller = ParentController()
 
     try:
-Nadia   service = ReportService
+        service = ReportService
 
-Nadia   headers, records = service.listExport(request.GET)
+        headers, records = service.listExport(request.GET)
 
-Nadia   return ExportUtil.export(headers, records, request.GET['exportType'])
+        return ExportUtil.export(headers, records, request.GET['exportType'])
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 def saveDailyChildReport(request):
     # TO-DO check if this user has a valid session
     controller = ParentController()
 
     try:
-Nadia   service = ReportService()
+        service = ReportService()
 
-Nadia   service.save_parent_child(request.POST)
+        service.save_parent_child(request.POST)
 
-Nadia   result = {'success': True, 'message': 'Parent and Child details successfully saved. You can now view it.'}
+        result = {'success': True, 'message': 'Parent and Child details successfully saved. You can now view it.'}
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")
 
 def get_principal(request):
     controller = ParentController()
     try:
-Nadia   user = eval(request.session.get('user'))
-Nadia   service = PrincipalService()
-Nadia   #print(user, "User Email: ", user.get("mail"))
-Nadia   result = service.get_principal(email = user.get('mail'))
+        user = eval(request.session.get('user'))
+        service = PrincipalService()
+        #print(user, "User Email: ", user.get("mail"))
+        result = service.get_principal(email = user.get('mail'))
 
     except Exception as e:
-Nadia   result = controller.handleException(e)
+        result = controller.handleException(e)
 
     return HttpResponse(json_encode(result),
-NadiaNadiaNadiaNadia    content_type="application/json")
+                        content_type="application/json")

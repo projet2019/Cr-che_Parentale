@@ -20,7 +20,7 @@
 --
 
 DROP TABLE IF EXISTS `module`;
-/*!40101 SET @saved_cs_clientNadia= @@character_set_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `module` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -48,7 +48,7 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `user_module_perm`;
-/*!40101 SET @saved_cs_clientNadia= @@character_set_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_module_perm` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -77,7 +77,7 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `web_user_detail`;
-/*!40101 SET @saved_cs_clientNadia= @@character_set_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `web_user_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -106,7 +106,7 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `web_users`;
-/*!40101 SET @saved_cs_clientNadia= @@character_set_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `web_users` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,

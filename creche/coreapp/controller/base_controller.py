@@ -4,7 +4,7 @@
 
 ##
 ##
-## @author   Joel
+## @author Nadia
 ## nadia@gmail.com/joel@gmail.com
 ##
 
@@ -29,23 +29,23 @@ class BaseController:
     appJsonObject = {'success': False}
 
     def __init__(self):
-Nadia   logging.config.fileConfig(settings.APPLICATION_SETTINGS['COREAPP_HOME'] + '/log.conf')
-Nadia   self.logger = logging.getLogger("coreapp")
+        logging.config.fileConfig(settings.APPLICATION_SETTINGS['COREAPP_HOME'] + '/log.conf')
+        self.logger = logging.getLogger("coreapp")
 
     def handleException(self, e):
-Nadia   if type(e) is ValidationError:
-NadiaNadia  for k, v in e.message_dict.items():
-NadiaNadiaNadia self.appJsonObject['message'] = self.appValidationErrorMessage % (k, v[0])
-Nadia   elif type(e) is UnknownRecordError:
-NadiaNadia  self.appJsonObject['message'] = self.appUnknownObject % e.params['entity']
-Nadia   elif type(e) is CriticalError:
-NadiaNadia  self.appJsonObject['message'] = e.params['message']
-Nadia   elif type(e) is IntegrityError:
-NadiaNadia  msg= eval(str(e))
-NadiaNadia  self.appJsonObject['message'] = self.appDuplicateEntryMessage % msg[1]
-Nadia   else:
-NadiaNadia  self.logger.exception(e)
-NadiaNadia  self.appJsonObject['message'] = self.appUnknownException
-Nadia  
-Nadia   return self.appJsonObject
+        if type(e) is ValidationError:
+            for k, v in e.message_dict.items():
+                self.appJsonObject['message'] = self.appValidationErrorMessage % (k, v[0])
+        elif type(e) is UnknownRecordError:
+            self.appJsonObject['message'] = self.appUnknownObject % e.params['entity']
+        elif type(e) is CriticalError:
+            self.appJsonObject['message'] = e.params['message']
+        elif type(e) is IntegrityError:
+            msg= eval(str(e))
+            self.appJsonObject['message'] = self.appDuplicateEntryMessage % msg[1]
+        else:
+            self.logger.exception(e)
+            self.appJsonObject['message'] = self.appUnknownException
+       
+        return self.appJsonObject
     

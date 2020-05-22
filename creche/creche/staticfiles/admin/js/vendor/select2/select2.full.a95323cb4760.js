@@ -42,421 +42,421 @@ if (!S2) { S2 = {}; } else { require = S2; }
 var requirejs, require, define;
 (function (undef) {
     var main, req, makeMap, handlers,
-Nadia   defined = {},
-Nadia   waiting = {},
-Nadia   config = {},
-Nadia   defining = {},
-Nadia   hasOwn = Object.prototype.hasOwnProperty,
-Nadia   aps = [].slice,
-Nadia   jsSuffixRegExp = /\.js$/;
+        defined = {},
+        waiting = {},
+        config = {},
+        defining = {},
+        hasOwn = Object.prototype.hasOwnProperty,
+        aps = [].slice,
+        jsSuffixRegExp = /\.js$/;
 
     function hasProp(obj, prop) {
-Nadia   return hasOwn.call(obj, prop);
+        return hasOwn.call(obj, prop);
     }
 
     /**
-Nadia* Given a relative module name, like ./something, normalize it to
-Nadia* a real name that can be mapped to a path.
-Nadia* @param {String} name the relative name
-Nadia* @param {String} baseName a real name that the name arg is relative
-Nadia* to.
-Nadia* @returns {String} normalized name
-Nadia*/
+     * Given a relative module name, like ./something, normalize it to
+     * a real name that can be mapped to a path.
+     * @param {String} name the relative name
+     * @param {String} baseName a real name that the name arg is relative
+     * to.
+     * @returns {String} normalized name
+     */
     function normalize(name, baseName) {
-Nadia   var nameParts, nameSegment, mapValue, foundMap, lastIndex,
-NadiaNadia  foundI, foundStarMap, starI, i, j, part,
-NadiaNadia  baseParts = baseName && baseName.split("/"),
-NadiaNadia  map = config.map,
-NadiaNadia  starMap = (map && map['*']) || {};
+        var nameParts, nameSegment, mapValue, foundMap, lastIndex,
+            foundI, foundStarMap, starI, i, j, part,
+            baseParts = baseName && baseName.split("/"),
+            map = config.map,
+            starMap = (map && map['*']) || {};
 
-Nadia   //Adjust any relative paths.
-Nadia   if (name && name.charAt(0) === ".") {
-NadiaNadia  //If have a base name, try to normalize against it,
-NadiaNadia  //otherwise, assume it is a top-level require that will
-NadiaNadia  //be relative to baseUrl in the end.
-NadiaNadia  if (baseName) {
-NadiaNadiaNadia name = name.split('/');
-NadiaNadiaNadia lastIndex = name.length - 1;
+        //Adjust any relative paths.
+        if (name && name.charAt(0) === ".") {
+            //If have a base name, try to normalize against it,
+            //otherwise, assume it is a top-level require that will
+            //be relative to baseUrl in the end.
+            if (baseName) {
+                name = name.split('/');
+                lastIndex = name.length - 1;
 
-NadiaNadiaNadia // Node .js allowance:
-NadiaNadiaNadia if (config.nodeIdCompat && jsSuffixRegExp.test(name[lastIndex])) {
-NadiaNadiaNadiaNadianame[lastIndex] = name[lastIndex].replace(jsSuffixRegExp, '');
-NadiaNadiaNadia }
+                // Node .js allowance:
+                if (config.nodeIdCompat && jsSuffixRegExp.test(name[lastIndex])) {
+                    name[lastIndex] = name[lastIndex].replace(jsSuffixRegExp, '');
+                }
 
-NadiaNadiaNadia //Lop off the last part of baseParts, so that . matches the
-NadiaNadiaNadia //"directory" and not name of the baseName's module. For instance,
-NadiaNadiaNadia //baseName of "one/two/three", maps to "one/two/three.js", but we
-NadiaNadiaNadia //want the directory, "one/two" for this normalization.
-NadiaNadiaNadia name = baseParts.slice(0, baseParts.length - 1).concat(name);
+                //Lop off the last part of baseParts, so that . matches the
+                //"directory" and not name of the baseName's module. For instance,
+                //baseName of "one/two/three", maps to "one/two/three.js", but we
+                //want the directory, "one/two" for this normalization.
+                name = baseParts.slice(0, baseParts.length - 1).concat(name);
 
-NadiaNadiaNadia //start trimDots
-NadiaNadiaNadia for (i = 0; i < name.length; i += 1) {
-NadiaNadiaNadiaNadiapart = name[i];
-NadiaNadiaNadiaNadiaif (part === ".") {
-NadiaNadiaNadiaNadia    name.splice(i, 1);
-NadiaNadiaNadiaNadia    i -= 1;
-NadiaNadiaNadiaNadia} else if (part === "..") {
-NadiaNadiaNadiaNadia    if (i === 1 && (name[2] === '..' || name[0] === '..')) {
-NadiaNadiaNadiaNadiaNadia   //End of the line. Keep at least one non-dot
-NadiaNadiaNadiaNadiaNadia   //path segment at the front so it can be mapped
-NadiaNadiaNadiaNadiaNadia   //correctly to disk. Otherwise, there is likely
-NadiaNadiaNadiaNadiaNadia   //no path mapping for a path starting with '..'.
-NadiaNadiaNadiaNadiaNadia   //This can still fail, but catches the most reasonable
-NadiaNadiaNadiaNadiaNadia   //uses of ..
-NadiaNadiaNadiaNadiaNadia   break;
-NadiaNadiaNadiaNadia    } else if (i > 0) {
-NadiaNadiaNadiaNadiaNadia   name.splice(i - 1, 2);
-NadiaNadiaNadiaNadiaNadia   i -= 2;
-NadiaNadiaNadiaNadia    }
-NadiaNadiaNadiaNadia}
-NadiaNadiaNadia }
-NadiaNadiaNadia //end trimDots
+                //start trimDots
+                for (i = 0; i < name.length; i += 1) {
+                    part = name[i];
+                    if (part === ".") {
+                        name.splice(i, 1);
+                        i -= 1;
+                    } else if (part === "..") {
+                        if (i === 1 && (name[2] === '..' || name[0] === '..')) {
+                            //End of the line. Keep at least one non-dot
+                            //path segment at the front so it can be mapped
+                            //correctly to disk. Otherwise, there is likely
+                            //no path mapping for a path starting with '..'.
+                            //This can still fail, but catches the most reasonable
+                            //uses of ..
+                            break;
+                        } else if (i > 0) {
+                            name.splice(i - 1, 2);
+                            i -= 2;
+                        }
+                    }
+                }
+                //end trimDots
 
-NadiaNadiaNadia name = name.join("/");
-NadiaNadia  } else if (name.indexOf('./') === 0) {
-NadiaNadiaNadia // No baseName, so this is ID is resolved relative
-NadiaNadiaNadia // to baseUrl, pull off the leading dot.
-NadiaNadiaNadia name = name.substring(2);
-NadiaNadia  }
-Nadia   }
+                name = name.join("/");
+            } else if (name.indexOf('./') === 0) {
+                // No baseName, so this is ID is resolved relative
+                // to baseUrl, pull off the leading dot.
+                name = name.substring(2);
+            }
+        }
 
-Nadia   //Apply map config if available.
-Nadia   if ((baseParts || starMap) && map) {
-NadiaNadia  nameParts = name.split('/');
+        //Apply map config if available.
+        if ((baseParts || starMap) && map) {
+            nameParts = name.split('/');
 
-NadiaNadia  for (i = nameParts.length; i > 0; i -= 1) {
-NadiaNadiaNadia nameSegment = nameParts.slice(0, i).join("/");
+            for (i = nameParts.length; i > 0; i -= 1) {
+                nameSegment = nameParts.slice(0, i).join("/");
 
-NadiaNadiaNadia if (baseParts) {
-NadiaNadiaNadiaNadia//Find the longest baseName segment match in the config.
-NadiaNadiaNadiaNadia//So, do joins on the biggest to smallest lengths of baseParts.
-NadiaNadiaNadiaNadiafor (j = baseParts.length; j > 0; j -= 1) {
-NadiaNadiaNadiaNadia    mapValue = map[baseParts.slice(0, j).join('/')];
+                if (baseParts) {
+                    //Find the longest baseName segment match in the config.
+                    //So, do joins on the biggest to smallest lengths of baseParts.
+                    for (j = baseParts.length; j > 0; j -= 1) {
+                        mapValue = map[baseParts.slice(0, j).join('/')];
 
-NadiaNadiaNadiaNadia    //baseName segment has  config, find if it has one for
-NadiaNadiaNadiaNadia    //this name.
-NadiaNadiaNadiaNadia    if (mapValue) {
-NadiaNadiaNadiaNadiaNadia   mapValue = mapValue[nameSegment];
-NadiaNadiaNadiaNadiaNadia   if (mapValue) {
-NadiaNadiaNadiaNadiaNadiaNadia  //Match, update name to the new value.
-NadiaNadiaNadiaNadiaNadiaNadia  foundMap = mapValue;
-NadiaNadiaNadiaNadiaNadiaNadia  foundI = i;
-NadiaNadiaNadiaNadiaNadiaNadia  break;
-NadiaNadiaNadiaNadiaNadia   }
-NadiaNadiaNadiaNadia    }
-NadiaNadiaNadiaNadia}
-NadiaNadiaNadia }
+                        //baseName segment has  config, find if it has one for
+                        //this name.
+                        if (mapValue) {
+                            mapValue = mapValue[nameSegment];
+                            if (mapValue) {
+                                //Match, update name to the new value.
+                                foundMap = mapValue;
+                                foundI = i;
+                                break;
+                            }
+                        }
+                    }
+                }
 
-NadiaNadiaNadia if (foundMap) {
-NadiaNadiaNadiaNadiabreak;
-NadiaNadiaNadia }
+                if (foundMap) {
+                    break;
+                }
 
-NadiaNadiaNadia //Check for a star map match, but just hold on to it,
-NadiaNadiaNadia //if there is a shorter segment match later in a matching
-NadiaNadiaNadia //config, then favor over this star map.
-NadiaNadiaNadia if (!foundStarMap && starMap && starMap[nameSegment]) {
-NadiaNadiaNadiaNadiafoundStarMap = starMap[nameSegment];
-NadiaNadiaNadiaNadiastarI = i;
-NadiaNadiaNadia }
-NadiaNadia  }
+                //Check for a star map match, but just hold on to it,
+                //if there is a shorter segment match later in a matching
+                //config, then favor over this star map.
+                if (!foundStarMap && starMap && starMap[nameSegment]) {
+                    foundStarMap = starMap[nameSegment];
+                    starI = i;
+                }
+            }
 
-NadiaNadia  if (!foundMap && foundStarMap) {
-NadiaNadiaNadia foundMap = foundStarMap;
-NadiaNadiaNadia foundI = starI;
-NadiaNadia  }
+            if (!foundMap && foundStarMap) {
+                foundMap = foundStarMap;
+                foundI = starI;
+            }
 
-NadiaNadia  if (foundMap) {
-NadiaNadiaNadia nameParts.splice(0, foundI, foundMap);
-NadiaNadiaNadia name = nameParts.join('/');
-NadiaNadia  }
-Nadia   }
+            if (foundMap) {
+                nameParts.splice(0, foundI, foundMap);
+                name = nameParts.join('/');
+            }
+        }
 
-Nadia   return name;
+        return name;
     }
 
     function makeRequire(relName, forceSync) {
-Nadia   return function () {
-NadiaNadia  //A version of a require function that passes a moduleName
-NadiaNadia  //value for items that may need to
-NadiaNadia  //look up paths relative to the moduleName
-NadiaNadia  var args = aps.call(arguments, 0);
+        return function () {
+            //A version of a require function that passes a moduleName
+            //value for items that may need to
+            //look up paths relative to the moduleName
+            var args = aps.call(arguments, 0);
 
-NadiaNadia  //If first arg is not require('string'), and there is only
-NadiaNadia  //one arg, it is the array form without a callback. Insert
-NadiaNadia  //a null so that the following concat is correct.
-NadiaNadia  if (typeof args[0] !== 'string' && args.length === 1) {
-NadiaNadiaNadia args.push(null);
-NadiaNadia  }
-NadiaNadia  return req.apply(undef, args.concat([relName, forceSync]));
-Nadia   };
+            //If first arg is not require('string'), and there is only
+            //one arg, it is the array form without a callback. Insert
+            //a null so that the following concat is correct.
+            if (typeof args[0] !== 'string' && args.length === 1) {
+                args.push(null);
+            }
+            return req.apply(undef, args.concat([relName, forceSync]));
+        };
     }
 
     function makeNormalize(relName) {
-Nadia   return function (name) {
-NadiaNadia  return normalize(name, relName);
-Nadia   };
+        return function (name) {
+            return normalize(name, relName);
+        };
     }
 
     function makeLoad(depName) {
-Nadia   return function (value) {
-NadiaNadia  defined[depName] = value;
-Nadia   };
+        return function (value) {
+            defined[depName] = value;
+        };
     }
 
     function callDep(name) {
-Nadia   if (hasProp(waiting, name)) {
-NadiaNadia  var args = waiting[name];
-NadiaNadia  delete waiting[name];
-NadiaNadia  defining[name] = true;
-NadiaNadia  main.apply(undef, args);
-Nadia   }
+        if (hasProp(waiting, name)) {
+            var args = waiting[name];
+            delete waiting[name];
+            defining[name] = true;
+            main.apply(undef, args);
+        }
 
-Nadia   if (!hasProp(defined, name) && !hasProp(defining, name)) {
-NadiaNadia  throw new Error('No ' + name);
-Nadia   }
-Nadia   return defined[name];
+        if (!hasProp(defined, name) && !hasProp(defining, name)) {
+            throw new Error('No ' + name);
+        }
+        return defined[name];
     }
 
     //Turns a plugin!resource to [plugin, resource]
     //with the plugin being undefined if the name
     //did not have a plugin prefix.
     function splitPrefix(name) {
-Nadia   var prefix,
-NadiaNadia  index = name ? name.indexOf('!') : -1;
-Nadia   if (index > -1) {
-NadiaNadia  prefix = name.substring(0, index);
-NadiaNadia  name = name.substring(index + 1, name.length);
-Nadia   }
-Nadia   return [prefix, name];
+        var prefix,
+            index = name ? name.indexOf('!') : -1;
+        if (index > -1) {
+            prefix = name.substring(0, index);
+            name = name.substring(index + 1, name.length);
+        }
+        return [prefix, name];
     }
 
     /**
-Nadia* Makes a name map, normalizing the name, and using a plugin
-Nadia* for normalization if necessary. Grabs a ref to plugin
-Nadia* too, as an optimization.
-Nadia*/
+     * Makes a name map, normalizing the name, and using a plugin
+     * for normalization if necessary. Grabs a ref to plugin
+     * too, as an optimization.
+     */
     makeMap = function (name, relName) {
-Nadia   var plugin,
-NadiaNadia  parts = splitPrefix(name),
-NadiaNadia  prefix = parts[0];
+        var plugin,
+            parts = splitPrefix(name),
+            prefix = parts[0];
 
-Nadia   name = parts[1];
+        name = parts[1];
 
-Nadia   if (prefix) {
-NadiaNadia  prefix = normalize(prefix, relName);
-NadiaNadia  plugin = callDep(prefix);
-Nadia   }
+        if (prefix) {
+            prefix = normalize(prefix, relName);
+            plugin = callDep(prefix);
+        }
 
-Nadia   //Normalize according
-Nadia   if (prefix) {
-NadiaNadia  if (plugin && plugin.normalize) {
-NadiaNadiaNadia name = plugin.normalize(name, makeNormalize(relName));
-NadiaNadia  } else {
-NadiaNadiaNadia name = normalize(name, relName);
-NadiaNadia  }
-Nadia   } else {
-NadiaNadia  name = normalize(name, relName);
-NadiaNadia  parts = splitPrefix(name);
-NadiaNadia  prefix = parts[0];
-NadiaNadia  name = parts[1];
-NadiaNadia  if (prefix) {
-NadiaNadiaNadia plugin = callDep(prefix);
-NadiaNadia  }
-Nadia   }
+        //Normalize according
+        if (prefix) {
+            if (plugin && plugin.normalize) {
+                name = plugin.normalize(name, makeNormalize(relName));
+            } else {
+                name = normalize(name, relName);
+            }
+        } else {
+            name = normalize(name, relName);
+            parts = splitPrefix(name);
+            prefix = parts[0];
+            name = parts[1];
+            if (prefix) {
+                plugin = callDep(prefix);
+            }
+        }
 
-Nadia   //Using ridiculous property names for space reasons
-Nadia   return {
-NadiaNadia  f: prefix ? prefix + '!' + name : name, //fullName
-NadiaNadia  n: name,
-NadiaNadia  pr: prefix,
-NadiaNadia  p: plugin
-Nadia   };
+        //Using ridiculous property names for space reasons
+        return {
+            f: prefix ? prefix + '!' + name : name, //fullName
+            n: name,
+            pr: prefix,
+            p: plugin
+        };
     };
 
     function makeConfig(name) {
-Nadia   return function () {
-NadiaNadia  return (config && config.config && config.config[name]) || {};
-Nadia   };
+        return function () {
+            return (config && config.config && config.config[name]) || {};
+        };
     }
 
     handlers = {
-Nadia   require: function (name) {
-NadiaNadia  return makeRequire(name);
-Nadia   },
-Nadia   exports: function (name) {
-NadiaNadia  var e = defined[name];
-NadiaNadia  if (typeof e !== 'undefined') {
-NadiaNadiaNadia return e;
-NadiaNadia  } else {
-NadiaNadiaNadia return (defined[name] = {});
-NadiaNadia  }
-Nadia   },
-Nadia   module: function (name) {
-NadiaNadia  return {
-NadiaNadiaNadia id: name,
-NadiaNadiaNadia uri: '',
-NadiaNadiaNadia exports: defined[name],
-NadiaNadiaNadia config: makeConfig(name)
-NadiaNadia  };
-Nadia   }
+        require: function (name) {
+            return makeRequire(name);
+        },
+        exports: function (name) {
+            var e = defined[name];
+            if (typeof e !== 'undefined') {
+                return e;
+            } else {
+                return (defined[name] = {});
+            }
+        },
+        module: function (name) {
+            return {
+                id: name,
+                uri: '',
+                exports: defined[name],
+                config: makeConfig(name)
+            };
+        }
     };
 
     main = function (name, deps, callback, relName) {
-Nadia   var cjsModule, depName, ret, map, i,
-NadiaNadia  args = [],
-NadiaNadia  callbackType = typeof callback,
-NadiaNadia  usingExports;
+        var cjsModule, depName, ret, map, i,
+            args = [],
+            callbackType = typeof callback,
+            usingExports;
 
-Nadia   //Use name if no relName
-Nadia   relName = relName || name;
+        //Use name if no relName
+        relName = relName || name;
 
-Nadia   //Call the callback to define the module, if necessary.
-Nadia   if (callbackType === 'undefined' || callbackType === 'function') {
-NadiaNadia  //Pull out the defined dependencies and pass the ordered
-NadiaNadia  //values to the callback.
-NadiaNadia  //Default to [require, exports, module] if no deps
-NadiaNadia  deps = !deps.length && callback.length ? ['require', 'exports', 'module'] : deps;
-NadiaNadia  for (i = 0; i < deps.length; i += 1) {
-NadiaNadiaNadia map = makeMap(deps[i], relName);
-NadiaNadiaNadia depName = map.f;
+        //Call the callback to define the module, if necessary.
+        if (callbackType === 'undefined' || callbackType === 'function') {
+            //Pull out the defined dependencies and pass the ordered
+            //values to the callback.
+            //Default to [require, exports, module] if no deps
+            deps = !deps.length && callback.length ? ['require', 'exports', 'module'] : deps;
+            for (i = 0; i < deps.length; i += 1) {
+                map = makeMap(deps[i], relName);
+                depName = map.f;
 
-NadiaNadiaNadia //Fast path CommonJS standard dependencies.
-NadiaNadiaNadia if (depName === "require") {
-NadiaNadiaNadiaNadiaargs[i] = handlers.require(name);
-NadiaNadiaNadia } else if (depName === "exports") {
-NadiaNadiaNadiaNadia//CommonJS module spec 1.1
-NadiaNadiaNadiaNadiaargs[i] = handlers.exports(name);
-NadiaNadiaNadiaNadiausingExports = true;
-NadiaNadiaNadia } else if (depName === "module") {
-NadiaNadiaNadiaNadia//CommonJS module spec 1.1
-NadiaNadiaNadiaNadiacjsModule = args[i] = handlers.module(name);
-NadiaNadiaNadia } else if (hasProp(defined, depName) ||
-NadiaNadiaNadiaNadiaNadia  hasProp(waiting, depName) ||
-NadiaNadiaNadiaNadiaNadia  hasProp(defining, depName)) {
-NadiaNadiaNadiaNadiaargs[i] = callDep(depName);
-NadiaNadiaNadia } else if (map.p) {
-NadiaNadiaNadiaNadiamap.p.load(map.n, makeRequire(relName, true), makeLoad(depName), {});
-NadiaNadiaNadiaNadiaargs[i] = defined[depName];
-NadiaNadiaNadia } else {
-NadiaNadiaNadiaNadiathrow new Error(name + ' missing ' + depName);
-NadiaNadiaNadia }
-NadiaNadia  }
+                //Fast path CommonJS standard dependencies.
+                if (depName === "require") {
+                    args[i] = handlers.require(name);
+                } else if (depName === "exports") {
+                    //CommonJS module spec 1.1
+                    args[i] = handlers.exports(name);
+                    usingExports = true;
+                } else if (depName === "module") {
+                    //CommonJS module spec 1.1
+                    cjsModule = args[i] = handlers.module(name);
+                } else if (hasProp(defined, depName) ||
+                           hasProp(waiting, depName) ||
+                           hasProp(defining, depName)) {
+                    args[i] = callDep(depName);
+                } else if (map.p) {
+                    map.p.load(map.n, makeRequire(relName, true), makeLoad(depName), {});
+                    args[i] = defined[depName];
+                } else {
+                    throw new Error(name + ' missing ' + depName);
+                }
+            }
 
-NadiaNadia  ret = callback ? callback.apply(defined[name], args) : undefined;
+            ret = callback ? callback.apply(defined[name], args) : undefined;
 
-NadiaNadia  if (name) {
-NadiaNadiaNadia //If setting exports via "module" is in play,
-NadiaNadiaNadia //favor that over return value and exports. After that,
-NadiaNadiaNadia //favor a non-undefined return value over exports use.
-NadiaNadiaNadia if (cjsModule && cjsModule.exports !== undef &&
-NadiaNadiaNadiaNadia    cjsModule.exports !== defined[name]) {
-NadiaNadiaNadiaNadiadefined[name] = cjsModule.exports;
-NadiaNadiaNadia } else if (ret !== undef || !usingExports) {
-NadiaNadiaNadiaNadia//Use the return value from the function.
-NadiaNadiaNadiaNadiadefined[name] = ret;
-NadiaNadiaNadia }
-NadiaNadia  }
-Nadia   } else if (name) {
-NadiaNadia  //May just be an object definition for the module. Only
-NadiaNadia  //worry about defining if have a module name.
-NadiaNadia  defined[name] = callback;
-Nadia   }
+            if (name) {
+                //If setting exports via "module" is in play,
+                //favor that over return value and exports. After that,
+                //favor a non-undefined return value over exports use.
+                if (cjsModule && cjsModule.exports !== undef &&
+                        cjsModule.exports !== defined[name]) {
+                    defined[name] = cjsModule.exports;
+                } else if (ret !== undef || !usingExports) {
+                    //Use the return value from the function.
+                    defined[name] = ret;
+                }
+            }
+        } else if (name) {
+            //May just be an object definition for the module. Only
+            //worry about defining if have a module name.
+            defined[name] = callback;
+        }
     };
 
     requirejs = require = req = function (deps, callback, relName, forceSync, alt) {
-Nadia   if (typeof deps === "string") {
-NadiaNadia  if (handlers[deps]) {
-NadiaNadiaNadia //callback in this case is really relName
-NadiaNadiaNadia return handlers[deps](callback);
-NadiaNadia  }
-NadiaNadia  //Just return the module wanted. In this scenario, the
-NadiaNadia  //deps arg is the module name, and second arg (if passed)
-NadiaNadia  //is just the relName.
-NadiaNadia  //Normalize module name, if it contains . or ..
-NadiaNadia  return callDep(makeMap(deps, callback).f);
-Nadia   } else if (!deps.splice) {
-NadiaNadia  //deps is a config object, not an array.
-NadiaNadia  config = deps;
-NadiaNadia  if (config.deps) {
-NadiaNadiaNadia req(config.deps, config.callback);
-NadiaNadia  }
-NadiaNadia  if (!callback) {
-NadiaNadiaNadia return;
-NadiaNadia  }
+        if (typeof deps === "string") {
+            if (handlers[deps]) {
+                //callback in this case is really relName
+                return handlers[deps](callback);
+            }
+            //Just return the module wanted. In this scenario, the
+            //deps arg is the module name, and second arg (if passed)
+            //is just the relName.
+            //Normalize module name, if it contains . or ..
+            return callDep(makeMap(deps, callback).f);
+        } else if (!deps.splice) {
+            //deps is a config object, not an array.
+            config = deps;
+            if (config.deps) {
+                req(config.deps, config.callback);
+            }
+            if (!callback) {
+                return;
+            }
 
-NadiaNadia  if (callback.splice) {
-NadiaNadiaNadia //callback is an array, which means it is a dependency list.
-NadiaNadiaNadia //Adjust args if there are dependencies
-NadiaNadiaNadia deps = callback;
-NadiaNadiaNadia callback = relName;
-NadiaNadiaNadia relName = null;
-NadiaNadia  } else {
-NadiaNadiaNadia deps = undef;
-NadiaNadia  }
-Nadia   }
+            if (callback.splice) {
+                //callback is an array, which means it is a dependency list.
+                //Adjust args if there are dependencies
+                deps = callback;
+                callback = relName;
+                relName = null;
+            } else {
+                deps = undef;
+            }
+        }
 
-Nadia   //Support require(['a'])
-Nadia   callback = callback || function () {};
+        //Support require(['a'])
+        callback = callback || function () {};
 
-Nadia   //If relName is a function, it is an errback handler,
-Nadia   //so remove it.
-Nadia   if (typeof relName === 'function') {
-NadiaNadia  relName = forceSync;
-NadiaNadia  forceSync = alt;
-Nadia   }
+        //If relName is a function, it is an errback handler,
+        //so remove it.
+        if (typeof relName === 'function') {
+            relName = forceSync;
+            forceSync = alt;
+        }
 
-Nadia   //Simulate async callback;
-Nadia   if (forceSync) {
-NadiaNadia  main(undef, deps, callback, relName);
-Nadia   } else {
-NadiaNadia  //Using a non-zero value because of concern for what old browsers
-NadiaNadia  //do, and latest browsers "upgrade" to 4 if lower value is used:
-NadiaNadia  //http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#dom-windowtimers-settimeout:
-NadiaNadia  //If want a value immediately, use require('id') instead -- something
-NadiaNadia  //that works in almond on the global level, but not guaranteed and
-NadiaNadia  //unlikely to work in other AMD implementations.
-NadiaNadia  setTimeout(function () {
-NadiaNadiaNadia main(undef, deps, callback, relName);
-NadiaNadia  }, 4);
-Nadia   }
+        //Simulate async callback;
+        if (forceSync) {
+            main(undef, deps, callback, relName);
+        } else {
+            //Using a non-zero value because of concern for what old browsers
+            //do, and latest browsers "upgrade" to 4 if lower value is used:
+            //http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#dom-windowtimers-settimeout:
+            //If want a value immediately, use require('id') instead -- something
+            //that works in almond on the global level, but not guaranteed and
+            //unlikely to work in other AMD implementations.
+            setTimeout(function () {
+                main(undef, deps, callback, relName);
+            }, 4);
+        }
 
-Nadia   return req;
+        return req;
     };
 
     /**
-Nadia* Just drops the config on the floor, but returns req in case
-Nadia* the config return value is used.
-Nadia*/
+     * Just drops the config on the floor, but returns req in case
+     * the config return value is used.
+     */
     req.config = function (cfg) {
-Nadia   return req(cfg);
+        return req(cfg);
     };
 
     /**
-Nadia* Expose module registry for debugging and tooling
-Nadia*/
+     * Expose module registry for debugging and tooling
+     */
     requirejs._defined = defined;
 
     define = function (name, deps, callback) {
-Nadia   if (typeof name !== 'string') {
-NadiaNadia  throw new Error('See almond README: incorrect module build, no module name');
-Nadia   }
+        if (typeof name !== 'string') {
+            throw new Error('See almond README: incorrect module build, no module name');
+        }
 
-Nadia   //This module may not have dependencies
-Nadia   if (!deps.splice) {
-NadiaNadia  //deps is not an array, so probably means
-NadiaNadia  //an object literal or factory function for
-NadiaNadia  //the value. Adjust args.
-NadiaNadia  callback = deps;
-NadiaNadia  deps = [];
-Nadia   }
+        //This module may not have dependencies
+        if (!deps.splice) {
+            //deps is not an array, so probably means
+            //an object literal or factory function for
+            //the value. Adjust args.
+            callback = deps;
+            deps = [];
+        }
 
-Nadia   if (!hasProp(defined, name) && !hasProp(waiting, name)) {
-NadiaNadia  waiting[name] = [name, deps, callback];
-Nadia   }
+        if (!hasProp(defined, name) && !hasProp(waiting, name)) {
+            waiting[name] = [name, deps, callback];
+        }
     };
 
     define.amd = {
-Nadia   jQuery: true
+        jQuery: true
     };
 }());
 
@@ -471,9 +471,9 @@ S2.define('jquery',[],function () {
 
   if (_$ == null && console && console.error) {
     console.error(
-Nadia 'Select2: An instance of jQuery or a jQuery-compatible library was not ' +
-Nadia 'found. Make sure that you are including jQuery before Select2 on your ' +
-Nadia 'web page.'
+      'Select2: An instance of jQuery or a jQuery-compatible library was not ' +
+      'found. Make sure that you are including jQuery before Select2 on your ' +
+      'web page.'
     );
   }
 
@@ -489,13 +489,13 @@ S2.define('select2/utils',[
     var __hasProp = {}.hasOwnProperty;
 
     function BaseConstructor () {
-Nadia this.constructor = ChildClass;
+      this.constructor = ChildClass;
     }
 
     for (var key in SuperClass) {
-Nadia if (__hasProp.call(SuperClass, key)) {
-Nadia   ChildClass[key] = SuperClass[key];
-Nadia }
+      if (__hasProp.call(SuperClass, key)) {
+        ChildClass[key] = SuperClass[key];
+      }
     }
 
     BaseConstructor.prototype = SuperClass.prototype;
@@ -511,17 +511,17 @@ Nadia }
     var methods = [];
 
     for (var methodName in proto) {
-Nadia var m = proto[methodName];
+      var m = proto[methodName];
 
-Nadia if (typeof m !== 'function') {
-Nadia   continue;
-Nadia }
+      if (typeof m !== 'function') {
+        continue;
+      }
 
-Nadia if (methodName === 'constructor') {
-Nadia   continue;
-Nadia }
+      if (methodName === 'constructor') {
+        continue;
+      }
 
-Nadia methods.push(methodName);
+      methods.push(methodName);
     }
 
     return methods;
@@ -532,59 +532,59 @@ Nadia methods.push(methodName);
     var superMethods = getMethods(SuperClass);
 
     function DecoratedClass () {
-Nadia var unshift = Array.prototype.unshift;
+      var unshift = Array.prototype.unshift;
 
-Nadia var argCount = DecoratorClass.prototype.constructor.length;
+      var argCount = DecoratorClass.prototype.constructor.length;
 
-Nadia var calledConstructor = SuperClass.prototype.constructor;
+      var calledConstructor = SuperClass.prototype.constructor;
 
-Nadia if (argCount > 0) {
-Nadia   unshift.call(arguments, SuperClass.prototype.constructor);
+      if (argCount > 0) {
+        unshift.call(arguments, SuperClass.prototype.constructor);
 
-Nadia   calledConstructor = DecoratorClass.prototype.constructor;
-Nadia }
+        calledConstructor = DecoratorClass.prototype.constructor;
+      }
 
-Nadia calledConstructor.apply(this, arguments);
+      calledConstructor.apply(this, arguments);
     }
 
     DecoratorClass.displayName = SuperClass.displayName;
 
     function ctr () {
-Nadia this.constructor = DecoratedClass;
+      this.constructor = DecoratedClass;
     }
 
     DecoratedClass.prototype = new ctr();
 
     for (var m = 0; m < superMethods.length; m++) {
-Nadia   var superMethod = superMethods[m];
+        var superMethod = superMethods[m];
 
-Nadia   DecoratedClass.prototype[superMethod] =
-NadiaNadiaSuperClass.prototype[superMethod];
+        DecoratedClass.prototype[superMethod] =
+          SuperClass.prototype[superMethod];
     }
 
     var calledMethod = function (methodName) {
-Nadia // Stub out the original method if it's not decorating an actual method
-Nadia var originalMethod = function () {};
+      // Stub out the original method if it's not decorating an actual method
+      var originalMethod = function () {};
 
-Nadia if (methodName in DecoratedClass.prototype) {
-Nadia   originalMethod = DecoratedClass.prototype[methodName];
-Nadia }
+      if (methodName in DecoratedClass.prototype) {
+        originalMethod = DecoratedClass.prototype[methodName];
+      }
 
-Nadia var decoratedMethod = DecoratorClass.prototype[methodName];
+      var decoratedMethod = DecoratorClass.prototype[methodName];
 
-Nadia return function () {
-Nadia   var unshift = Array.prototype.unshift;
+      return function () {
+        var unshift = Array.prototype.unshift;
 
-Nadia   unshift.call(arguments, originalMethod);
+        unshift.call(arguments, originalMethod);
 
-Nadia   return decoratedMethod.apply(this, arguments);
-Nadia };
+        return decoratedMethod.apply(this, arguments);
+      };
     };
 
     for (var d = 0; d < decoratedMethods.length; d++) {
-Nadia var decoratedMethod = decoratedMethods[d];
+      var decoratedMethod = decoratedMethods[d];
 
-Nadia DecoratedClass.prototype[decoratedMethod] = calledMethod(decoratedMethod);
+      DecoratedClass.prototype[decoratedMethod] = calledMethod(decoratedMethod);
     }
 
     return DecoratedClass;
@@ -598,9 +598,9 @@ Nadia DecoratedClass.prototype[decoratedMethod] = calledMethod(decoratedMethod);
     this.listeners = this.listeners || {};
 
     if (event in this.listeners) {
-Nadia this.listeners[event].push(callback);
+      this.listeners[event].push(callback);
     } else {
-Nadia this.listeners[event] = [callback];
+      this.listeners[event] = [callback];
     }
   };
 
@@ -612,29 +612,29 @@ Nadia this.listeners[event] = [callback];
 
     // Params should always come in as an array
     if (params == null) {
-Nadia params = [];
+      params = [];
     }
 
     // If there are no arguments to the event, use a temporary object
     if (params.length === 0) {
-Nadia params.push({});
+      params.push({});
     }
 
     // Set the `_type` of the first object to the event
     params[0]._type = event;
 
     if (event in this.listeners) {
-Nadia this.invoke(this.listeners[event], slice.call(arguments, 1));
+      this.invoke(this.listeners[event], slice.call(arguments, 1));
     }
 
     if ('*' in this.listeners) {
-Nadia this.invoke(this.listeners['*'], arguments);
+      this.invoke(this.listeners['*'], arguments);
     }
   };
 
   Observable.prototype.invoke = function (listeners, params) {
     for (var i = 0, len = listeners.length; i < len; i++) {
-Nadia listeners[i].apply(this, params);
+      listeners[i].apply(this, params);
     }
   };
 
@@ -644,8 +644,8 @@ Nadia listeners[i].apply(this, params);
     var chars = '';
 
     for (var i = 0; i < length; i++) {
-Nadia var randomChar = Math.floor(Math.random() * 36);
-Nadia chars += randomChar.toString(36);
+      var randomChar = Math.floor(Math.random() * 36);
+      chars += randomChar.toString(36);
     }
 
     return chars;
@@ -653,39 +653,39 @@ Nadia chars += randomChar.toString(36);
 
   Utils.bind = function (func, context) {
     return function () {
-Nadia func.apply(context, arguments);
+      func.apply(context, arguments);
     };
   };
 
   Utils._convertData = function (data) {
     for (var originalKey in data) {
-Nadia var keys = originalKey.split('-');
+      var keys = originalKey.split('-');
 
-Nadia var dataLevel = data;
+      var dataLevel = data;
 
-Nadia if (keys.length === 1) {
-Nadia   continue;
-Nadia }
+      if (keys.length === 1) {
+        continue;
+      }
 
-Nadia for (var k = 0; k < keys.length; k++) {
-Nadia   var key = keys[k];
+      for (var k = 0; k < keys.length; k++) {
+        var key = keys[k];
 
-Nadia   // Lowercase the first letter
-Nadia   // By default, dash-separated becomes camelCase
-Nadia   key = key.substring(0, 1).toLowerCase() + key.substring(1);
+        // Lowercase the first letter
+        // By default, dash-separated becomes camelCase
+        key = key.substring(0, 1).toLowerCase() + key.substring(1);
 
-Nadia   if (!(key in dataLevel)) {
-NadiaNadiadataLevel[key] = {};
-Nadia   }
+        if (!(key in dataLevel)) {
+          dataLevel[key] = {};
+        }
 
-Nadia   if (k == keys.length - 1) {
-NadiaNadiadataLevel[key] = data[originalKey];
-Nadia   }
+        if (k == keys.length - 1) {
+          dataLevel[key] = data[originalKey];
+        }
 
-Nadia   dataLevel = dataLevel[key];
-Nadia }
+        dataLevel = dataLevel[key];
+      }
 
-Nadia delete data[originalKey];
+      delete data[originalKey];
     }
 
     return data;
@@ -704,36 +704,36 @@ Nadia delete data[originalKey];
 
     //Check both x and y declarations
     if (overflowX === overflowY &&
-Nadia   (overflowY === 'hidden' || overflowY === 'visible')) {
-Nadia return false;
+        (overflowY === 'hidden' || overflowY === 'visible')) {
+      return false;
     }
 
     if (overflowX === 'scroll' || overflowY === 'scroll') {
-Nadia return true;
+      return true;
     }
 
     return ($el.innerHeight() < el.scrollHeight ||
-Nadia $el.innerWidth() < el.scrollWidth);
+      $el.innerWidth() < el.scrollWidth);
   };
 
   Utils.escapeMarkup = function (markup) {
     var replaceMap = {
-Nadia '\\': '&#92;',
-Nadia '&': '&amp;',
-Nadia '<': '&lt;',
-Nadia '>': '&gt;',
-Nadia '"': '&quot;',
-Nadia '\'': '&#39;',
-Nadia '/': '&#47;'
+      '\\': '&#92;',
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&#39;',
+      '/': '&#47;'
     };
 
     // Do not try to escape the markup if it's not a string
     if (typeof markup !== 'string') {
-Nadia return markup;
+      return markup;
     }
 
     return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
-Nadia return replaceMap[match];
+      return replaceMap[match];
     });
   };
 
@@ -742,13 +742,13 @@ Nadia return replaceMap[match];
     // jQuery 1.7.x does not support $.fn.append() with an array
     // Fall back to a jQuery object collection using $.fn.add()
     if ($.fn.jquery.substr(0, 3) === '1.7') {
-Nadia var $jqNodes = $();
+      var $jqNodes = $();
 
-Nadia $.map($nodes, function (node) {
-Nadia   $jqNodes = $jqNodes.add(node);
-Nadia });
+      $.map($nodes, function (node) {
+        $jqNodes = $jqNodes.add(node);
+      });
 
-Nadia $nodes = $jqNodes;
+      $nodes = $jqNodes;
     }
 
     $element.append($nodes);
@@ -773,11 +773,11 @@ S2.define('select2/results',[
 
   Results.prototype.render = function () {
     var $results = $(
-Nadia '<ul class="select2-results__options" role="tree"></ul>'
+      '<ul class="select2-results__options" role="tree"></ul>'
     );
 
     if (this.options.get('multiple')) {
-Nadia $results.attr('aria-multiselectable', 'true');
+      $results.attr('aria-multiselectable', 'true');
     }
 
     this.$results = $results;
@@ -796,16 +796,16 @@ Nadia $results.attr('aria-multiselectable', 'true');
     this.hideLoading();
 
     var $message = $(
-Nadia '<li role="treeitem" aria-live="assertive"' +
-Nadia ' class="select2-results__option"></li>'
+      '<li role="treeitem" aria-live="assertive"' +
+      ' class="select2-results__option"></li>'
     );
 
     var message = this.options.get('translations').get(params.message);
 
     $message.append(
-Nadia escapeMarkup(
-Nadia   message(params.args)
-Nadia )
+      escapeMarkup(
+        message(params.args)
+      )
     );
 
     $message[0].className += ' select2-results__message';
@@ -823,23 +823,23 @@ Nadia )
     var $options = [];
 
     if (data.results == null || data.results.length === 0) {
-Nadia if (this.$results.children().length === 0) {
-Nadia   this.trigger('results:message', {
-NadiaNadiamessage: 'noResults'
-Nadia   });
-Nadia }
+      if (this.$results.children().length === 0) {
+        this.trigger('results:message', {
+          message: 'noResults'
+        });
+      }
 
-Nadia return;
+      return;
     }
 
     data.results = this.sort(data.results);
 
     for (var d = 0; d < data.results.length; d++) {
-Nadia var item = data.results[d];
+      var item = data.results[d];
 
-Nadia var $option = this.option(item);
+      var $option = this.option(item);
 
-Nadia $options.push($option);
+      $options.push($option);
     }
 
     this.$results.append($options);
@@ -858,18 +858,18 @@ Nadia $options.push($option);
 
   Results.prototype.highlightFirstItem = function () {
     var $options = this.$results
-Nadia .find('.select2-results__option[aria-selected]');
+      .find('.select2-results__option[aria-selected]');
 
     var $selected = $options.filter('[aria-selected=true]');
 
     // Check if there are any selected options
     if ($selected.length > 0) {
-Nadia // If there are selected options, highlight the first
-Nadia $selected.first().trigger('mouseenter');
+      // If there are selected options, highlight the first
+      $selected.first().trigger('mouseenter');
     } else {
-Nadia // If there are no selected options, highlight the first option
-Nadia // in the dropdown
-Nadia $options.first().trigger('mouseenter');
+      // If there are no selected options, highlight the first option
+      // in the dropdown
+      $options.first().trigger('mouseenter');
     }
 
     this.ensureHighlightVisible();
@@ -879,28 +879,28 @@ Nadia $options.first().trigger('mouseenter');
     var self = this;
 
     this.data.current(function (selected) {
-Nadia var selectedIds = $.map(selected, function (s) {
-Nadia   return s.id.toString();
-Nadia });
+      var selectedIds = $.map(selected, function (s) {
+        return s.id.toString();
+      });
 
-Nadia var $options = self.$results
-Nadia   .find('.select2-results__option[aria-selected]');
+      var $options = self.$results
+        .find('.select2-results__option[aria-selected]');
 
-Nadia $options.each(function () {
-Nadia   var $option = $(this);
+      $options.each(function () {
+        var $option = $(this);
 
-Nadia   var item = $.data(this, 'data');
+        var item = $.data(this, 'data');
 
-Nadia   // id needs to be converted to a string when comparing
-Nadia   var id = '' + item.id;
+        // id needs to be converted to a string when comparing
+        var id = '' + item.id;
 
-Nadia   if ((item.element != null && item.element.selected) ||
-NadiaNadia  (item.element == null && $.inArray(id, selectedIds) > -1)) {
-NadiaNadia$option.attr('aria-selected', 'true');
-Nadia   } else {
-NadiaNadia$option.attr('aria-selected', 'false');
-Nadia   }
-Nadia });
+        if ((item.element != null && item.element.selected) ||
+            (item.element == null && $.inArray(id, selectedIds) > -1)) {
+          $option.attr('aria-selected', 'true');
+        } else {
+          $option.attr('aria-selected', 'false');
+        }
+      });
 
     });
   };
@@ -911,9 +911,9 @@ Nadia });
     var loadingMore = this.options.get('translations').get('searching');
 
     var loading = {
-Nadia disabled: true,
-Nadia loading: true,
-Nadia text: loadingMore(params)
+      disabled: true,
+      loading: true,
+      text: loadingMore(params)
     };
     var $loading = this.option(loading);
     $loading.className += ' loading-results';
@@ -930,68 +930,68 @@ Nadia text: loadingMore(params)
     option.className = 'select2-results__option';
 
     var attrs = {
-Nadia 'role': 'treeitem',
-Nadia 'aria-selected': 'false'
+      'role': 'treeitem',
+      'aria-selected': 'false'
     };
 
     if (data.disabled) {
-Nadia delete attrs['aria-selected'];
-Nadia attrs['aria-disabled'] = 'true';
+      delete attrs['aria-selected'];
+      attrs['aria-disabled'] = 'true';
     }
 
     if (data.id == null) {
-Nadia delete attrs['aria-selected'];
+      delete attrs['aria-selected'];
     }
 
     if (data._resultId != null) {
-Nadia option.id = data._resultId;
+      option.id = data._resultId;
     }
 
     if (data.title) {
-Nadia option.title = data.title;
+      option.title = data.title;
     }
 
     if (data.children) {
-Nadia attrs.role = 'group';
-Nadia attrs['aria-label'] = data.text;
-Nadia delete attrs['aria-selected'];
+      attrs.role = 'group';
+      attrs['aria-label'] = data.text;
+      delete attrs['aria-selected'];
     }
 
     for (var attr in attrs) {
-Nadia var val = attrs[attr];
+      var val = attrs[attr];
 
-Nadia option.setAttribute(attr, val);
+      option.setAttribute(attr, val);
     }
 
     if (data.children) {
-Nadia var $option = $(option);
+      var $option = $(option);
 
-Nadia var label = document.createElement('strong');
-Nadia label.className = 'select2-results__group';
+      var label = document.createElement('strong');
+      label.className = 'select2-results__group';
 
-Nadia var $label = $(label);
-Nadia this.template(data, label);
+      var $label = $(label);
+      this.template(data, label);
 
-Nadia var $children = [];
+      var $children = [];
 
-Nadia for (var c = 0; c < data.children.length; c++) {
-Nadia   var child = data.children[c];
+      for (var c = 0; c < data.children.length; c++) {
+        var child = data.children[c];
 
-Nadia   var $child = this.option(child);
+        var $child = this.option(child);
 
-Nadia   $children.push($child);
-Nadia }
+        $children.push($child);
+      }
 
-Nadia var $childrenContainer = $('<ul></ul>', {
-Nadia   'class': 'select2-results__options select2-results__options--nested'
-Nadia });
+      var $childrenContainer = $('<ul></ul>', {
+        'class': 'select2-results__options select2-results__options--nested'
+      });
 
-Nadia $childrenContainer.append($children);
+      $childrenContainer.append($children);
 
-Nadia $option.append(label);
-Nadia $option.append($childrenContainer);
+      $option.append(label);
+      $option.append($childrenContainer);
     } else {
-Nadia this.template(data, option);
+      this.template(data, option);
     }
 
     $.data(option, 'data', data);
@@ -1007,223 +1007,223 @@ Nadia this.template(data, option);
     this.$results.attr('id', id);
 
     container.on('results:all', function (params) {
-Nadia self.clear();
-Nadia self.append(params.data);
+      self.clear();
+      self.append(params.data);
 
-Nadia if (container.isOpen()) {
-Nadia   self.setClasses();
-Nadia   self.highlightFirstItem();
-Nadia }
+      if (container.isOpen()) {
+        self.setClasses();
+        self.highlightFirstItem();
+      }
     });
 
     container.on('results:append', function (params) {
-Nadia self.append(params.data);
+      self.append(params.data);
 
-Nadia if (container.isOpen()) {
-Nadia   self.setClasses();
-Nadia }
+      if (container.isOpen()) {
+        self.setClasses();
+      }
     });
 
     container.on('query', function (params) {
-Nadia self.hideMessages();
-Nadia self.showLoading(params);
+      self.hideMessages();
+      self.showLoading(params);
     });
 
     container.on('select', function () {
-Nadia if (!container.isOpen()) {
-Nadia   return;
-Nadia }
+      if (!container.isOpen()) {
+        return;
+      }
 
-Nadia self.setClasses();
-Nadia self.highlightFirstItem();
+      self.setClasses();
+      self.highlightFirstItem();
     });
 
     container.on('unselect', function () {
-Nadia if (!container.isOpen()) {
-Nadia   return;
-Nadia }
+      if (!container.isOpen()) {
+        return;
+      }
 
-Nadia self.setClasses();
-Nadia self.highlightFirstItem();
+      self.setClasses();
+      self.highlightFirstItem();
     });
 
     container.on('open', function () {
-Nadia // When the dropdown is open, aria-expended="true"
-Nadia self.$results.attr('aria-expanded', 'true');
-Nadia self.$results.attr('aria-hidden', 'false');
+      // When the dropdown is open, aria-expended="true"
+      self.$results.attr('aria-expanded', 'true');
+      self.$results.attr('aria-hidden', 'false');
 
-Nadia self.setClasses();
-Nadia self.ensureHighlightVisible();
+      self.setClasses();
+      self.ensureHighlightVisible();
     });
 
     container.on('close', function () {
-Nadia // When the dropdown is closed, aria-expended="false"
-Nadia self.$results.attr('aria-expanded', 'false');
-Nadia self.$results.attr('aria-hidden', 'true');
-Nadia self.$results.removeAttr('aria-activedescendant');
+      // When the dropdown is closed, aria-expended="false"
+      self.$results.attr('aria-expanded', 'false');
+      self.$results.attr('aria-hidden', 'true');
+      self.$results.removeAttr('aria-activedescendant');
     });
 
     container.on('results:toggle', function () {
-Nadia var $highlighted = self.getHighlightedResults();
+      var $highlighted = self.getHighlightedResults();
 
-Nadia if ($highlighted.length === 0) {
-Nadia   return;
-Nadia }
+      if ($highlighted.length === 0) {
+        return;
+      }
 
-Nadia $highlighted.trigger('mouseup');
+      $highlighted.trigger('mouseup');
     });
 
     container.on('results:select', function () {
-Nadia var $highlighted = self.getHighlightedResults();
+      var $highlighted = self.getHighlightedResults();
 
-Nadia if ($highlighted.length === 0) {
-Nadia   return;
-Nadia }
+      if ($highlighted.length === 0) {
+        return;
+      }
 
-Nadia var data = $highlighted.data('data');
+      var data = $highlighted.data('data');
 
-Nadia if ($highlighted.attr('aria-selected') == 'true') {
-Nadia   self.trigger('close', {});
-Nadia } else {
-Nadia   self.trigger('select', {
-NadiaNadiadata: data
-Nadia   });
-Nadia }
+      if ($highlighted.attr('aria-selected') == 'true') {
+        self.trigger('close', {});
+      } else {
+        self.trigger('select', {
+          data: data
+        });
+      }
     });
 
     container.on('results:previous', function () {
-Nadia var $highlighted = self.getHighlightedResults();
+      var $highlighted = self.getHighlightedResults();
 
-Nadia var $options = self.$results.find('[aria-selected]');
+      var $options = self.$results.find('[aria-selected]');
 
-Nadia var currentIndex = $options.index($highlighted);
+      var currentIndex = $options.index($highlighted);
 
-Nadia // If we are already at te top, don't move further
-Nadia if (currentIndex === 0) {
-Nadia   return;
-Nadia }
+      // If we are already at te top, don't move further
+      if (currentIndex === 0) {
+        return;
+      }
 
-Nadia var nextIndex = currentIndex - 1;
+      var nextIndex = currentIndex - 1;
 
-Nadia // If none are highlighted, highlight the first
-Nadia if ($highlighted.length === 0) {
-Nadia   nextIndex = 0;
-Nadia }
+      // If none are highlighted, highlight the first
+      if ($highlighted.length === 0) {
+        nextIndex = 0;
+      }
 
-Nadia var $next = $options.eq(nextIndex);
+      var $next = $options.eq(nextIndex);
 
-Nadia $next.trigger('mouseenter');
+      $next.trigger('mouseenter');
 
-Nadia var currentOffset = self.$results.offset().top;
-Nadia var nextTop = $next.offset().top;
-Nadia var nextOffset = self.$results.scrollTop() + (nextTop - currentOffset);
+      var currentOffset = self.$results.offset().top;
+      var nextTop = $next.offset().top;
+      var nextOffset = self.$results.scrollTop() + (nextTop - currentOffset);
 
-Nadia if (nextIndex === 0) {
-Nadia   self.$results.scrollTop(0);
-Nadia } else if (nextTop - currentOffset < 0) {
-Nadia   self.$results.scrollTop(nextOffset);
-Nadia }
+      if (nextIndex === 0) {
+        self.$results.scrollTop(0);
+      } else if (nextTop - currentOffset < 0) {
+        self.$results.scrollTop(nextOffset);
+      }
     });
 
     container.on('results:next', function () {
-Nadia var $highlighted = self.getHighlightedResults();
+      var $highlighted = self.getHighlightedResults();
 
-Nadia var $options = self.$results.find('[aria-selected]');
+      var $options = self.$results.find('[aria-selected]');
 
-Nadia var currentIndex = $options.index($highlighted);
+      var currentIndex = $options.index($highlighted);
 
-Nadia var nextIndex = currentIndex + 1;
+      var nextIndex = currentIndex + 1;
 
-Nadia // If we are at the last option, stay there
-Nadia if (nextIndex >= $options.length) {
-Nadia   return;
-Nadia }
+      // If we are at the last option, stay there
+      if (nextIndex >= $options.length) {
+        return;
+      }
 
-Nadia var $next = $options.eq(nextIndex);
+      var $next = $options.eq(nextIndex);
 
-Nadia $next.trigger('mouseenter');
+      $next.trigger('mouseenter');
 
-Nadia var currentOffset = self.$results.offset().top +
-Nadia   self.$results.outerHeight(false);
-Nadia var nextBottom = $next.offset().top + $next.outerHeight(false);
-Nadia var nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
+      var currentOffset = self.$results.offset().top +
+        self.$results.outerHeight(false);
+      var nextBottom = $next.offset().top + $next.outerHeight(false);
+      var nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
 
-Nadia if (nextIndex === 0) {
-Nadia   self.$results.scrollTop(0);
-Nadia } else if (nextBottom > currentOffset) {
-Nadia   self.$results.scrollTop(nextOffset);
-Nadia }
+      if (nextIndex === 0) {
+        self.$results.scrollTop(0);
+      } else if (nextBottom > currentOffset) {
+        self.$results.scrollTop(nextOffset);
+      }
     });
 
     container.on('results:focus', function (params) {
-Nadia params.element.addClass('select2-results__option--highlighted');
+      params.element.addClass('select2-results__option--highlighted');
     });
 
     container.on('results:message', function (params) {
-Nadia self.displayMessage(params);
+      self.displayMessage(params);
     });
 
     if ($.fn.mousewheel) {
-Nadia this.$results.on('mousewheel', function (e) {
-Nadia   var top = self.$results.scrollTop();
+      this.$results.on('mousewheel', function (e) {
+        var top = self.$results.scrollTop();
 
-Nadia   var bottom = self.$results.get(0).scrollHeight - top + e.deltaY;
+        var bottom = self.$results.get(0).scrollHeight - top + e.deltaY;
 
-Nadia   var isAtTop = e.deltaY > 0 && top - e.deltaY <= 0;
-Nadia   var isAtBottom = e.deltaY < 0 && bottom <= self.$results.height();
+        var isAtTop = e.deltaY > 0 && top - e.deltaY <= 0;
+        var isAtBottom = e.deltaY < 0 && bottom <= self.$results.height();
 
-Nadia   if (isAtTop) {
-NadiaNadiaself.$results.scrollTop(0);
+        if (isAtTop) {
+          self.$results.scrollTop(0);
 
-NadiaNadiae.preventDefault();
-NadiaNadiae.stopPropagation();
-Nadia   } else if (isAtBottom) {
-NadiaNadiaself.$results.scrollTop(
-NadiaNadia  self.$results.get(0).scrollHeight - self.$results.height()
-NadiaNadia);
+          e.preventDefault();
+          e.stopPropagation();
+        } else if (isAtBottom) {
+          self.$results.scrollTop(
+            self.$results.get(0).scrollHeight - self.$results.height()
+          );
 
-NadiaNadiae.preventDefault();
-NadiaNadiae.stopPropagation();
-Nadia   }
-Nadia });
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
     }
 
     this.$results.on('mouseup', '.select2-results__option[aria-selected]',
-Nadia function (evt) {
-Nadia var $this = $(this);
+      function (evt) {
+      var $this = $(this);
 
-Nadia var data = $this.data('data');
+      var data = $this.data('data');
 
-Nadia if ($this.attr('aria-selected') === 'true') {
-Nadia   if (self.options.get('multiple')) {
-NadiaNadiaself.trigger('unselect', {
-NadiaNadia  originalEvent: evt,
-NadiaNadia  data: data
-NadiaNadia});
-Nadia   } else {
-NadiaNadiaself.trigger('close', {});
-Nadia   }
+      if ($this.attr('aria-selected') === 'true') {
+        if (self.options.get('multiple')) {
+          self.trigger('unselect', {
+            originalEvent: evt,
+            data: data
+          });
+        } else {
+          self.trigger('close', {});
+        }
 
-Nadia   return;
-Nadia }
+        return;
+      }
 
-Nadia self.trigger('select', {
-Nadia   originalEvent: evt,
-Nadia   data: data
-Nadia });
+      self.trigger('select', {
+        originalEvent: evt,
+        data: data
+      });
     });
 
     this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
-Nadia function (evt) {
-Nadia var data = $(this).data('data');
+      function (evt) {
+      var data = $(this).data('data');
 
-Nadia self.getHighlightedResults()
-NadiaNadia.removeClass('select2-results__option--highlighted');
+      self.getHighlightedResults()
+          .removeClass('select2-results__option--highlighted');
 
-Nadia self.trigger('results:focus', {
-Nadia   data: data,
-Nadia   element: $(this)
-Nadia });
+      self.trigger('results:focus', {
+        data: data,
+        element: $(this)
+      });
     });
   };
 
@@ -1242,7 +1242,7 @@ Nadia });
     var $highlighted = this.getHighlightedResults();
 
     if ($highlighted.length === 0) {
-Nadia return;
+      return;
     }
 
     var $options = this.$results.find('[aria-selected]');
@@ -1257,9 +1257,9 @@ Nadia return;
     nextOffset -= $highlighted.outerHeight(false) * 2;
 
     if (currentIndex <= 2) {
-Nadia this.$results.scrollTop(0);
+      this.$results.scrollTop(0);
     } else if (offsetDelta > this.$results.outerHeight() || offsetDelta < 0) {
-Nadia this.$results.scrollTop(nextOffset);
+      this.$results.scrollTop(nextOffset);
     }
   };
 
@@ -1270,11 +1270,11 @@ Nadia this.$results.scrollTop(nextOffset);
     var content = template(result, container);
 
     if (content == null) {
-Nadia container.style.display = 'none';
+      container.style.display = 'none';
     } else if (typeof content === 'string') {
-Nadia container.innerHTML = escapeMarkup(content);
+      container.innerHTML = escapeMarkup(content);
     } else {
-Nadia $(container).append(content);
+      $(container).append(content);
     }
   };
 
@@ -1323,17 +1323,17 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-Nadia '<span class="select2-selection" role="combobox" ' +
-Nadia ' aria-haspopup="true" aria-expanded="false">' +
-Nadia '</span>'
+      '<span class="select2-selection" role="combobox" ' +
+      ' aria-haspopup="true" aria-expanded="false">' +
+      '</span>'
     );
 
     this._tabindex = 0;
 
     if (this.$element.data('old-tabindex') != null) {
-Nadia this._tabindex = this.$element.data('old-tabindex');
+      this._tabindex = this.$element.data('old-tabindex');
     } else if (this.$element.attr('tabindex') != null) {
-Nadia this._tabindex = this.$element.attr('tabindex');
+      this._tabindex = this.$element.attr('tabindex');
     }
 
     $selection.attr('title', this.$element.attr('title'));
@@ -1353,54 +1353,54 @@ Nadia this._tabindex = this.$element.attr('tabindex');
     this.container = container;
 
     this.$selection.on('focus', function (evt) {
-Nadia self.trigger('focus', evt);
+      self.trigger('focus', evt);
     });
 
     this.$selection.on('blur', function (evt) {
-Nadia self._handleBlur(evt);
+      self._handleBlur(evt);
     });
 
     this.$selection.on('keydown', function (evt) {
-Nadia self.trigger('keypress', evt);
+      self.trigger('keypress', evt);
 
-Nadia if (evt.which === KEYS.SPACE) {
-Nadia   evt.preventDefault();
-Nadia }
+      if (evt.which === KEYS.SPACE) {
+        evt.preventDefault();
+      }
     });
 
     container.on('results:focus', function (params) {
-Nadia self.$selection.attr('aria-activedescendant', params.data._resultId);
+      self.$selection.attr('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
-Nadia self.update(params.data);
+      self.update(params.data);
     });
 
     container.on('open', function () {
-Nadia // When the dropdown is open, aria-expanded="true"
-Nadia self.$selection.attr('aria-expanded', 'true');
-Nadia self.$selection.attr('aria-owns', resultsId);
+      // When the dropdown is open, aria-expanded="true"
+      self.$selection.attr('aria-expanded', 'true');
+      self.$selection.attr('aria-owns', resultsId);
 
-Nadia self._attachCloseHandler(container);
+      self._attachCloseHandler(container);
     });
 
     container.on('close', function () {
-Nadia // When the dropdown is closed, aria-expanded="false"
-Nadia self.$selection.attr('aria-expanded', 'false');
-Nadia self.$selection.removeAttr('aria-activedescendant');
-Nadia self.$selection.removeAttr('aria-owns');
+      // When the dropdown is closed, aria-expanded="false"
+      self.$selection.attr('aria-expanded', 'false');
+      self.$selection.removeAttr('aria-activedescendant');
+      self.$selection.removeAttr('aria-owns');
 
-Nadia self.$selection.focus();
+      self.$selection.focus();
 
-Nadia self._detachCloseHandler(container);
+      self._detachCloseHandler(container);
     });
 
     container.on('enable', function () {
-Nadia self.$selection.attr('tabindex', self._tabindex);
+      self.$selection.attr('tabindex', self._tabindex);
     });
 
     container.on('disable', function () {
-Nadia self.$selection.attr('tabindex', '-1');
+      self.$selection.attr('tabindex', '-1');
     });
   };
 
@@ -1410,15 +1410,15 @@ Nadia self.$selection.attr('tabindex', '-1');
     // This needs to be delayed as the active element is the body when the tab
     // key is pressed, possibly along with others.
     window.setTimeout(function () {
-Nadia // Don't trigger `blur` if the focus is still in the selection
-Nadia if (
-Nadia   (document.activeElement == self.$selection[0]) ||
-Nadia   ($.contains(self.$selection[0], document.activeElement))
-Nadia ) {
-Nadia   return;
-Nadia }
+      // Don't trigger `blur` if the focus is still in the selection
+      if (
+        (document.activeElement == self.$selection[0]) ||
+        ($.contains(self.$selection[0], document.activeElement))
+      ) {
+        return;
+      }
 
-Nadia self.trigger('blur', evt);
+      self.trigger('blur', evt);
     }, 1);
   };
 
@@ -1426,23 +1426,23 @@ Nadia self.trigger('blur', evt);
     var self = this;
 
     $(document.body).on('mousedown.select2.' + container.id, function (e) {
-Nadia var $target = $(e.target);
+      var $target = $(e.target);
 
-Nadia var $select = $target.closest('.select2');
+      var $select = $target.closest('.select2');
 
-Nadia var $all = $('.select2.select2-container--open');
+      var $all = $('.select2.select2-container--open');
 
-Nadia $all.each(function () {
-Nadia   var $this = $(this);
+      $all.each(function () {
+        var $this = $(this);
 
-Nadia   if (this == $select[0]) {
-NadiaNadiareturn;
-Nadia   }
+        if (this == $select[0]) {
+          return;
+        }
 
-Nadia   var $element = $this.data('element');
+        var $element = $this.data('element');
 
-Nadia   $element.select2('close');
-Nadia });
+        $element.select2('close');
+      });
     });
   };
 
@@ -1484,10 +1484,10 @@ S2.define('select2/selection/single',[
     $selection.addClass('select2-selection--single');
 
     $selection.html(
-Nadia '<span class="select2-selection__rendered"></span>' +
-Nadia '<span class="select2-selection__arrow" role="presentation">' +
-Nadia   '<b role="presentation"></b>' +
-Nadia '</span>'
+      '<span class="select2-selection__rendered"></span>' +
+      '<span class="select2-selection__arrow" role="presentation">' +
+        '<b role="presentation"></b>' +
+      '</span>'
     );
 
     return $selection;
@@ -1504,32 +1504,32 @@ Nadia '</span>'
     this.$selection.attr('aria-labelledby', id);
 
     this.$selection.on('mousedown', function (evt) {
-Nadia // Only respond to left clicks
-Nadia if (evt.which !== 1) {
-Nadia   return;
-Nadia }
+      // Only respond to left clicks
+      if (evt.which !== 1) {
+        return;
+      }
 
-Nadia self.trigger('toggle', {
-Nadia   originalEvent: evt
-Nadia });
+      self.trigger('toggle', {
+        originalEvent: evt
+      });
     });
 
     this.$selection.on('focus', function (evt) {
-Nadia // User focuses on the container
+      // User focuses on the container
     });
 
     this.$selection.on('blur', function (evt) {
-Nadia // User exits the container
+      // User exits the container
     });
 
     container.on('focus', function (evt) {
-Nadia if (!container.isOpen()) {
-Nadia   self.$selection.focus();
-Nadia }
+      if (!container.isOpen()) {
+        self.$selection.focus();
+      }
     });
 
     container.on('selection:update', function (params) {
-Nadia self.update(params.data);
+      self.update(params.data);
     });
   };
 
@@ -1550,8 +1550,8 @@ Nadia self.update(params.data);
 
   SingleSelection.prototype.update = function (data) {
     if (data.length === 0) {
-Nadia this.clear();
-Nadia return;
+      this.clear();
+      return;
     }
 
     var selection = data[0];
@@ -1583,7 +1583,7 @@ S2.define('select2/selection/multiple',[
     $selection.addClass('select2-selection--multiple');
 
     $selection.html(
-Nadia '<ul class="select2-selection__rendered"></ul>'
+      '<ul class="select2-selection__rendered"></ul>'
     );
 
     return $selection;
@@ -1595,30 +1595,30 @@ Nadia '<ul class="select2-selection__rendered"></ul>'
     MultipleSelection.__super__.bind.apply(this, arguments);
 
     this.$selection.on('click', function (evt) {
-Nadia self.trigger('toggle', {
-Nadia   originalEvent: evt
-Nadia });
+      self.trigger('toggle', {
+        originalEvent: evt
+      });
     });
 
     this.$selection.on(
-Nadia 'click',
-Nadia '.select2-selection__choice__remove',
-Nadia function (evt) {
-Nadia   // Ignore the event if it is disabled
-Nadia   if (self.options.get('disabled')) {
-NadiaNadiareturn;
-Nadia   }
+      'click',
+      '.select2-selection__choice__remove',
+      function (evt) {
+        // Ignore the event if it is disabled
+        if (self.options.get('disabled')) {
+          return;
+        }
 
-Nadia   var $remove = $(this);
-Nadia   var $selection = $remove.parent();
+        var $remove = $(this);
+        var $selection = $remove.parent();
 
-Nadia   var data = $selection.data('data');
+        var data = $selection.data('data');
 
-Nadia   self.trigger('unselect', {
-NadiaNadiaoriginalEvent: evt,
-NadiaNadiadata: data
-Nadia   });
-Nadia }
+        self.trigger('unselect', {
+          originalEvent: evt,
+          data: data
+        });
+      }
     );
   };
 
@@ -1635,11 +1635,11 @@ Nadia }
 
   MultipleSelection.prototype.selectionContainer = function () {
     var $container = $(
-Nadia '<li class="select2-selection__choice">' +
-Nadia   '<span class="select2-selection__choice__remove" role="presentation">' +
-NadiaNadia'&times;' +
-Nadia   '</span>' +
-Nadia '</li>'
+      '<li class="select2-selection__choice">' +
+        '<span class="select2-selection__choice__remove" role="presentation">' +
+          '&times;' +
+        '</span>' +
+      '</li>'
     );
 
     return $container;
@@ -1649,23 +1649,23 @@ Nadia '</li>'
     this.clear();
 
     if (data.length === 0) {
-Nadia return;
+      return;
     }
 
     var $selections = [];
 
     for (var d = 0; d < data.length; d++) {
-Nadia var selection = data[d];
+      var selection = data[d];
 
-Nadia var $selection = this.selectionContainer();
-Nadia var formatted = this.display(selection, $selection);
+      var $selection = this.selectionContainer();
+      var formatted = this.display(selection, $selection);
 
-Nadia $selection.append(formatted);
-Nadia $selection.prop('title', selection.title || selection.text);
+      $selection.append(formatted);
+      $selection.prop('title', selection.title || selection.text);
 
-Nadia $selection.data('data', selection);
+      $selection.data('data', selection);
 
-Nadia $selections.push($selection);
+      $selections.push($selection);
     }
 
     var $rendered = this.$selection.find('.select2-selection__rendered');
@@ -1687,10 +1687,10 @@ S2.define('select2/selection/placeholder',[
 
   Placeholder.prototype.normalizePlaceholder = function (_, placeholder) {
     if (typeof placeholder === 'string') {
-Nadia placeholder = {
-Nadia   id: '',
-Nadia   text: placeholder
-Nadia };
+      placeholder = {
+        id: '',
+        text: placeholder
+      };
     }
 
     return placeholder;
@@ -1701,19 +1701,19 @@ Nadia };
 
     $placeholder.html(this.display(placeholder));
     $placeholder.addClass('select2-selection__placeholder')
-NadiaNadiaNadia .removeClass('select2-selection__choice');
+                .removeClass('select2-selection__choice');
 
     return $placeholder;
   };
 
   Placeholder.prototype.update = function (decorated, data) {
     var singlePlaceholder = (
-Nadia data.length == 1 && data[0].id != this.placeholder.id
+      data.length == 1 && data[0].id != this.placeholder.id
     );
     var multipleSelections = data.length > 1;
 
     if (multipleSelections || singlePlaceholder) {
-Nadia return decorated.call(this, data);
+      return decorated.call(this, data);
     }
 
     this.clear();
@@ -1738,35 +1738,35 @@ S2.define('select2/selection/allowClear',[
     decorated.call(this, container, $container);
 
     if (this.placeholder == null) {
-Nadia if (this.options.get('debug') && window.console && console.error) {
-Nadia   console.error(
-NadiaNadia'Select2: The `allowClear` option should be used in combination ' +
-NadiaNadia'with the `placeholder` option.'
-Nadia   );
-Nadia }
+      if (this.options.get('debug') && window.console && console.error) {
+        console.error(
+          'Select2: The `allowClear` option should be used in combination ' +
+          'with the `placeholder` option.'
+        );
+      }
     }
 
     this.$selection.on('mousedown', '.select2-selection__clear',
-Nadia function (evt) {
-Nadia   self._handleClear(evt);
+      function (evt) {
+        self._handleClear(evt);
     });
 
     container.on('keypress', function (evt) {
-Nadia self._handleKeyboardClear(evt, container);
+      self._handleKeyboardClear(evt, container);
     });
   };
 
   AllowClear.prototype._handleClear = function (_, evt) {
     // Ignore the event if it is disabled
     if (this.options.get('disabled')) {
-Nadia return;
+      return;
     }
 
     var $clear = this.$selection.find('.select2-selection__clear');
 
     // Ignore the event if nothing has been selected
     if ($clear.length === 0) {
-Nadia return;
+      return;
     }
 
     evt.stopPropagation();
@@ -1774,18 +1774,18 @@ Nadia return;
     var data = $clear.data('data');
 
     for (var d = 0; d < data.length; d++) {
-Nadia var unselectData = {
-Nadia   data: data[d]
-Nadia };
+      var unselectData = {
+        data: data[d]
+      };
 
-Nadia // Trigger the `unselect` event, so people can prevent it from being
-Nadia // cleared.
-Nadia this.trigger('unselect', unselectData);
+      // Trigger the `unselect` event, so people can prevent it from being
+      // cleared.
+      this.trigger('unselect', unselectData);
 
-Nadia // If the event was prevented, don't clear it out.
-Nadia if (unselectData.prevented) {
-Nadia   return;
-Nadia }
+      // If the event was prevented, don't clear it out.
+      if (unselectData.prevented) {
+        return;
+      }
     }
 
     this.$element.val(this.placeholder.id).trigger('change');
@@ -1795,11 +1795,11 @@ Nadia }
 
   AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
     if (container.isOpen()) {
-Nadia return;
+      return;
     }
 
     if (evt.which == KEYS.DELETE || evt.which == KEYS.BACKSPACE) {
-Nadia this._handleClear(evt);
+      this._handleClear(evt);
     }
   };
 
@@ -1807,14 +1807,14 @@ Nadia this._handleClear(evt);
     decorated.call(this, data);
 
     if (this.$selection.find('.select2-selection__placeholder').length > 0 ||
-Nadia   data.length === 0) {
-Nadia return;
+        data.length === 0) {
+      return;
     }
 
     var $remove = $(
-Nadia '<span class="select2-selection__clear">' +
-Nadia   '&times;' +
-Nadia '</span>'
+      '<span class="select2-selection__clear">' +
+        '&times;' +
+      '</span>'
     );
     $remove.data('data', data);
 
@@ -1835,11 +1835,11 @@ S2.define('select2/selection/search',[
 
   Search.prototype.render = function (decorated) {
     var $search = $(
-Nadia '<li class="select2-search select2-search--inline">' +
-Nadia   '<input class="select2-search__field" type="search" tabindex="-1"' +
-Nadia   ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
-Nadia   ' spellcheck="false" role="textbox" aria-autocomplete="list" />' +
-Nadia '</li>'
+      '<li class="select2-search select2-search--inline">' +
+        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
+        ' spellcheck="false" role="textbox" aria-autocomplete="list" />' +
+      '</li>'
     );
 
     this.$searchContainer = $search;
@@ -1858,62 +1858,62 @@ Nadia '</li>'
     decorated.call(this, container, $container);
 
     container.on('open', function () {
-Nadia self.$search.trigger('focus');
+      self.$search.trigger('focus');
     });
 
     container.on('close', function () {
-Nadia self.$search.val('');
-Nadia self.$search.removeAttr('aria-activedescendant');
-Nadia self.$search.trigger('focus');
+      self.$search.val('');
+      self.$search.removeAttr('aria-activedescendant');
+      self.$search.trigger('focus');
     });
 
     container.on('enable', function () {
-Nadia self.$search.prop('disabled', false);
+      self.$search.prop('disabled', false);
 
-Nadia self._transferTabIndex();
+      self._transferTabIndex();
     });
 
     container.on('disable', function () {
-Nadia self.$search.prop('disabled', true);
+      self.$search.prop('disabled', true);
     });
 
     container.on('focus', function (evt) {
-Nadia self.$search.trigger('focus');
+      self.$search.trigger('focus');
     });
 
     container.on('results:focus', function (params) {
-Nadia self.$search.attr('aria-activedescendant', params.id);
+      self.$search.attr('aria-activedescendant', params.id);
     });
 
     this.$selection.on('focusin', '.select2-search--inline', function (evt) {
-Nadia self.trigger('focus', evt);
+      self.trigger('focus', evt);
     });
 
     this.$selection.on('focusout', '.select2-search--inline', function (evt) {
-Nadia self._handleBlur(evt);
+      self._handleBlur(evt);
     });
 
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
-Nadia evt.stopPropagation();
+      evt.stopPropagation();
 
-Nadia self.trigger('keypress', evt);
+      self.trigger('keypress', evt);
 
-Nadia self._keyUpPrevented = evt.isDefaultPrevented();
+      self._keyUpPrevented = evt.isDefaultPrevented();
 
-Nadia var key = evt.which;
+      var key = evt.which;
 
-Nadia if (key === KEYS.BACKSPACE && self.$search.val() === '') {
-Nadia   var $previousChoice = self.$searchContainer
-NadiaNadia.prev('.select2-selection__choice');
+      if (key === KEYS.BACKSPACE && self.$search.val() === '') {
+        var $previousChoice = self.$searchContainer
+          .prev('.select2-selection__choice');
 
-Nadia   if ($previousChoice.length > 0) {
-NadiaNadiavar item = $previousChoice.data('data');
+        if ($previousChoice.length > 0) {
+          var item = $previousChoice.data('data');
 
-NadiaNadiaself.searchRemoveChoice(item);
+          self.searchRemoveChoice(item);
 
-NadiaNadiaevt.preventDefault();
-Nadia   }
-Nadia }
+          evt.preventDefault();
+        }
+      }
     });
 
     // Try to detect the IE version should the `documentMode` property that
@@ -1928,48 +1928,48 @@ Nadia }
     // This will prevent double-triggering of events for browsers which support
     // both the `keyup` and `input` events.
     this.$selection.on(
-Nadia 'input.searchcheck',
-Nadia '.select2-search--inline',
-Nadia function (evt) {
-Nadia   // IE will trigger the `input` event when a placeholder is used on a
-Nadia   // search box. To get around this issue, we are forced to ignore all
-Nadia   // `input` events in IE and keep using `keyup`.
-Nadia   if (disableInputEvents) {
-NadiaNadiaself.$selection.off('input.search input.searchcheck');
-NadiaNadiareturn;
-Nadia   }
+      'input.searchcheck',
+      '.select2-search--inline',
+      function (evt) {
+        // IE will trigger the `input` event when a placeholder is used on a
+        // search box. To get around this issue, we are forced to ignore all
+        // `input` events in IE and keep using `keyup`.
+        if (disableInputEvents) {
+          self.$selection.off('input.search input.searchcheck');
+          return;
+        }
 
-Nadia   // Unbind the duplicated `keyup` event
-Nadia   self.$selection.off('keyup.search');
-Nadia }
+        // Unbind the duplicated `keyup` event
+        self.$selection.off('keyup.search');
+      }
     );
 
     this.$selection.on(
-Nadia 'keyup.search input.search',
-Nadia '.select2-search--inline',
-Nadia function (evt) {
-Nadia   // IE will trigger the `input` event when a placeholder is used on a
-Nadia   // search box. To get around this issue, we are forced to ignore all
-Nadia   // `input` events in IE and keep using `keyup`.
-Nadia   if (disableInputEvents && evt.type === 'input') {
-NadiaNadiaself.$selection.off('input.search input.searchcheck');
-NadiaNadiareturn;
-Nadia   }
+      'keyup.search input.search',
+      '.select2-search--inline',
+      function (evt) {
+        // IE will trigger the `input` event when a placeholder is used on a
+        // search box. To get around this issue, we are forced to ignore all
+        // `input` events in IE and keep using `keyup`.
+        if (disableInputEvents && evt.type === 'input') {
+          self.$selection.off('input.search input.searchcheck');
+          return;
+        }
 
-Nadia   var key = evt.which;
+        var key = evt.which;
 
-Nadia   // We can freely ignore events from modifier keys
-Nadia   if (key == KEYS.SHIFT || key == KEYS.CTRL || key == KEYS.ALT) {
-NadiaNadiareturn;
-Nadia   }
+        // We can freely ignore events from modifier keys
+        if (key == KEYS.SHIFT || key == KEYS.CTRL || key == KEYS.ALT) {
+          return;
+        }
 
-Nadia   // Tabbing will be handled during the `keydown` phase
-Nadia   if (key == KEYS.TAB) {
-NadiaNadiareturn;
-Nadia   }
+        // Tabbing will be handled during the `keydown` phase
+        if (key == KEYS.TAB) {
+          return;
+        }
 
-Nadia   self.handleSearch(evt);
-Nadia }
+        self.handleSearch(evt);
+      }
     );
   };
 
@@ -1997,11 +1997,11 @@ Nadia }
     decorated.call(this, data);
 
     this.$selection.find('.select2-selection__rendered')
-NadiaNadiaNadia    .append(this.$searchContainer);
+                   .append(this.$searchContainer);
 
     this.resizeSearch();
     if (searchHadFocus) {
-Nadia this.$search.focus();
+      this.$search.focus();
     }
   };
 
@@ -2009,11 +2009,11 @@ Nadia this.$search.focus();
     this.resizeSearch();
 
     if (!this._keyUpPrevented) {
-Nadia var input = this.$search.val();
+      var input = this.$search.val();
 
-Nadia this.trigger('query', {
-Nadia   term: input
-Nadia });
+      this.trigger('query', {
+        term: input
+      });
     }
 
     this._keyUpPrevented = false;
@@ -2021,7 +2021,7 @@ Nadia });
 
   Search.prototype.searchRemoveChoice = function (decorated, item) {
     this.trigger('unselect', {
-Nadia data: item
+      data: item
     });
 
     this.$search.val(item.text);
@@ -2034,11 +2034,11 @@ Nadia data: item
     var width = '';
 
     if (this.$search.attr('placeholder') !== '') {
-Nadia width = this.$selection.find('.select2-selection__rendered').innerWidth();
+      width = this.$selection.find('.select2-selection__rendered').innerWidth();
     } else {
-Nadia var minimumWidth = this.$search.val().length + 1;
+      var minimumWidth = this.$search.val().length + 1;
 
-Nadia width = (minimumWidth * 0.75) + 'em';
+      width = (minimumWidth * 0.75) + 'em';
     }
 
     this.$search.css('width', width);
@@ -2055,10 +2055,10 @@ S2.define('select2/selection/eventRelay',[
   EventRelay.prototype.bind = function (decorated, container, $container) {
     var self = this;
     var relayEvents = [
-Nadia 'open', 'opening',
-Nadia 'close', 'closing',
-Nadia 'select', 'selecting',
-Nadia 'unselect', 'unselecting'
+      'open', 'opening',
+      'close', 'closing',
+      'select', 'selecting',
+      'unselect', 'unselecting'
     ];
 
     var preventableEvents = ['opening', 'closing', 'selecting', 'unselecting'];
@@ -2066,27 +2066,27 @@ Nadia 'unselect', 'unselecting'
     decorated.call(this, container, $container);
 
     container.on('*', function (name, params) {
-Nadia // Ignore events that should not be relayed
-Nadia if ($.inArray(name, relayEvents) === -1) {
-Nadia   return;
-Nadia }
+      // Ignore events that should not be relayed
+      if ($.inArray(name, relayEvents) === -1) {
+        return;
+      }
 
-Nadia // The parameters should always be an object
-Nadia params = params || {};
+      // The parameters should always be an object
+      params = params || {};
 
-Nadia // Generate the jQuery event for the Select2 event
-Nadia var evt = $.Event('select2:' + name, {
-Nadia   params: params
-Nadia });
+      // Generate the jQuery event for the Select2 event
+      var evt = $.Event('select2:' + name, {
+        params: params
+      });
 
-Nadia self.$element.trigger(evt);
+      self.$element.trigger(evt);
 
-Nadia // Only handle preventable events if it was one
-Nadia if ($.inArray(name, preventableEvents) === -1) {
-Nadia   return;
-Nadia }
+      // Only handle preventable events if it was one
+      if ($.inArray(name, preventableEvents) === -1) {
+        return;
+      }
 
-Nadia params.prevented = evt.isDefaultPrevented();
+      params.prevented = evt.isDefaultPrevented();
     });
   };
 
@@ -2119,9 +2119,9 @@ S2.define('select2/translation',[
 
   Translation.loadPath = function (path) {
     if (!(path in Translation._cache)) {
-Nadia var translations = require(path);
+      var translations = require(path);
 
-Nadia Translation._cache[path] = translations;
+      Translation._cache[path] = translations;
     }
 
     return new Translation(Translation._cache[path]);
@@ -3009,9 +3009,9 @@ S2.define('select2/data/base',[
     id += Utils.generateChars(4);
 
     if (data.id != null) {
-Nadia id += '-' + data.id.toString();
+      id += '-' + data.id.toString();
     } else {
-Nadia id += '-' + Utils.generateChars(4);
+      id += '-' + Utils.generateChars(4);
     }
     return id;
   };
@@ -3038,11 +3038,11 @@ S2.define('select2/data/select',[
     var self = this;
 
     this.$element.find(':selected').each(function () {
-Nadia var $option = $(this);
+      var $option = $(this);
 
-Nadia var option = self.item($option);
+      var option = self.item($option);
 
-Nadia data.push(option);
+      data.push(option);
     });
 
     callback(data);
@@ -3055,36 +3055,36 @@ Nadia data.push(option);
 
     // If data.element is a DOM node, use it instead
     if ($(data.element).is('option')) {
-Nadia data.element.selected = true;
+      data.element.selected = true;
 
-Nadia this.$element.trigger('change');
+      this.$element.trigger('change');
 
-Nadia return;
+      return;
     }
 
     if (this.$element.prop('multiple')) {
-Nadia this.current(function (currentData) {
-Nadia   var val = [];
+      this.current(function (currentData) {
+        var val = [];
 
-Nadia   data = [data];
-Nadia   data.push.apply(data, currentData);
+        data = [data];
+        data.push.apply(data, currentData);
 
-Nadia   for (var d = 0; d < data.length; d++) {
-NadiaNadiavar id = data[d].id;
+        for (var d = 0; d < data.length; d++) {
+          var id = data[d].id;
 
-NadiaNadiaif ($.inArray(id, val) === -1) {
-NadiaNadia  val.push(id);
-NadiaNadia}
-Nadia   }
+          if ($.inArray(id, val) === -1) {
+            val.push(id);
+          }
+        }
 
-Nadia   self.$element.val(val);
-Nadia   self.$element.trigger('change');
-Nadia });
+        self.$element.val(val);
+        self.$element.trigger('change');
+      });
     } else {
-Nadia var val = data.id;
+      var val = data.id;
 
-Nadia this.$element.val(val);
-Nadia this.$element.trigger('change');
+      this.$element.val(val);
+      this.$element.trigger('change');
     }
   };
 
@@ -3092,33 +3092,33 @@ Nadia this.$element.trigger('change');
     var self = this;
 
     if (!this.$element.prop('multiple')) {
-Nadia return;
+      return;
     }
 
     data.selected = false;
 
     if ($(data.element).is('option')) {
-Nadia data.element.selected = false;
+      data.element.selected = false;
 
-Nadia this.$element.trigger('change');
+      this.$element.trigger('change');
 
-Nadia return;
+      return;
     }
 
     this.current(function (currentData) {
-Nadia var val = [];
+      var val = [];
 
-Nadia for (var d = 0; d < currentData.length; d++) {
-Nadia   var id = currentData[d].id;
+      for (var d = 0; d < currentData.length; d++) {
+        var id = currentData[d].id;
 
-Nadia   if (id !== data.id && $.inArray(id, val) === -1) {
-NadiaNadiaval.push(id);
-Nadia   }
-Nadia }
+        if (id !== data.id && $.inArray(id, val) === -1) {
+          val.push(id);
+        }
+      }
 
-Nadia self.$element.val(val);
+      self.$element.val(val);
 
-Nadia self.$element.trigger('change');
+      self.$element.trigger('change');
     });
   };
 
@@ -3128,19 +3128,19 @@ Nadia self.$element.trigger('change');
     this.container = container;
 
     container.on('select', function (params) {
-Nadia self.select(params.data);
+      self.select(params.data);
     });
 
     container.on('unselect', function (params) {
-Nadia self.unselect(params.data);
+      self.unselect(params.data);
     });
   };
 
   SelectAdapter.prototype.destroy = function () {
     // Remove anything added to child elements
     this.$element.find('*').each(function () {
-Nadia // Remove any custom data set by Select2
-Nadia $.removeData(this, 'data');
+      // Remove any custom data set by Select2
+      $.removeData(this, 'data');
     });
   };
 
@@ -3151,23 +3151,23 @@ Nadia $.removeData(this, 'data');
     var $options = this.$element.children();
 
     $options.each(function () {
-Nadia var $option = $(this);
+      var $option = $(this);
 
-Nadia if (!$option.is('option') && !$option.is('optgroup')) {
-Nadia   return;
-Nadia }
+      if (!$option.is('option') && !$option.is('optgroup')) {
+        return;
+      }
 
-Nadia var option = self.item($option);
+      var option = self.item($option);
 
-Nadia var matches = self.matches(params, option);
+      var matches = self.matches(params, option);
 
-Nadia if (matches !== null) {
-Nadia   data.push(matches);
-Nadia }
+      if (matches !== null) {
+        data.push(matches);
+      }
     });
 
     callback({
-Nadia results: data
+      results: data
     });
   };
 
@@ -3179,32 +3179,32 @@ Nadia results: data
     var option;
 
     if (data.children) {
-Nadia option = document.createElement('optgroup');
-Nadia option.label = data.text;
+      option = document.createElement('optgroup');
+      option.label = data.text;
     } else {
-Nadia option = document.createElement('option');
+      option = document.createElement('option');
 
-Nadia if (option.textContent !== undefined) {
-Nadia   option.textContent = data.text;
-Nadia } else {
-Nadia   option.innerText = data.text;
-Nadia }
+      if (option.textContent !== undefined) {
+        option.textContent = data.text;
+      } else {
+        option.innerText = data.text;
+      }
     }
 
     if (data.id) {
-Nadia option.value = data.id;
+      option.value = data.id;
     }
 
     if (data.disabled) {
-Nadia option.disabled = true;
+      option.disabled = true;
     }
 
     if (data.selected) {
-Nadia option.selected = true;
+      option.selected = true;
     }
 
     if (data.title) {
-Nadia option.title = data.title;
+      option.title = data.title;
     }
 
     var $option = $(option);
@@ -3224,36 +3224,36 @@ Nadia option.title = data.title;
     data = $.data($option[0], 'data');
 
     if (data != null) {
-Nadia return data;
+      return data;
     }
 
     if ($option.is('option')) {
-Nadia data = {
-Nadia   id: $option.val(),
-Nadia   text: $option.text(),
-Nadia   disabled: $option.prop('disabled'),
-Nadia   selected: $option.prop('selected'),
-Nadia   title: $option.prop('title')
-Nadia };
+      data = {
+        id: $option.val(),
+        text: $option.text(),
+        disabled: $option.prop('disabled'),
+        selected: $option.prop('selected'),
+        title: $option.prop('title')
+      };
     } else if ($option.is('optgroup')) {
-Nadia data = {
-Nadia   text: $option.prop('label'),
-Nadia   children: [],
-Nadia   title: $option.prop('title')
-Nadia };
+      data = {
+        text: $option.prop('label'),
+        children: [],
+        title: $option.prop('title')
+      };
 
-Nadia var $children = $option.children('option');
-Nadia var children = [];
+      var $children = $option.children('option');
+      var children = [];
 
-Nadia for (var c = 0; c < $children.length; c++) {
-Nadia   var $child = $($children[c]);
+      for (var c = 0; c < $children.length; c++) {
+        var $child = $($children[c]);
 
-Nadia   var child = this.item($child);
+        var child = this.item($child);
 
-Nadia   children.push(child);
-Nadia }
+        children.push(child);
+      }
 
-Nadia data.children = children;
+      data.children = children;
     }
 
     data = this._normalizeItem(data);
@@ -3266,31 +3266,31 @@ Nadia data.children = children;
 
   SelectAdapter.prototype._normalizeItem = function (item) {
     if (!$.isPlainObject(item)) {
-Nadia item = {
-Nadia   id: item,
-Nadia   text: item
-Nadia };
+      item = {
+        id: item,
+        text: item
+      };
     }
 
     item = $.extend({}, {
-Nadia text: ''
+      text: ''
     }, item);
 
     var defaults = {
-Nadia selected: false,
-Nadia disabled: false
+      selected: false,
+      disabled: false
     };
 
     if (item.id != null) {
-Nadia item.id = item.id.toString();
+      item.id = item.id.toString();
     }
 
     if (item.text != null) {
-Nadia item.text = item.text.toString();
+      item.text = item.text.toString();
     }
 
     if (item._resultId == null && item.id && this.container != null) {
-Nadia item._resultId = this.generateResultId(this.container, item);
+      item._resultId = this.generateResultId(this.container, item);
     }
 
     return $.extend({}, defaults, item);
@@ -3322,13 +3322,13 @@ S2.define('select2/data/array',[
 
   ArrayAdapter.prototype.select = function (data) {
     var $option = this.$element.find('option').filter(function (i, elm) {
-Nadia return elm.value == data.id.toString();
+      return elm.value == data.id.toString();
     });
 
     if ($option.length === 0) {
-Nadia $option = this.option(data);
+      $option = this.option(data);
 
-Nadia this.addOptions($option);
+      this.addOptions($option);
     }
 
     ArrayAdapter.__super__.select.call(this, data);
@@ -3339,44 +3339,44 @@ Nadia this.addOptions($option);
 
     var $existing = this.$element.find('option');
     var existingIds = $existing.map(function () {
-Nadia return self.item($(this)).id;
+      return self.item($(this)).id;
     }).get();
 
     var $options = [];
 
     // Filter out all items except for the one passed in the argument
     function onlyItem (item) {
-Nadia return function () {
-Nadia   return $(this).val() == item.id;
-Nadia };
+      return function () {
+        return $(this).val() == item.id;
+      };
     }
 
     for (var d = 0; d < data.length; d++) {
-Nadia var item = this._normalizeItem(data[d]);
+      var item = this._normalizeItem(data[d]);
 
-Nadia // Skip items which were pre-loaded, only merge the data
-Nadia if ($.inArray(item.id, existingIds) >= 0) {
-Nadia   var $existingOption = $existing.filter(onlyItem(item));
+      // Skip items which were pre-loaded, only merge the data
+      if ($.inArray(item.id, existingIds) >= 0) {
+        var $existingOption = $existing.filter(onlyItem(item));
 
-Nadia   var existingData = this.item($existingOption);
-Nadia   var newData = $.extend(true, {}, item, existingData);
+        var existingData = this.item($existingOption);
+        var newData = $.extend(true, {}, item, existingData);
 
-Nadia   var $newOption = this.option(newData);
+        var $newOption = this.option(newData);
 
-Nadia   $existingOption.replaceWith($newOption);
+        $existingOption.replaceWith($newOption);
 
-Nadia   continue;
-Nadia }
+        continue;
+      }
 
-Nadia var $option = this.option(item);
+      var $option = this.option(item);
 
-Nadia if (item.children) {
-Nadia   var $children = this.convertToOptions(item.children);
+      if (item.children) {
+        var $children = this.convertToOptions(item.children);
 
-Nadia   Utils.appendMany($option, $children);
-Nadia }
+        Utils.appendMany($option, $children);
+      }
 
-Nadia $options.push($option);
+      $options.push($option);
     }
 
     return $options;
@@ -3394,7 +3394,7 @@ S2.define('select2/data/ajax',[
     this.ajaxOptions = this._applyDefaults(options.get('ajax'));
 
     if (this.ajaxOptions.processResults != null) {
-Nadia this.processResults = this.ajaxOptions.processResults;
+      this.processResults = this.ajaxOptions.processResults;
     }
 
     AjaxAdapter.__super__.constructor.call(this, $element, options);
@@ -3404,19 +3404,19 @@ Nadia this.processResults = this.ajaxOptions.processResults;
 
   AjaxAdapter.prototype._applyDefaults = function (options) {
     var defaults = {
-Nadia data: function (params) {
-Nadia   return $.extend({}, params, {
-NadiaNadiaq: params.term
-Nadia   });
-Nadia },
-Nadia transport: function (params, success, failure) {
-Nadia   var $request = $.ajax(params);
+      data: function (params) {
+        return $.extend({}, params, {
+          q: params.term
+        });
+      },
+      transport: function (params, success, failure) {
+        var $request = $.ajax(params);
 
-Nadia   $request.then(success);
-Nadia   $request.fail(failure);
+        $request.then(success);
+        $request.fail(failure);
 
-Nadia   return $request;
-Nadia }
+        return $request;
+      }
     };
 
     return $.extend({}, defaults, options, true);
@@ -3431,64 +3431,64 @@ Nadia }
     var self = this;
 
     if (this._request != null) {
-Nadia // JSONP requests cannot always be aborted
-Nadia if ($.isFunction(this._request.abort)) {
-Nadia   this._request.abort();
-Nadia }
+      // JSONP requests cannot always be aborted
+      if ($.isFunction(this._request.abort)) {
+        this._request.abort();
+      }
 
-Nadia this._request = null;
+      this._request = null;
     }
 
     var options = $.extend({
-Nadia type: 'GET'
+      type: 'GET'
     }, this.ajaxOptions);
 
     if (typeof options.url === 'function') {
-Nadia options.url = options.url.call(this.$element, params);
+      options.url = options.url.call(this.$element, params);
     }
 
     if (typeof options.data === 'function') {
-Nadia options.data = options.data.call(this.$element, params);
+      options.data = options.data.call(this.$element, params);
     }
 
     function request () {
-Nadia var $request = options.transport(options, function (data) {
-Nadia   var results = self.processResults(data, params);
+      var $request = options.transport(options, function (data) {
+        var results = self.processResults(data, params);
 
-Nadia   if (self.options.get('debug') && window.console && console.error) {
-NadiaNadia// Check to make sure that the response included a `results` key.
-NadiaNadiaif (!results || !results.results || !$.isArray(results.results)) {
-NadiaNadia  console.error(
-NadiaNadia    'Select2: The AJAX results did not return an array in the ' +
-NadiaNadia    '`results` key of the response.'
-NadiaNadia  );
-NadiaNadia}
-Nadia   }
+        if (self.options.get('debug') && window.console && console.error) {
+          // Check to make sure that the response included a `results` key.
+          if (!results || !results.results || !$.isArray(results.results)) {
+            console.error(
+              'Select2: The AJAX results did not return an array in the ' +
+              '`results` key of the response.'
+            );
+          }
+        }
 
-Nadia   callback(results);
-Nadia }, function () {
-Nadia   // Attempt to detect if a request was aborted
-Nadia   // Only works if the transport exposes a status property
-Nadia   if ($request.status && $request.status === '0') {
-NadiaNadiareturn;
-Nadia   }
+        callback(results);
+      }, function () {
+        // Attempt to detect if a request was aborted
+        // Only works if the transport exposes a status property
+        if ($request.status && $request.status === '0') {
+          return;
+        }
 
-Nadia   self.trigger('results:message', {
-NadiaNadiamessage: 'errorLoading'
-Nadia   });
-Nadia });
+        self.trigger('results:message', {
+          message: 'errorLoading'
+        });
+      });
 
-Nadia self._request = $request;
+      self._request = $request;
     }
 
     if (this.ajaxOptions.delay && params.term != null) {
-Nadia if (this._queryTimeout) {
-Nadia   window.clearTimeout(this._queryTimeout);
-Nadia }
+      if (this._queryTimeout) {
+        window.clearTimeout(this._queryTimeout);
+      }
 
-Nadia this._queryTimeout = window.setTimeout(request, this.ajaxOptions.delay);
+      this._queryTimeout = window.setTimeout(request, this.ajaxOptions.delay);
     } else {
-Nadia request();
+      request();
     }
   };
 
@@ -3504,26 +3504,26 @@ S2.define('select2/data/tags',[
     var createTag = options.get('createTag');
 
     if (createTag !== undefined) {
-Nadia this.createTag = createTag;
+      this.createTag = createTag;
     }
 
     var insertTag = options.get('insertTag');
 
     if (insertTag !== undefined) {
-Nadia   this.insertTag = insertTag;
+        this.insertTag = insertTag;
     }
 
     decorated.call(this, $element, options);
 
     if ($.isArray(tags)) {
-Nadia for (var t = 0; t < tags.length; t++) {
-Nadia   var tag = tags[t];
-Nadia   var item = this._normalizeItem(tag);
+      for (var t = 0; t < tags.length; t++) {
+        var tag = tags[t];
+        var item = this._normalizeItem(tag);
 
-Nadia   var $option = this.option(item);
+        var $option = this.option(item);
 
-Nadia   this.$element.append($option);
-Nadia }
+        this.$element.append($option);
+      }
     }
   }
 
@@ -3533,55 +3533,55 @@ Nadia }
     this._removeOldTags();
 
     if (params.term == null || params.page != null) {
-Nadia decorated.call(this, params, callback);
-Nadia return;
+      decorated.call(this, params, callback);
+      return;
     }
 
     function wrapper (obj, child) {
-Nadia var data = obj.results;
+      var data = obj.results;
 
-Nadia for (var i = 0; i < data.length; i++) {
-Nadia   var option = data[i];
+      for (var i = 0; i < data.length; i++) {
+        var option = data[i];
 
-Nadia   var checkChildren = (
-NadiaNadiaoption.children != null &&
-NadiaNadia!wrapper({
-NadiaNadia  results: option.children
-NadiaNadia}, true)
-Nadia   );
+        var checkChildren = (
+          option.children != null &&
+          !wrapper({
+            results: option.children
+          }, true)
+        );
 
-Nadia   var checkText = option.text === params.term;
+        var checkText = option.text === params.term;
 
-Nadia   if (checkText || checkChildren) {
-NadiaNadiaif (child) {
-NadiaNadia  return false;
-NadiaNadia}
+        if (checkText || checkChildren) {
+          if (child) {
+            return false;
+          }
 
-NadiaNadiaobj.data = data;
-NadiaNadiacallback(obj);
+          obj.data = data;
+          callback(obj);
 
-NadiaNadiareturn;
-Nadia   }
-Nadia }
+          return;
+        }
+      }
 
-Nadia if (child) {
-Nadia   return true;
-Nadia }
+      if (child) {
+        return true;
+      }
 
-Nadia var tag = self.createTag(params);
+      var tag = self.createTag(params);
 
-Nadia if (tag != null) {
-Nadia   var $option = self.option(tag);
-Nadia   $option.attr('data-select2-tag', true);
+      if (tag != null) {
+        var $option = self.option(tag);
+        $option.attr('data-select2-tag', true);
 
-Nadia   self.addOptions([$option]);
+        self.addOptions([$option]);
 
-Nadia   self.insertTag(data, tag);
-Nadia }
+        self.insertTag(data, tag);
+      }
 
-Nadia obj.results = data;
+      obj.results = data;
 
-Nadia callback(obj);
+      callback(obj);
     }
 
     decorated.call(this, params, wrapper);
@@ -3591,12 +3591,12 @@ Nadia callback(obj);
     var term = $.trim(params.term);
 
     if (term === '') {
-Nadia return null;
+      return null;
     }
 
     return {
-Nadia id: term,
-Nadia text: term
+      id: term,
+      text: term
     };
   };
 
@@ -3610,11 +3610,11 @@ Nadia text: term
     var $options = this.$element.find('option[data-select2-tag]');
 
     $options.each(function () {
-Nadia if (this.selected) {
-Nadia   return;
-Nadia }
+      if (this.selected) {
+        return;
+      }
 
-Nadia $(this).remove();
+      $(this).remove();
     });
   };
 
@@ -3628,7 +3628,7 @@ S2.define('select2/data/tokenizer',[
     var tokenizer = options.get('tokenizer');
 
     if (tokenizer !== undefined) {
-Nadia this.tokenizer = tokenizer;
+      this.tokenizer = tokenizer;
     }
 
     decorated.call(this, $element, options);
@@ -3638,39 +3638,39 @@ Nadia this.tokenizer = tokenizer;
     decorated.call(this, container, $container);
 
     this.$search =  container.dropdown.$search || container.selection.$search ||
-Nadia $container.find('.select2-search__field');
+      $container.find('.select2-search__field');
   };
 
   Tokenizer.prototype.query = function (decorated, params, callback) {
     var self = this;
 
     function createAndSelect (data) {
-Nadia // Normalize the data object so we can use it for checks
-Nadia var item = self._normalizeItem(data);
+      // Normalize the data object so we can use it for checks
+      var item = self._normalizeItem(data);
 
-Nadia // Check if the data object already exists as a tag
-Nadia // Select it if it doesn't
-Nadia var $existingOptions = self.$element.find('option').filter(function () {
-Nadia   return $(this).val() === item.id;
-Nadia });
+      // Check if the data object already exists as a tag
+      // Select it if it doesn't
+      var $existingOptions = self.$element.find('option').filter(function () {
+        return $(this).val() === item.id;
+      });
 
-Nadia // If an existing option wasn't found for it, create the option
-Nadia if (!$existingOptions.length) {
-Nadia   var $option = self.option(item);
-Nadia   $option.attr('data-select2-tag', true);
+      // If an existing option wasn't found for it, create the option
+      if (!$existingOptions.length) {
+        var $option = self.option(item);
+        $option.attr('data-select2-tag', true);
 
-Nadia   self._removeOldTags();
-Nadia   self.addOptions([$option]);
-Nadia }
+        self._removeOldTags();
+        self.addOptions([$option]);
+      }
 
-Nadia // Select the item, now that we know there is an option for it
-Nadia select(item);
+      // Select the item, now that we know there is an option for it
+      select(item);
     }
 
     function select (data) {
-Nadia self.trigger('select', {
-Nadia   data: data
-Nadia });
+      self.trigger('select', {
+        data: data
+      });
     }
 
     params.term = params.term || '';
@@ -3678,13 +3678,13 @@ Nadia });
     var tokenData = this.tokenizer(params, this.options, createAndSelect);
 
     if (tokenData.term !== params.term) {
-Nadia // Replace the search term if we have the search box
-Nadia if (this.$search.length) {
-Nadia   this.$search.val(tokenData.term);
-Nadia   this.$search.focus();
-Nadia }
+      // Replace the search term if we have the search box
+      if (this.$search.length) {
+        this.$search.val(tokenData.term);
+        this.$search.focus();
+      }
 
-Nadia params.term = tokenData.term;
+      params.term = tokenData.term;
     }
 
     decorated.call(this, params, callback);
@@ -3696,42 +3696,42 @@ Nadia params.term = tokenData.term;
     var i = 0;
 
     var createTag = this.createTag || function (params) {
-Nadia return {
-Nadia   id: params.term,
-Nadia   text: params.term
-Nadia };
+      return {
+        id: params.term,
+        text: params.term
+      };
     };
 
     while (i < term.length) {
-Nadia var termChar = term[i];
+      var termChar = term[i];
 
-Nadia if ($.inArray(termChar, separators) === -1) {
-Nadia   i++;
+      if ($.inArray(termChar, separators) === -1) {
+        i++;
 
-Nadia   continue;
-Nadia }
+        continue;
+      }
 
-Nadia var part = term.substr(0, i);
-Nadia var partParams = $.extend({}, params, {
-Nadia   term: part
-Nadia });
+      var part = term.substr(0, i);
+      var partParams = $.extend({}, params, {
+        term: part
+      });
 
-Nadia var data = createTag(partParams);
+      var data = createTag(partParams);
 
-Nadia if (data == null) {
-Nadia   i++;
-Nadia   continue;
-Nadia }
+      if (data == null) {
+        i++;
+        continue;
+      }
 
-Nadia callback(data);
+      callback(data);
 
-Nadia // Reset the term to not include the tokenized portion
-Nadia term = term.substr(i + 1) || '';
-Nadia i = 0;
+      // Reset the term to not include the tokenized portion
+      term = term.substr(i + 1) || '';
+      i = 0;
     }
 
     return {
-Nadia term: term
+      term: term
     };
   };
 
@@ -3751,16 +3751,16 @@ S2.define('select2/data/minimumInputLength',[
     params.term = params.term || '';
 
     if (params.term.length < this.minimumInputLength) {
-Nadia this.trigger('results:message', {
-Nadia   message: 'inputTooShort',
-Nadia   args: {
-NadiaNadiaminimum: this.minimumInputLength,
-NadiaNadiainput: params.term,
-NadiaNadiaparams: params
-Nadia   }
-Nadia });
+      this.trigger('results:message', {
+        message: 'inputTooShort',
+        args: {
+          minimum: this.minimumInputLength,
+          input: params.term,
+          params: params
+        }
+      });
 
-Nadia return;
+      return;
     }
 
     decorated.call(this, params, callback);
@@ -3782,17 +3782,17 @@ S2.define('select2/data/maximumInputLength',[
     params.term = params.term || '';
 
     if (this.maximumInputLength > 0 &&
-Nadia   params.term.length > this.maximumInputLength) {
-Nadia this.trigger('results:message', {
-Nadia   message: 'inputTooLong',
-Nadia   args: {
-NadiaNadiamaximum: this.maximumInputLength,
-NadiaNadiainput: params.term,
-NadiaNadiaparams: params
-Nadia   }
-Nadia });
+        params.term.length > this.maximumInputLength) {
+      this.trigger('results:message', {
+        message: 'inputTooLong',
+        args: {
+          maximum: this.maximumInputLength,
+          input: params.term,
+          params: params
+        }
+      });
 
-Nadia return;
+      return;
     }
 
     decorated.call(this, params, callback);
@@ -3812,22 +3812,22 @@ S2.define('select2/data/maximumSelectionLength',[
 
   MaximumSelectionLength.prototype.query =
     function (decorated, params, callback) {
-Nadia var self = this;
+      var self = this;
 
-Nadia this.current(function (currentData) {
-Nadia   var count = currentData != null ? currentData.length : 0;
-Nadia   if (self.maximumSelectionLength > 0 &&
-NadiaNadiacount >= self.maximumSelectionLength) {
-NadiaNadiaself.trigger('results:message', {
-NadiaNadia  message: 'maximumSelected',
-NadiaNadia  args: {
-NadiaNadia    maximum: self.maximumSelectionLength
-NadiaNadia  }
-NadiaNadia});
-NadiaNadiareturn;
-Nadia   }
-Nadia   decorated.call(self, params, callback);
-Nadia });
+      this.current(function (currentData) {
+        var count = currentData != null ? currentData.length : 0;
+        if (self.maximumSelectionLength > 0 &&
+          count >= self.maximumSelectionLength) {
+          self.trigger('results:message', {
+            message: 'maximumSelected',
+            args: {
+              maximum: self.maximumSelectionLength
+            }
+          });
+          return;
+        }
+        decorated.call(self, params, callback);
+      });
   };
 
   return MaximumSelectionLength;
@@ -3848,9 +3848,9 @@ S2.define('select2/dropdown',[
 
   Dropdown.prototype.render = function () {
     var $dropdown = $(
-Nadia '<span class="select2-dropdown">' +
-Nadia   '<span class="select2-results"></span>' +
-Nadia '</span>'
+      '<span class="select2-dropdown">' +
+        '<span class="select2-results"></span>' +
+      '</span>'
     );
 
     $dropdown.attr('dir', this.options.get('dir'));
@@ -3886,11 +3886,11 @@ S2.define('select2/dropdown/search',[
     var $rendered = decorated.call(this);
 
     var $search = $(
-Nadia '<span class="select2-search select2-search--dropdown">' +
-Nadia   '<input class="select2-search__field" type="search" tabindex="-1"' +
-Nadia   ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
-Nadia   ' spellcheck="false" role="textbox" />' +
-Nadia '</span>'
+      '<span class="select2-search select2-search--dropdown">' +
+        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
+        ' spellcheck="false" role="textbox" />' +
+      '</span>'
     );
 
     this.$searchContainer = $search;
@@ -3907,65 +3907,65 @@ Nadia '</span>'
     decorated.call(this, container, $container);
 
     this.$search.on('keydown', function (evt) {
-Nadia self.trigger('keypress', evt);
+      self.trigger('keypress', evt);
 
-Nadia self._keyUpPrevented = evt.isDefaultPrevented();
+      self._keyUpPrevented = evt.isDefaultPrevented();
     });
 
     // Workaround for browsers which do not support the `input` event
     // This will prevent double-triggering of events for browsers which support
     // both the `keyup` and `input` events.
     this.$search.on('input', function (evt) {
-Nadia // Unbind the duplicated `keyup` event
-Nadia $(this).off('keyup');
+      // Unbind the duplicated `keyup` event
+      $(this).off('keyup');
     });
 
     this.$search.on('keyup input', function (evt) {
-Nadia self.handleSearch(evt);
+      self.handleSearch(evt);
     });
 
     container.on('open', function () {
-Nadia self.$search.attr('tabindex', 0);
+      self.$search.attr('tabindex', 0);
 
-Nadia self.$search.focus();
+      self.$search.focus();
 
-Nadia window.setTimeout(function () {
-Nadia   self.$search.focus();
-Nadia }, 0);
+      window.setTimeout(function () {
+        self.$search.focus();
+      }, 0);
     });
 
     container.on('close', function () {
-Nadia self.$search.attr('tabindex', -1);
+      self.$search.attr('tabindex', -1);
 
-Nadia self.$search.val('');
+      self.$search.val('');
     });
 
     container.on('focus', function () {
-Nadia if (container.isOpen()) {
-Nadia   self.$search.focus();
-Nadia }
+      if (container.isOpen()) {
+        self.$search.focus();
+      }
     });
 
     container.on('results:all', function (params) {
-Nadia if (params.query.term == null || params.query.term === '') {
-Nadia   var showSearch = self.showSearch(params);
+      if (params.query.term == null || params.query.term === '') {
+        var showSearch = self.showSearch(params);
 
-Nadia   if (showSearch) {
-NadiaNadiaself.$searchContainer.removeClass('select2-search--hide');
-Nadia   } else {
-NadiaNadiaself.$searchContainer.addClass('select2-search--hide');
-Nadia   }
-Nadia }
+        if (showSearch) {
+          self.$searchContainer.removeClass('select2-search--hide');
+        } else {
+          self.$searchContainer.addClass('select2-search--hide');
+        }
+      }
     });
   };
 
   Search.prototype.handleSearch = function (evt) {
     if (!this._keyUpPrevented) {
-Nadia var input = this.$search.val();
+      var input = this.$search.val();
 
-Nadia this.trigger('query', {
-Nadia   term: input
-Nadia });
+      this.trigger('query', {
+        term: input
+      });
     }
 
     this._keyUpPrevented = false;
@@ -3995,10 +3995,10 @@ S2.define('select2/dropdown/hidePlaceholder',[
 
   HidePlaceholder.prototype.normalizePlaceholder = function (_, placeholder) {
     if (typeof placeholder === 'string') {
-Nadia placeholder = {
-Nadia   id: '',
-Nadia   text: placeholder
-Nadia };
+      placeholder = {
+        id: '',
+        text: placeholder
+      };
     }
 
     return placeholder;
@@ -4008,11 +4008,11 @@ Nadia };
     var modifiedData = data.slice(0);
 
     for (var d = data.length - 1; d >= 0; d--) {
-Nadia var item = data[d];
+      var item = data[d];
 
-Nadia if (this.placeholder.id === item.id) {
-Nadia   modifiedData.splice(d, 1);
-Nadia }
+      if (this.placeholder.id === item.id) {
+        modifiedData.splice(d, 1);
+      }
     }
 
     return modifiedData;
@@ -4040,7 +4040,7 @@ S2.define('select2/dropdown/infiniteScroll',[
     decorated.call(this, data);
 
     if (this.showLoadingMore(data)) {
-Nadia this.$results.append(this.$loadingMore);
+      this.$results.append(this.$loadingMore);
     }
   };
 
@@ -4050,33 +4050,33 @@ Nadia this.$results.append(this.$loadingMore);
     decorated.call(this, container, $container);
 
     container.on('query', function (params) {
-Nadia self.lastParams = params;
-Nadia self.loading = true;
+      self.lastParams = params;
+      self.loading = true;
     });
 
     container.on('query:append', function (params) {
-Nadia self.lastParams = params;
-Nadia self.loading = true;
+      self.lastParams = params;
+      self.loading = true;
     });
 
     this.$results.on('scroll', function () {
-Nadia var isLoadMoreVisible = $.contains(
-Nadia   document.documentElement,
-Nadia   self.$loadingMore[0]
-Nadia );
+      var isLoadMoreVisible = $.contains(
+        document.documentElement,
+        self.$loadingMore[0]
+      );
 
-Nadia if (self.loading || !isLoadMoreVisible) {
-Nadia   return;
-Nadia }
+      if (self.loading || !isLoadMoreVisible) {
+        return;
+      }
 
-Nadia var currentOffset = self.$results.offset().top +
-Nadia   self.$results.outerHeight(false);
-Nadia var loadingMoreOffset = self.$loadingMore.offset().top +
-Nadia   self.$loadingMore.outerHeight(false);
+      var currentOffset = self.$results.offset().top +
+        self.$results.outerHeight(false);
+      var loadingMoreOffset = self.$loadingMore.offset().top +
+        self.$loadingMore.outerHeight(false);
 
-Nadia if (currentOffset + 50 >= loadingMoreOffset) {
-Nadia   self.loadMore();
-Nadia }
+      if (currentOffset + 50 >= loadingMoreOffset) {
+        self.loadMore();
+      }
     });
   };
 
@@ -4096,9 +4096,9 @@ Nadia }
 
   InfiniteScroll.prototype.createLoadingMore = function () {
     var $option = $(
-Nadia '<li ' +
-Nadia 'class="select2-results__option select2-results__option--load-more"' +
-Nadia 'role="treeitem" aria-disabled="true"></li>'
+      '<li ' +
+      'class="select2-results__option select2-results__option--load-more"' +
+      'role="treeitem" aria-disabled="true"></li>'
     );
 
     var message = this.options.get('translations').get('loadingMore');
@@ -4129,31 +4129,31 @@ S2.define('select2/dropdown/attachBody',[
     decorated.call(this, container, $container);
 
     container.on('open', function () {
-Nadia self._showDropdown();
-Nadia self._attachPositioningHandler(container);
+      self._showDropdown();
+      self._attachPositioningHandler(container);
 
-Nadia if (!setupResultsEvents) {
-Nadia   setupResultsEvents = true;
+      if (!setupResultsEvents) {
+        setupResultsEvents = true;
 
-Nadia   container.on('results:all', function () {
-NadiaNadiaself._positionDropdown();
-NadiaNadiaself._resizeDropdown();
-Nadia   });
+        container.on('results:all', function () {
+          self._positionDropdown();
+          self._resizeDropdown();
+        });
 
-Nadia   container.on('results:append', function () {
-NadiaNadiaself._positionDropdown();
-NadiaNadiaself._resizeDropdown();
-Nadia   });
-Nadia }
+        container.on('results:append', function () {
+          self._positionDropdown();
+          self._resizeDropdown();
+        });
+      }
     });
 
     container.on('close', function () {
-Nadia self._hideDropdown();
-Nadia self._detachPositioningHandler(container);
+      self._hideDropdown();
+      self._detachPositioningHandler(container);
     });
 
     this.$dropdownContainer.on('mousedown', function (evt) {
-Nadia evt.stopPropagation();
+      evt.stopPropagation();
     });
   };
 
@@ -4171,8 +4171,8 @@ Nadia evt.stopPropagation();
     $dropdown.addClass('select2-container--open');
 
     $dropdown.css({
-Nadia position: 'absolute',
-Nadia top: -999999
+      position: 'absolute',
+      top: -999999
     });
 
     this.$container = $container;
@@ -4194,7 +4194,7 @@ Nadia top: -999999
   };
 
   AttachBody.prototype._attachPositioningHandler =
-Nadia function (decorated, container) {
+      function (decorated, container) {
     var self = this;
 
     var scrollEvent = 'scroll.select2.' + container.id;
@@ -4203,26 +4203,26 @@ Nadia function (decorated, container) {
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.each(function () {
-Nadia $(this).data('select2-scroll-position', {
-Nadia   x: $(this).scrollLeft(),
-Nadia   y: $(this).scrollTop()
-Nadia });
+      $(this).data('select2-scroll-position', {
+        x: $(this).scrollLeft(),
+        y: $(this).scrollTop()
+      });
     });
 
     $watchers.on(scrollEvent, function (ev) {
-Nadia var position = $(this).data('select2-scroll-position');
-Nadia $(this).scrollTop(position.y);
+      var position = $(this).data('select2-scroll-position');
+      $(this).scrollTop(position.y);
     });
 
     $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
-Nadia function (e) {
-Nadia self._positionDropdown();
-Nadia self._resizeDropdown();
+      function (e) {
+      self._positionDropdown();
+      self._resizeDropdown();
     });
   };
 
   AttachBody.prototype._detachPositioningHandler =
-Nadia function (decorated, container) {
+      function (decorated, container) {
     var scrollEvent = 'scroll.select2.' + container.id;
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
@@ -4246,27 +4246,27 @@ Nadia function (decorated, container) {
     offset.bottom = offset.top + this.$container.outerHeight(false);
 
     var container = {
-Nadia height: this.$container.outerHeight(false)
+      height: this.$container.outerHeight(false)
     };
 
     container.top = offset.top;
     container.bottom = offset.top + container.height;
 
     var dropdown = {
-Nadia height: this.$dropdown.outerHeight(false)
+      height: this.$dropdown.outerHeight(false)
     };
 
     var viewport = {
-Nadia top: $window.scrollTop(),
-Nadia bottom: $window.scrollTop() + $window.height()
+      top: $window.scrollTop(),
+      bottom: $window.scrollTop() + $window.height()
     };
 
     var enoughRoomAbove = viewport.top < (offset.top - dropdown.height);
     var enoughRoomBelow = viewport.bottom > (offset.bottom + dropdown.height);
 
     var css = {
-Nadia left: offset.left,
-Nadia top: container.bottom
+      left: offset.left,
+      top: container.bottom
     };
 
     // Determine what the parent element is to use for calciulating the offset
@@ -4275,7 +4275,7 @@ Nadia top: container.bottom
     // For statically positoned elements, we need to get the element
     // that is determining the offset
     if ($offsetParent.css('position') === 'static') {
-Nadia $offsetParent = $offsetParent.offsetParent();
+      $offsetParent = $offsetParent.offsetParent();
     }
 
     var parentOffset = $offsetParent.offset();
@@ -4284,27 +4284,27 @@ Nadia $offsetParent = $offsetParent.offsetParent();
     css.left -= parentOffset.left;
 
     if (!isCurrentlyAbove && !isCurrentlyBelow) {
-Nadia newDirection = 'below';
+      newDirection = 'below';
     }
 
     if (!enoughRoomBelow && enoughRoomAbove && !isCurrentlyAbove) {
-Nadia newDirection = 'above';
+      newDirection = 'above';
     } else if (!enoughRoomAbove && enoughRoomBelow && isCurrentlyAbove) {
-Nadia newDirection = 'below';
+      newDirection = 'below';
     }
 
     if (newDirection == 'above' ||
-Nadia (isCurrentlyAbove && newDirection !== 'below')) {
-Nadia css.top = container.top - parentOffset.top - dropdown.height;
+      (isCurrentlyAbove && newDirection !== 'below')) {
+      css.top = container.top - parentOffset.top - dropdown.height;
     }
 
     if (newDirection != null) {
-Nadia this.$dropdown
-Nadia   .removeClass('select2-dropdown--below select2-dropdown--above')
-Nadia   .addClass('select2-dropdown--' + newDirection);
-Nadia this.$container
-Nadia   .removeClass('select2-container--below select2-container--above')
-Nadia   .addClass('select2-container--' + newDirection);
+      this.$dropdown
+        .removeClass('select2-dropdown--below select2-dropdown--above')
+        .addClass('select2-dropdown--' + newDirection);
+      this.$container
+        .removeClass('select2-container--below select2-container--above')
+        .addClass('select2-container--' + newDirection);
     }
 
     this.$dropdownContainer.css(css);
@@ -4312,13 +4312,13 @@ Nadia   .addClass('select2-container--' + newDirection);
 
   AttachBody.prototype._resizeDropdown = function () {
     var css = {
-Nadia width: this.$container.outerWidth(false) + 'px'
+      width: this.$container.outerWidth(false) + 'px'
     };
 
     if (this.options.get('dropdownAutoWidth')) {
-Nadia css.minWidth = css.width;
-Nadia css.position = 'relative';
-Nadia css.width = 'auto';
+      css.minWidth = css.width;
+      css.position = 'relative';
+      css.width = 'auto';
     }
 
     this.$dropdown.css(css);
@@ -4341,13 +4341,13 @@ S2.define('select2/dropdown/minimumResultsForSearch',[
     var count = 0;
 
     for (var d = 0; d < data.length; d++) {
-Nadia var item = data[d];
+      var item = data[d];
 
-Nadia if (item.children) {
-Nadia   count += countResults(item.children);
-Nadia } else {
-Nadia   count++;
-Nadia }
+      if (item.children) {
+        count += countResults(item.children);
+      } else {
+        count++;
+      }
     }
 
     return count;
@@ -4357,7 +4357,7 @@ Nadia }
     this.minimumResultsForSearch = options.get('minimumResultsForSearch');
 
     if (this.minimumResultsForSearch < 0) {
-Nadia this.minimumResultsForSearch = Infinity;
+      this.minimumResultsForSearch = Infinity;
     }
 
     decorated.call(this, $element, options, dataAdapter);
@@ -4365,7 +4365,7 @@ Nadia this.minimumResultsForSearch = Infinity;
 
   MinimumResultsForSearch.prototype.showSearch = function (decorated, params) {
     if (countResults(params.data.results) < this.minimumResultsForSearch) {
-Nadia return false;
+      return false;
     }
 
     return decorated.call(this, params);
@@ -4385,40 +4385,40 @@ S2.define('select2/dropdown/selectOnClose',[
     decorated.call(this, container, $container);
 
     container.on('close', function (params) {
-Nadia self._handleSelectOnClose(params);
+      self._handleSelectOnClose(params);
     });
   };
 
   SelectOnClose.prototype._handleSelectOnClose = function (_, params) {
     if (params && params.originalSelect2Event != null) {
-Nadia var event = params.originalSelect2Event;
+      var event = params.originalSelect2Event;
 
-Nadia // Don't select an item if the close event was triggered from a select or
-Nadia // unselect event
-Nadia if (event._type === 'select' || event._type === 'unselect') {
-Nadia   return;
-Nadia }
+      // Don't select an item if the close event was triggered from a select or
+      // unselect event
+      if (event._type === 'select' || event._type === 'unselect') {
+        return;
+      }
     }
 
     var $highlightedResults = this.getHighlightedResults();
 
     // Only select highlighted results
     if ($highlightedResults.length < 1) {
-Nadia return;
+      return;
     }
 
     var data = $highlightedResults.data('data');
 
     // Don't re-select already selected resulte
     if (
-Nadia (data.element != null && data.element.selected) ||
-Nadia (data.element == null && data.selected)
+      (data.element != null && data.element.selected) ||
+      (data.element == null && data.selected)
     ) {
-Nadia return;
+      return;
     }
 
     this.trigger('select', {
-Nadia   data: data
+        data: data
     });
   };
 
@@ -4436,11 +4436,11 @@ S2.define('select2/dropdown/closeOnSelect',[
     decorated.call(this, container, $container);
 
     container.on('select', function (evt) {
-Nadia self._selectTriggered(evt);
+      self._selectTriggered(evt);
     });
 
     container.on('unselect', function (evt) {
-Nadia self._selectTriggered(evt);
+      self._selectTriggered(evt);
     });
   };
 
@@ -4449,12 +4449,12 @@ Nadia self._selectTriggered(evt);
 
     // Don't close if the control key is being held
     if (originalEvent && originalEvent.ctrlKey) {
-Nadia return;
+      return;
     }
 
     this.trigger('close', {
-Nadia originalEvent: originalEvent,
-Nadia originalSelect2Event: evt
+      originalEvent: originalEvent,
+      originalSelect2Event: evt
     });
   };
 
@@ -4465,43 +4465,43 @@ S2.define('select2/i18n/en',[],function () {
   // English
   return {
     errorLoading: function () {
-Nadia return 'The results could not be loaded.';
+      return 'The results could not be loaded.';
     },
     inputTooLong: function (args) {
-Nadia var overChars = args.input.length - args.maximum;
+      var overChars = args.input.length - args.maximum;
 
-Nadia var message = 'Please delete ' + overChars + ' character';
+      var message = 'Please delete ' + overChars + ' character';
 
-Nadia if (overChars != 1) {
-Nadia   message += 's';
-Nadia }
+      if (overChars != 1) {
+        message += 's';
+      }
 
-Nadia return message;
+      return message;
     },
     inputTooShort: function (args) {
-Nadia var remainingChars = args.minimum - args.input.length;
+      var remainingChars = args.minimum - args.input.length;
 
-Nadia var message = 'Please enter ' + remainingChars + ' or more characters';
+      var message = 'Please enter ' + remainingChars + ' or more characters';
 
-Nadia return message;
+      return message;
     },
     loadingMore: function () {
-Nadia return 'Loading more results…';
+      return 'Loading more results…';
     },
     maximumSelected: function (args) {
-Nadia var message = 'You can only select ' + args.maximum + ' item';
+      var message = 'You can only select ' + args.maximum + ' item';
 
-Nadia if (args.maximum != 1) {
-Nadia   message += 's';
-Nadia }
+      if (args.maximum != 1) {
+        message += 's';
+      }
 
-Nadia return message;
+      return message;
     },
     noResults: function () {
-Nadia return 'No results found';
+      return 'No results found';
     },
     searching: function () {
-Nadia return 'Searching…';
+      return 'Searching…';
     }
   };
 });
@@ -4544,20 +4544,20 @@ S2.define('select2/defaults',[
   './i18n/en'
 ], function ($, require,
 
-NadiaNadia   ResultsList,
+             ResultsList,
 
-NadiaNadia   SingleSelection, MultipleSelection, Placeholder, AllowClear,
-NadiaNadia   SelectionSearch, EventRelay,
+             SingleSelection, MultipleSelection, Placeholder, AllowClear,
+             SelectionSearch, EventRelay,
 
-NadiaNadia   Utils, Translation, DIACRITICS,
+             Utils, Translation, DIACRITICS,
 
-NadiaNadia   SelectData, ArrayData, AjaxData, Tags, Tokenizer,
-NadiaNadia   MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
+             SelectData, ArrayData, AjaxData, Tags, Tokenizer,
+             MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
-NadiaNadia   Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-NadiaNadia   AttachBody, MinimumResultsForSearch, SelectOnClose, CloseOnSelect,
+             Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
+             AttachBody, MinimumResultsForSearch, SelectOnClose, CloseOnSelect,
 
-NadiaNadia   EnglishTranslation) {
+             EnglishTranslation) {
   function Defaults () {
     this.reset();
   }
@@ -4566,239 +4566,239 @@ NadiaNadia   EnglishTranslation) {
     options = $.extend(true, {}, this.defaults, options);
 
     if (options.dataAdapter == null) {
-Nadia if (options.ajax != null) {
-Nadia   options.dataAdapter = AjaxData;
-Nadia } else if (options.data != null) {
-Nadia   options.dataAdapter = ArrayData;
-Nadia } else {
-Nadia   options.dataAdapter = SelectData;
-Nadia }
+      if (options.ajax != null) {
+        options.dataAdapter = AjaxData;
+      } else if (options.data != null) {
+        options.dataAdapter = ArrayData;
+      } else {
+        options.dataAdapter = SelectData;
+      }
 
-Nadia if (options.minimumInputLength > 0) {
-Nadia   options.dataAdapter = Utils.Decorate(
-NadiaNadiaoptions.dataAdapter,
-NadiaNadiaMinimumInputLength
-Nadia   );
-Nadia }
+      if (options.minimumInputLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MinimumInputLength
+        );
+      }
 
-Nadia if (options.maximumInputLength > 0) {
-Nadia   options.dataAdapter = Utils.Decorate(
-NadiaNadiaoptions.dataAdapter,
-NadiaNadiaMaximumInputLength
-Nadia   );
-Nadia }
+      if (options.maximumInputLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MaximumInputLength
+        );
+      }
 
-Nadia if (options.maximumSelectionLength > 0) {
-Nadia   options.dataAdapter = Utils.Decorate(
-NadiaNadiaoptions.dataAdapter,
-NadiaNadiaMaximumSelectionLength
-Nadia   );
-Nadia }
+      if (options.maximumSelectionLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MaximumSelectionLength
+        );
+      }
 
-Nadia if (options.tags) {
-Nadia   options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
-Nadia }
+      if (options.tags) {
+        options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+      }
 
-Nadia if (options.tokenSeparators != null || options.tokenizer != null) {
-Nadia   options.dataAdapter = Utils.Decorate(
-NadiaNadiaoptions.dataAdapter,
-NadiaNadiaTokenizer
-Nadia   );
-Nadia }
+      if (options.tokenSeparators != null || options.tokenizer != null) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          Tokenizer
+        );
+      }
 
-Nadia if (options.query != null) {
-Nadia   var Query = require(options.amdBase + 'compat/query');
+      if (options.query != null) {
+        var Query = require(options.amdBase + 'compat/query');
 
-Nadia   options.dataAdapter = Utils.Decorate(
-NadiaNadiaoptions.dataAdapter,
-NadiaNadiaQuery
-Nadia   );
-Nadia }
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          Query
+        );
+      }
 
-Nadia if (options.initSelection != null) {
-Nadia   var InitSelection = require(options.amdBase + 'compat/initSelection');
+      if (options.initSelection != null) {
+        var InitSelection = require(options.amdBase + 'compat/initSelection');
 
-Nadia   options.dataAdapter = Utils.Decorate(
-NadiaNadiaoptions.dataAdapter,
-NadiaNadiaInitSelection
-Nadia   );
-Nadia }
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          InitSelection
+        );
+      }
     }
 
     if (options.resultsAdapter == null) {
-Nadia options.resultsAdapter = ResultsList;
+      options.resultsAdapter = ResultsList;
 
-Nadia if (options.ajax != null) {
-Nadia   options.resultsAdapter = Utils.Decorate(
-NadiaNadiaoptions.resultsAdapter,
-NadiaNadiaInfiniteScroll
-Nadia   );
-Nadia }
+      if (options.ajax != null) {
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          InfiniteScroll
+        );
+      }
 
-Nadia if (options.placeholder != null) {
-Nadia   options.resultsAdapter = Utils.Decorate(
-NadiaNadiaoptions.resultsAdapter,
-NadiaNadiaHidePlaceholder
-Nadia   );
-Nadia }
+      if (options.placeholder != null) {
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          HidePlaceholder
+        );
+      }
 
-Nadia if (options.selectOnClose) {
-Nadia   options.resultsAdapter = Utils.Decorate(
-NadiaNadiaoptions.resultsAdapter,
-NadiaNadiaSelectOnClose
-Nadia   );
-Nadia }
+      if (options.selectOnClose) {
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          SelectOnClose
+        );
+      }
     }
 
     if (options.dropdownAdapter == null) {
-Nadia if (options.multiple) {
-Nadia   options.dropdownAdapter = Dropdown;
-Nadia } else {
-Nadia   var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
+      if (options.multiple) {
+        options.dropdownAdapter = Dropdown;
+      } else {
+        var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
 
-Nadia   options.dropdownAdapter = SearchableDropdown;
-Nadia }
+        options.dropdownAdapter = SearchableDropdown;
+      }
 
-Nadia if (options.minimumResultsForSearch !== 0) {
-Nadia   options.dropdownAdapter = Utils.Decorate(
-NadiaNadiaoptions.dropdownAdapter,
-NadiaNadiaMinimumResultsForSearch
-Nadia   );
-Nadia }
+      if (options.minimumResultsForSearch !== 0) {
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          MinimumResultsForSearch
+        );
+      }
 
-Nadia if (options.closeOnSelect) {
-Nadia   options.dropdownAdapter = Utils.Decorate(
-NadiaNadiaoptions.dropdownAdapter,
-NadiaNadiaCloseOnSelect
-Nadia   );
-Nadia }
+      if (options.closeOnSelect) {
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          CloseOnSelect
+        );
+      }
 
-Nadia if (
-Nadia   options.dropdownCssClass != null ||
-Nadia   options.dropdownCss != null ||
-Nadia   options.adaptDropdownCssClass != null
-Nadia ) {
-Nadia   var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
+      if (
+        options.dropdownCssClass != null ||
+        options.dropdownCss != null ||
+        options.adaptDropdownCssClass != null
+      ) {
+        var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
 
-Nadia   options.dropdownAdapter = Utils.Decorate(
-NadiaNadiaoptions.dropdownAdapter,
-NadiaNadiaDropdownCSS
-Nadia   );
-Nadia }
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          DropdownCSS
+        );
+      }
 
-Nadia options.dropdownAdapter = Utils.Decorate(
-Nadia   options.dropdownAdapter,
-Nadia   AttachBody
-Nadia );
+      options.dropdownAdapter = Utils.Decorate(
+        options.dropdownAdapter,
+        AttachBody
+      );
     }
 
     if (options.selectionAdapter == null) {
-Nadia if (options.multiple) {
-Nadia   options.selectionAdapter = MultipleSelection;
-Nadia } else {
-Nadia   options.selectionAdapter = SingleSelection;
-Nadia }
+      if (options.multiple) {
+        options.selectionAdapter = MultipleSelection;
+      } else {
+        options.selectionAdapter = SingleSelection;
+      }
 
-Nadia // Add the placeholder mixin if a placeholder was specified
-Nadia if (options.placeholder != null) {
-Nadia   options.selectionAdapter = Utils.Decorate(
-NadiaNadiaoptions.selectionAdapter,
-NadiaNadiaPlaceholder
-Nadia   );
-Nadia }
+      // Add the placeholder mixin if a placeholder was specified
+      if (options.placeholder != null) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          Placeholder
+        );
+      }
 
-Nadia if (options.allowClear) {
-Nadia   options.selectionAdapter = Utils.Decorate(
-NadiaNadiaoptions.selectionAdapter,
-NadiaNadiaAllowClear
-Nadia   );
-Nadia }
+      if (options.allowClear) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          AllowClear
+        );
+      }
 
-Nadia if (options.multiple) {
-Nadia   options.selectionAdapter = Utils.Decorate(
-NadiaNadiaoptions.selectionAdapter,
-NadiaNadiaSelectionSearch
-Nadia   );
-Nadia }
+      if (options.multiple) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          SelectionSearch
+        );
+      }
 
-Nadia if (
-Nadia   options.containerCssClass != null ||
-Nadia   options.containerCss != null ||
-Nadia   options.adaptContainerCssClass != null
-Nadia ) {
-Nadia   var ContainerCSS = require(options.amdBase + 'compat/containerCss');
+      if (
+        options.containerCssClass != null ||
+        options.containerCss != null ||
+        options.adaptContainerCssClass != null
+      ) {
+        var ContainerCSS = require(options.amdBase + 'compat/containerCss');
 
-Nadia   options.selectionAdapter = Utils.Decorate(
-NadiaNadiaoptions.selectionAdapter,
-NadiaNadiaContainerCSS
-Nadia   );
-Nadia }
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          ContainerCSS
+        );
+      }
 
-Nadia options.selectionAdapter = Utils.Decorate(
-Nadia   options.selectionAdapter,
-Nadia   EventRelay
-Nadia );
+      options.selectionAdapter = Utils.Decorate(
+        options.selectionAdapter,
+        EventRelay
+      );
     }
 
     if (typeof options.language === 'string') {
-Nadia // Check if the language is specified with a region
-Nadia if (options.language.indexOf('-') > 0) {
-Nadia   // Extract the region information if it is included
-Nadia   var languageParts = options.language.split('-');
-Nadia   var baseLanguage = languageParts[0];
+      // Check if the language is specified with a region
+      if (options.language.indexOf('-') > 0) {
+        // Extract the region information if it is included
+        var languageParts = options.language.split('-');
+        var baseLanguage = languageParts[0];
 
-Nadia   options.language = [options.language, baseLanguage];
-Nadia } else {
-Nadia   options.language = [options.language];
-Nadia }
+        options.language = [options.language, baseLanguage];
+      } else {
+        options.language = [options.language];
+      }
     }
 
     if ($.isArray(options.language)) {
-Nadia var languages = new Translation();
-Nadia options.language.push('en');
+      var languages = new Translation();
+      options.language.push('en');
 
-Nadia var languageNames = options.language;
+      var languageNames = options.language;
 
-Nadia for (var l = 0; l < languageNames.length; l++) {
-Nadia   var name = languageNames[l];
-Nadia   var language = {};
+      for (var l = 0; l < languageNames.length; l++) {
+        var name = languageNames[l];
+        var language = {};
 
-Nadia   try {
-NadiaNadia// Try to load it with the original name
-NadiaNadialanguage = Translation.loadPath(name);
-Nadia   } catch (e) {
-NadiaNadiatry {
-NadiaNadia  // If we couldn't load it, check if it wasn't the full path
-NadiaNadia  name = this.defaults.amdLanguageBase + name;
-NadiaNadia  language = Translation.loadPath(name);
-NadiaNadia} catch (ex) {
-NadiaNadia  // The translation could not be loaded at all. Sometimes this is
-NadiaNadia  // because of a configuration problem, other times this can be
-NadiaNadia  // because of how Select2 helps load all possible translation files.
-NadiaNadia  if (options.debug && window.console && console.warn) {
-NadiaNadia    console.warn(
-NadiaNadiaNadia 'Select2: The language file for "' + name + '" could not be ' +
-NadiaNadiaNadia 'automatically loaded. A fallback will be used instead.'
-NadiaNadia    );
-NadiaNadia  }
+        try {
+          // Try to load it with the original name
+          language = Translation.loadPath(name);
+        } catch (e) {
+          try {
+            // If we couldn't load it, check if it wasn't the full path
+            name = this.defaults.amdLanguageBase + name;
+            language = Translation.loadPath(name);
+          } catch (ex) {
+            // The translation could not be loaded at all. Sometimes this is
+            // because of a configuration problem, other times this can be
+            // because of how Select2 helps load all possible translation files.
+            if (options.debug && window.console && console.warn) {
+              console.warn(
+                'Select2: The language file for "' + name + '" could not be ' +
+                'automatically loaded. A fallback will be used instead.'
+              );
+            }
 
-NadiaNadia  continue;
-NadiaNadia}
-Nadia   }
+            continue;
+          }
+        }
 
-Nadia   languages.extend(language);
-Nadia }
+        languages.extend(language);
+      }
 
-Nadia options.translations = languages;
+      options.translations = languages;
     } else {
-Nadia var baseTranslation = Translation.loadPath(
-Nadia   this.defaults.amdLanguageBase + 'en'
-Nadia );
-Nadia var customTranslation = new Translation(options.language);
+      var baseTranslation = Translation.loadPath(
+        this.defaults.amdLanguageBase + 'en'
+      );
+      var customTranslation = new Translation(options.language);
 
-Nadia customTranslation.extend(baseTranslation);
+      customTranslation.extend(baseTranslation);
 
-Nadia options.translations = customTranslation;
+      options.translations = customTranslation;
     }
 
     return options;
@@ -4806,84 +4806,84 @@ Nadia options.translations = customTranslation;
 
   Defaults.prototype.reset = function () {
     function stripDiacritics (text) {
-Nadia // Used 'uni range + named function' from http://jsperf.com/diacritics/18
-Nadia function match(a) {
-Nadia   return DIACRITICS[a] || a;
-Nadia }
+      // Used 'uni range + named function' from http://jsperf.com/diacritics/18
+      function match(a) {
+        return DIACRITICS[a] || a;
+      }
 
-Nadia return text.replace(/[^\u0000-\u007E]/g, match);
+      return text.replace(/[^\u0000-\u007E]/g, match);
     }
 
     function matcher (params, data) {
-Nadia // Always return the object if there is nothing to compare
-Nadia if ($.trim(params.term) === '') {
-Nadia   return data;
-Nadia }
+      // Always return the object if there is nothing to compare
+      if ($.trim(params.term) === '') {
+        return data;
+      }
 
-Nadia // Do a recursive check for options with children
-Nadia if (data.children && data.children.length > 0) {
-Nadia   // Clone the data object if there are children
-Nadia   // This is required as we modify the object to remove any non-matches
-Nadia   var match = $.extend(true, {}, data);
+      // Do a recursive check for options with children
+      if (data.children && data.children.length > 0) {
+        // Clone the data object if there are children
+        // This is required as we modify the object to remove any non-matches
+        var match = $.extend(true, {}, data);
 
-Nadia   // Check each child of the option
-Nadia   for (var c = data.children.length - 1; c >= 0; c--) {
-NadiaNadiavar child = data.children[c];
+        // Check each child of the option
+        for (var c = data.children.length - 1; c >= 0; c--) {
+          var child = data.children[c];
 
-NadiaNadiavar matches = matcher(params, child);
+          var matches = matcher(params, child);
 
-NadiaNadia// If there wasn't a match, remove the object in the array
-NadiaNadiaif (matches == null) {
-NadiaNadia  match.children.splice(c, 1);
-NadiaNadia}
-Nadia   }
+          // If there wasn't a match, remove the object in the array
+          if (matches == null) {
+            match.children.splice(c, 1);
+          }
+        }
 
-Nadia   // If any children matched, return the new object
-Nadia   if (match.children.length > 0) {
-NadiaNadiareturn match;
-Nadia   }
+        // If any children matched, return the new object
+        if (match.children.length > 0) {
+          return match;
+        }
 
-Nadia   // If there were no matching children, check just the plain object
-Nadia   return matcher(params, match);
-Nadia }
+        // If there were no matching children, check just the plain object
+        return matcher(params, match);
+      }
 
-Nadia var original = stripDiacritics(data.text).toUpperCase();
-Nadia var term = stripDiacritics(params.term).toUpperCase();
+      var original = stripDiacritics(data.text).toUpperCase();
+      var term = stripDiacritics(params.term).toUpperCase();
 
-Nadia // Check if the text contains the term
-Nadia if (original.indexOf(term) > -1) {
-Nadia   return data;
-Nadia }
+      // Check if the text contains the term
+      if (original.indexOf(term) > -1) {
+        return data;
+      }
 
-Nadia // If it doesn't contain the term, don't return anything
-Nadia return null;
+      // If it doesn't contain the term, don't return anything
+      return null;
     }
 
     this.defaults = {
-Nadia amdBase: './',
-Nadia amdLanguageBase: './i18n/',
-Nadia closeOnSelect: true,
-Nadia debug: false,
-Nadia dropdownAutoWidth: false,
-Nadia escapeMarkup: Utils.escapeMarkup,
-Nadia language: EnglishTranslation,
-Nadia matcher: matcher,
-Nadia minimumInputLength: 0,
-Nadia maximumInputLength: 0,
-Nadia maximumSelectionLength: 0,
-Nadia minimumResultsForSearch: 0,
-Nadia selectOnClose: false,
-Nadia sorter: function (data) {
-Nadia   return data;
-Nadia },
-Nadia templateResult: function (result) {
-Nadia   return result.text;
-Nadia },
-Nadia templateSelection: function (selection) {
-Nadia   return selection.text;
-Nadia },
-Nadia theme: 'default',
-Nadia width: 'resolve'
+      amdBase: './',
+      amdLanguageBase: './i18n/',
+      closeOnSelect: true,
+      debug: false,
+      dropdownAutoWidth: false,
+      escapeMarkup: Utils.escapeMarkup,
+      language: EnglishTranslation,
+      matcher: matcher,
+      minimumInputLength: 0,
+      maximumInputLength: 0,
+      maximumSelectionLength: 0,
+      minimumResultsForSearch: 0,
+      selectOnClose: false,
+      sorter: function (data) {
+        return data;
+      },
+      templateResult: function (result) {
+        return result.text;
+      },
+      templateSelection: function (selection) {
+        return selection.text;
+      },
+      theme: 'default',
+      width: 'resolve'
     };
   };
 
@@ -4913,18 +4913,18 @@ S2.define('select2/options',[
     this.options = options;
 
     if ($element != null) {
-Nadia this.fromElement($element);
+      this.fromElement($element);
     }
 
     this.options = Defaults.apply(this.options);
 
     if ($element && $element.is('input')) {
-Nadia var InputCompat = require(this.get('amdBase') + 'compat/inputData');
+      var InputCompat = require(this.get('amdBase') + 'compat/inputData');
 
-Nadia this.options.dataAdapter = Utils.Decorate(
-Nadia   this.options.dataAdapter,
-Nadia   InputCompat
-Nadia );
+      this.options.dataAdapter = Utils.Decorate(
+        this.options.dataAdapter,
+        InputCompat
+      );
     }
   }
 
@@ -4932,58 +4932,58 @@ Nadia );
     var excludedData = ['select2'];
 
     if (this.options.multiple == null) {
-Nadia this.options.multiple = $e.prop('multiple');
+      this.options.multiple = $e.prop('multiple');
     }
 
     if (this.options.disabled == null) {
-Nadia this.options.disabled = $e.prop('disabled');
+      this.options.disabled = $e.prop('disabled');
     }
 
     if (this.options.language == null) {
-Nadia if ($e.prop('lang')) {
-Nadia   this.options.language = $e.prop('lang').toLowerCase();
-Nadia } else if ($e.closest('[lang]').prop('lang')) {
-Nadia   this.options.language = $e.closest('[lang]').prop('lang');
-Nadia }
+      if ($e.prop('lang')) {
+        this.options.language = $e.prop('lang').toLowerCase();
+      } else if ($e.closest('[lang]').prop('lang')) {
+        this.options.language = $e.closest('[lang]').prop('lang');
+      }
     }
 
     if (this.options.dir == null) {
-Nadia if ($e.prop('dir')) {
-Nadia   this.options.dir = $e.prop('dir');
-Nadia } else if ($e.closest('[dir]').prop('dir')) {
-Nadia   this.options.dir = $e.closest('[dir]').prop('dir');
-Nadia } else {
-Nadia   this.options.dir = 'ltr';
-Nadia }
+      if ($e.prop('dir')) {
+        this.options.dir = $e.prop('dir');
+      } else if ($e.closest('[dir]').prop('dir')) {
+        this.options.dir = $e.closest('[dir]').prop('dir');
+      } else {
+        this.options.dir = 'ltr';
+      }
     }
 
     $e.prop('disabled', this.options.disabled);
     $e.prop('multiple', this.options.multiple);
 
     if ($e.data('select2Tags')) {
-Nadia if (this.options.debug && window.console && console.warn) {
-Nadia   console.warn(
-NadiaNadia'Select2: The `data-select2-tags` attribute has been changed to ' +
-NadiaNadia'use the `data-data` and `data-tags="true"` attributes and will be ' +
-NadiaNadia'removed in future versions of Select2.'
-Nadia   );
-Nadia }
+      if (this.options.debug && window.console && console.warn) {
+        console.warn(
+          'Select2: The `data-select2-tags` attribute has been changed to ' +
+          'use the `data-data` and `data-tags="true"` attributes and will be ' +
+          'removed in future versions of Select2.'
+        );
+      }
 
-Nadia $e.data('data', $e.data('select2Tags'));
-Nadia $e.data('tags', true);
+      $e.data('data', $e.data('select2Tags'));
+      $e.data('tags', true);
     }
 
     if ($e.data('ajaxUrl')) {
-Nadia if (this.options.debug && window.console && console.warn) {
-Nadia   console.warn(
-NadiaNadia'Select2: The `data-ajax-url` attribute has been changed to ' +
-NadiaNadia'`data-ajax--url` and support for the old attribute will be removed' +
-NadiaNadia' in future versions of Select2.'
-Nadia   );
-Nadia }
+      if (this.options.debug && window.console && console.warn) {
+        console.warn(
+          'Select2: The `data-ajax-url` attribute has been changed to ' +
+          '`data-ajax--url` and support for the old attribute will be removed' +
+          ' in future versions of Select2.'
+        );
+      }
 
-Nadia $e.attr('ajax--url', $e.data('ajaxUrl'));
-Nadia $e.data('ajax--url', $e.data('ajaxUrl'));
+      $e.attr('ajax--url', $e.data('ajaxUrl'));
+      $e.data('ajax--url', $e.data('ajaxUrl'));
     }
 
     var dataset = {};
@@ -4991,9 +4991,9 @@ Nadia $e.data('ajax--url', $e.data('ajaxUrl'));
     // Prefer the element's `dataset` attribute if it exists
     // jQuery 1.x does not correctly handle data attributes with multiple dashes
     if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
-Nadia dataset = $.extend(true, {}, $e[0].dataset, $e.data());
+      dataset = $.extend(true, {}, $e[0].dataset, $e.data());
     } else {
-Nadia dataset = $e.data();
+      dataset = $e.data();
     }
 
     var data = $.extend(true, {}, dataset);
@@ -5001,15 +5001,15 @@ Nadia dataset = $e.data();
     data = Utils._convertData(data);
 
     for (var key in data) {
-Nadia if ($.inArray(key, excludedData) > -1) {
-Nadia   continue;
-Nadia }
+      if ($.inArray(key, excludedData) > -1) {
+        continue;
+      }
 
-Nadia if ($.isPlainObject(this.options[key])) {
-Nadia   $.extend(this.options[key], data[key]);
-Nadia } else {
-Nadia   this.options[key] = data[key];
-Nadia }
+      if ($.isPlainObject(this.options[key])) {
+        $.extend(this.options[key], data[key]);
+      } else {
+        this.options[key] = data[key];
+      }
     }
 
     return this;
@@ -5034,7 +5034,7 @@ S2.define('select2/core',[
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
     if ($element.data('select2') != null) {
-Nadia $element.data('select2').destroy();
+      $element.data('select2').destroy();
     }
 
     this.$element = $element;
@@ -5099,9 +5099,9 @@ Nadia $element.data('select2').destroy();
 
     // Set the initial state
     this.dataAdapter.current(function (initialData) {
-Nadia self.trigger('selection:update', {
-Nadia   data: initialData
-Nadia });
+      self.trigger('selection:update', {
+        data: initialData
+      });
     });
 
     // Hide the original select
@@ -5120,11 +5120,11 @@ Nadia });
     var id = '';
 
     if ($element.attr('id') != null) {
-Nadia id = $element.attr('id');
+      id = $element.attr('id');
     } else if ($element.attr('name') != null) {
-Nadia id = $element.attr('name') + '-' + Utils.generateChars(2);
+      id = $element.attr('name') + '-' + Utils.generateChars(2);
     } else {
-Nadia id = Utils.generateChars(4);
+      id = Utils.generateChars(4);
     }
 
     id = id.replace(/(:|\.|\[|\]|,)/g, '');
@@ -5139,7 +5139,7 @@ Nadia id = Utils.generateChars(4);
     var width = this._resolveWidth(this.$element, this.options.get('width'));
 
     if (width != null) {
-Nadia $container.css('width', width);
+      $container.css('width', width);
     }
   };
 
@@ -5147,44 +5147,44 @@ Nadia $container.css('width', width);
     var WIDTH = /^width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i;
 
     if (method == 'resolve') {
-Nadia var styleWidth = this._resolveWidth($element, 'style');
+      var styleWidth = this._resolveWidth($element, 'style');
 
-Nadia if (styleWidth != null) {
-Nadia   return styleWidth;
-Nadia }
+      if (styleWidth != null) {
+        return styleWidth;
+      }
 
-Nadia return this._resolveWidth($element, 'element');
+      return this._resolveWidth($element, 'element');
     }
 
     if (method == 'element') {
-Nadia var elementWidth = $element.outerWidth(false);
+      var elementWidth = $element.outerWidth(false);
 
-Nadia if (elementWidth <= 0) {
-Nadia   return 'auto';
-Nadia }
+      if (elementWidth <= 0) {
+        return 'auto';
+      }
 
-Nadia return elementWidth + 'px';
+      return elementWidth + 'px';
     }
 
     if (method == 'style') {
-Nadia var style = $element.attr('style');
+      var style = $element.attr('style');
 
-Nadia if (typeof(style) !== 'string') {
-Nadia   return null;
-Nadia }
+      if (typeof(style) !== 'string') {
+        return null;
+      }
 
-Nadia var attrs = style.split(';');
+      var attrs = style.split(';');
 
-Nadia for (var i = 0, l = attrs.length; i < l; i = i + 1) {
-Nadia   var attr = attrs[i].replace(/\s/g, '');
-Nadia   var matches = attr.match(WIDTH);
+      for (var i = 0, l = attrs.length; i < l; i = i + 1) {
+        var attr = attrs[i].replace(/\s/g, '');
+        var matches = attr.match(WIDTH);
 
-Nadia   if (matches !== null && matches.length >= 1) {
-NadiaNadiareturn matches[1];
-Nadia   }
-Nadia }
+        if (matches !== null && matches.length >= 1) {
+          return matches[1];
+        }
+      }
 
-Nadia return null;
+      return null;
     }
 
     return method;
@@ -5202,55 +5202,55 @@ Nadia return null;
     var self = this;
 
     this.$element.on('change.select2', function () {
-Nadia self.dataAdapter.current(function (data) {
-Nadia   self.trigger('selection:update', {
-NadiaNadiadata: data
-Nadia   });
-Nadia });
+      self.dataAdapter.current(function (data) {
+        self.trigger('selection:update', {
+          data: data
+        });
+      });
     });
 
     this.$element.on('focus.select2', function (evt) {
-Nadia self.trigger('focus', evt);
+      self.trigger('focus', evt);
     });
 
     this._syncA = Utils.bind(this._syncAttributes, this);
     this._syncS = Utils.bind(this._syncSubtree, this);
 
     if (this.$element[0].attachEvent) {
-Nadia this.$element[0].attachEvent('onpropertychange', this._syncA);
+      this.$element[0].attachEvent('onpropertychange', this._syncA);
     }
 
     var observer = window.MutationObserver ||
-Nadia window.WebKitMutationObserver ||
-Nadia window.MozMutationObserver
+      window.WebKitMutationObserver ||
+      window.MozMutationObserver
     ;
 
     if (observer != null) {
-Nadia this._observer = new observer(function (mutations) {
-Nadia   $.each(mutations, self._syncA);
-Nadia   $.each(mutations, self._syncS);
-Nadia });
-Nadia this._observer.observe(this.$element[0], {
-Nadia   attributes: true,
-Nadia   childList: true,
-Nadia   subtree: false
-Nadia });
+      this._observer = new observer(function (mutations) {
+        $.each(mutations, self._syncA);
+        $.each(mutations, self._syncS);
+      });
+      this._observer.observe(this.$element[0], {
+        attributes: true,
+        childList: true,
+        subtree: false
+      });
     } else if (this.$element[0].addEventListener) {
-Nadia this.$element[0].addEventListener(
-Nadia   'DOMAttrModified',
-Nadia   self._syncA,
-Nadia   false
-Nadia );
-Nadia this.$element[0].addEventListener(
-Nadia   'DOMNodeInserted',
-Nadia   self._syncS,
-Nadia   false
-Nadia );
-Nadia this.$element[0].addEventListener(
-Nadia   'DOMNodeRemoved',
-Nadia   self._syncS,
-Nadia   false
-Nadia );
+      this.$element[0].addEventListener(
+        'DOMAttrModified',
+        self._syncA,
+        false
+      );
+      this.$element[0].addEventListener(
+        'DOMNodeInserted',
+        self._syncS,
+        false
+      );
+      this.$element[0].addEventListener(
+        'DOMNodeRemoved',
+        self._syncS,
+        false
+      );
     }
   };
 
@@ -5258,7 +5258,7 @@ Nadia );
     var self = this;
 
     this.dataAdapter.on('*', function (name, params) {
-Nadia self.trigger(name, params);
+      self.trigger(name, params);
     });
   };
 
@@ -5267,19 +5267,19 @@ Nadia self.trigger(name, params);
     var nonRelayEvents = ['toggle', 'focus'];
 
     this.selection.on('toggle', function () {
-Nadia self.toggleDropdown();
+      self.toggleDropdown();
     });
 
     this.selection.on('focus', function (params) {
-Nadia self.focus(params);
+      self.focus(params);
     });
 
     this.selection.on('*', function (name, params) {
-Nadia if ($.inArray(name, nonRelayEvents) !== -1) {
-Nadia   return;
-Nadia }
+      if ($.inArray(name, nonRelayEvents) !== -1) {
+        return;
+      }
 
-Nadia self.trigger(name, params);
+      self.trigger(name, params);
     });
   };
 
@@ -5287,7 +5287,7 @@ Nadia self.trigger(name, params);
     var self = this;
 
     this.dropdown.on('*', function (name, params) {
-Nadia self.trigger(name, params);
+      self.trigger(name, params);
     });
   };
 
@@ -5295,7 +5295,7 @@ Nadia self.trigger(name, params);
     var self = this;
 
     this.results.on('*', function (name, params) {
-Nadia self.trigger(name, params);
+      self.trigger(name, params);
     });
   };
 
@@ -5303,81 +5303,81 @@ Nadia self.trigger(name, params);
     var self = this;
 
     this.on('open', function () {
-Nadia self.$container.addClass('select2-container--open');
+      self.$container.addClass('select2-container--open');
     });
 
     this.on('close', function () {
-Nadia self.$container.removeClass('select2-container--open');
+      self.$container.removeClass('select2-container--open');
     });
 
     this.on('enable', function () {
-Nadia self.$container.removeClass('select2-container--disabled');
+      self.$container.removeClass('select2-container--disabled');
     });
 
     this.on('disable', function () {
-Nadia self.$container.addClass('select2-container--disabled');
+      self.$container.addClass('select2-container--disabled');
     });
 
     this.on('blur', function () {
-Nadia self.$container.removeClass('select2-container--focus');
+      self.$container.removeClass('select2-container--focus');
     });
 
     this.on('query', function (params) {
-Nadia if (!self.isOpen()) {
-Nadia   self.trigger('open', {});
-Nadia }
+      if (!self.isOpen()) {
+        self.trigger('open', {});
+      }
 
-Nadia this.dataAdapter.query(params, function (data) {
-Nadia   self.trigger('results:all', {
-NadiaNadiadata: data,
-NadiaNadiaquery: params
-Nadia   });
-Nadia });
+      this.dataAdapter.query(params, function (data) {
+        self.trigger('results:all', {
+          data: data,
+          query: params
+        });
+      });
     });
 
     this.on('query:append', function (params) {
-Nadia this.dataAdapter.query(params, function (data) {
-Nadia   self.trigger('results:append', {
-NadiaNadiadata: data,
-NadiaNadiaquery: params
-Nadia   });
-Nadia });
+      this.dataAdapter.query(params, function (data) {
+        self.trigger('results:append', {
+          data: data,
+          query: params
+        });
+      });
     });
 
     this.on('keypress', function (evt) {
-Nadia var key = evt.which;
+      var key = evt.which;
 
-Nadia if (self.isOpen()) {
-Nadia   if (key === KEYS.ESC || key === KEYS.TAB ||
-NadiaNadia  (key === KEYS.UP && evt.altKey)) {
-NadiaNadiaself.close();
+      if (self.isOpen()) {
+        if (key === KEYS.ESC || key === KEYS.TAB ||
+            (key === KEYS.UP && evt.altKey)) {
+          self.close();
 
-NadiaNadiaevt.preventDefault();
-Nadia   } else if (key === KEYS.ENTER) {
-NadiaNadiaself.trigger('results:select', {});
+          evt.preventDefault();
+        } else if (key === KEYS.ENTER) {
+          self.trigger('results:select', {});
 
-NadiaNadiaevt.preventDefault();
-Nadia   } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
-NadiaNadiaself.trigger('results:toggle', {});
+          evt.preventDefault();
+        } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
+          self.trigger('results:toggle', {});
 
-NadiaNadiaevt.preventDefault();
-Nadia   } else if (key === KEYS.UP) {
-NadiaNadiaself.trigger('results:previous', {});
+          evt.preventDefault();
+        } else if (key === KEYS.UP) {
+          self.trigger('results:previous', {});
 
-NadiaNadiaevt.preventDefault();
-Nadia   } else if (key === KEYS.DOWN) {
-NadiaNadiaself.trigger('results:next', {});
+          evt.preventDefault();
+        } else if (key === KEYS.DOWN) {
+          self.trigger('results:next', {});
 
-NadiaNadiaevt.preventDefault();
-Nadia   }
-Nadia } else {
-Nadia   if (key === KEYS.ENTER || key === KEYS.SPACE ||
-NadiaNadia  (key === KEYS.DOWN && evt.altKey)) {
-NadiaNadiaself.open();
+          evt.preventDefault();
+        }
+      } else {
+        if (key === KEYS.ENTER || key === KEYS.SPACE ||
+            (key === KEYS.DOWN && evt.altKey)) {
+          self.open();
 
-NadiaNadiaevt.preventDefault();
-Nadia   }
-Nadia }
+          evt.preventDefault();
+        }
+      }
     });
   };
 
@@ -5385,13 +5385,13 @@ Nadia }
     this.options.set('disabled', this.$element.prop('disabled'));
 
     if (this.options.get('disabled')) {
-Nadia if (this.isOpen()) {
-Nadia   this.close();
-Nadia }
+      if (this.isOpen()) {
+        this.close();
+      }
 
-Nadia this.trigger('disable', {});
+      this.trigger('disable', {});
     } else {
-Nadia this.trigger('enable', {});
+      this.trigger('enable', {});
     }
   };
 
@@ -5402,36 +5402,36 @@ Nadia this.trigger('enable', {});
     // Ignore any mutation events raised for elements that aren't options or
     // optgroups. This handles the case when the select element is destroyed
     if (
-Nadia evt && evt.target && (
-Nadia   evt.target.nodeName !== 'OPTION' && evt.target.nodeName !== 'OPTGROUP'
-Nadia )
+      evt && evt.target && (
+        evt.target.nodeName !== 'OPTION' && evt.target.nodeName !== 'OPTGROUP'
+      )
     ) {
-Nadia return;
+      return;
     }
 
     if (!mutations) {
-Nadia // If mutation events aren't supported, then we can only assume that the
-Nadia // change affected the selections
-Nadia changed = true;
+      // If mutation events aren't supported, then we can only assume that the
+      // change affected the selections
+      changed = true;
     } else if (mutations.addedNodes && mutations.addedNodes.length > 0) {
-Nadia for (var n = 0; n < mutations.addedNodes.length; n++) {
-Nadia   var node = mutations.addedNodes[n];
+      for (var n = 0; n < mutations.addedNodes.length; n++) {
+        var node = mutations.addedNodes[n];
 
-Nadia   if (node.selected) {
-NadiaNadiachanged = true;
-Nadia   }
-Nadia }
+        if (node.selected) {
+          changed = true;
+        }
+      }
     } else if (mutations.removedNodes && mutations.removedNodes.length > 0) {
-Nadia changed = true;
+      changed = true;
     }
 
     // Only re-pull the data if we think there is a change
     if (changed) {
-Nadia this.dataAdapter.current(function (currentData) {
-Nadia   self.trigger('selection:update', {
-NadiaNadiadata: currentData
-Nadia   });
-Nadia });
+      this.dataAdapter.current(function (currentData) {
+        self.trigger('selection:update', {
+          data: currentData
+        });
+      });
     }
   };
 
@@ -5442,31 +5442,31 @@ Nadia });
   Select2.prototype.trigger = function (name, args) {
     var actualTrigger = Select2.__super__.trigger;
     var preTriggerMap = {
-Nadia 'open': 'opening',
-Nadia 'close': 'closing',
-Nadia 'select': 'selecting',
-Nadia 'unselect': 'unselecting'
+      'open': 'opening',
+      'close': 'closing',
+      'select': 'selecting',
+      'unselect': 'unselecting'
     };
 
     if (args === undefined) {
-Nadia args = {};
+      args = {};
     }
 
     if (name in preTriggerMap) {
-Nadia var preTriggerName = preTriggerMap[name];
-Nadia var preTriggerArgs = {
-Nadia   prevented: false,
-Nadia   name: name,
-Nadia   args: args
-Nadia };
+      var preTriggerName = preTriggerMap[name];
+      var preTriggerArgs = {
+        prevented: false,
+        name: name,
+        args: args
+      };
 
-Nadia actualTrigger.call(this, preTriggerName, preTriggerArgs);
+      actualTrigger.call(this, preTriggerName, preTriggerArgs);
 
-Nadia if (preTriggerArgs.prevented) {
-Nadia   args.prevented = true;
+      if (preTriggerArgs.prevented) {
+        args.prevented = true;
 
-Nadia   return;
-Nadia }
+        return;
+      }
     }
 
     actualTrigger.call(this, name, args);
@@ -5474,19 +5474,19 @@ Nadia }
 
   Select2.prototype.toggleDropdown = function () {
     if (this.options.get('disabled')) {
-Nadia return;
+      return;
     }
 
     if (this.isOpen()) {
-Nadia this.close();
+      this.close();
     } else {
-Nadia this.open();
+      this.open();
     }
   };
 
   Select2.prototype.open = function () {
     if (this.isOpen()) {
-Nadia return;
+      return;
     }
 
     this.trigger('query', {});
@@ -5494,7 +5494,7 @@ Nadia return;
 
   Select2.prototype.close = function () {
     if (!this.isOpen()) {
-Nadia return;
+      return;
     }
 
     this.trigger('close', {});
@@ -5511,7 +5511,7 @@ Nadia return;
   Select2.prototype.focus = function (data) {
     // No need to re-trigger focus events if we are already focused
     if (this.hasFocus()) {
-Nadia return;
+      return;
     }
 
     this.$container.addClass('select2-container--focus');
@@ -5520,15 +5520,15 @@ Nadia return;
 
   Select2.prototype.enable = function (args) {
     if (this.options.get('debug') && window.console && console.warn) {
-Nadia console.warn(
-Nadia   'Select2: The `select2("enable")` method has been deprecated and will' +
-Nadia   ' be removed in later Select2 versions. Use $element.prop("disabled")' +
-Nadia   ' instead.'
-Nadia );
+      console.warn(
+        'Select2: The `select2("enable")` method has been deprecated and will' +
+        ' be removed in later Select2 versions. Use $element.prop("disabled")' +
+        ' instead.'
+      );
     }
 
     if (args == null || args.length === 0) {
-Nadia args = [true];
+      args = [true];
     }
 
     var disabled = !args[0];
@@ -5538,17 +5538,17 @@ Nadia args = [true];
 
   Select2.prototype.data = function () {
     if (this.options.get('debug') &&
-Nadia   arguments.length > 0 && window.console && console.warn) {
-Nadia console.warn(
-Nadia   'Select2: Data can no longer be set using `select2("data")`. You ' +
-Nadia   'should consider setting the value instead using `$element.val()`.'
-Nadia );
+        arguments.length > 0 && window.console && console.warn) {
+      console.warn(
+        'Select2: Data can no longer be set using `select2("data")`. You ' +
+        'should consider setting the value instead using `$element.val()`.'
+      );
     }
 
     var data = [];
 
     this.dataAdapter.current(function (currentData) {
-Nadia data = currentData;
+      data = currentData;
     });
 
     return data;
@@ -5556,22 +5556,22 @@ Nadia data = currentData;
 
   Select2.prototype.val = function (args) {
     if (this.options.get('debug') && window.console && console.warn) {
-Nadia console.warn(
-Nadia   'Select2: The `select2("val")` method has been deprecated and will be' +
-Nadia   ' removed in later Select2 versions. Use $element.val() instead.'
-Nadia );
+      console.warn(
+        'Select2: The `select2("val")` method has been deprecated and will be' +
+        ' removed in later Select2 versions. Use $element.val() instead.'
+      );
     }
 
     if (args == null || args.length === 0) {
-Nadia return this.$element.val();
+      return this.$element.val();
     }
 
     var newVal = args[0];
 
     if ($.isArray(newVal)) {
-Nadia newVal = $.map(newVal, function (obj) {
-Nadia   return obj.toString();
-Nadia });
+      newVal = $.map(newVal, function (obj) {
+        return obj.toString();
+      });
     }
 
     this.$element.val(newVal).trigger('change');
@@ -5581,19 +5581,19 @@ Nadia });
     this.$container.remove();
 
     if (this.$element[0].detachEvent) {
-Nadia this.$element[0].detachEvent('onpropertychange', this._syncA);
+      this.$element[0].detachEvent('onpropertychange', this._syncA);
     }
 
     if (this._observer != null) {
-Nadia this._observer.disconnect();
-Nadia this._observer = null;
+      this._observer.disconnect();
+      this._observer = null;
     } else if (this.$element[0].removeEventListener) {
-Nadia this.$element[0]
-Nadia   .removeEventListener('DOMAttrModified', this._syncA, false);
-Nadia this.$element[0]
-Nadia   .removeEventListener('DOMNodeInserted', this._syncS, false);
-Nadia this.$element[0]
-Nadia   .removeEventListener('DOMNodeRemoved', this._syncS, false);
+      this.$element[0]
+        .removeEventListener('DOMAttrModified', this._syncA, false);
+      this.$element[0]
+        .removeEventListener('DOMNodeInserted', this._syncS, false);
+      this.$element[0]
+        .removeEventListener('DOMNodeRemoved', this._syncS, false);
     }
 
     this._syncA = null;
@@ -5619,10 +5619,10 @@ Nadia   .removeEventListener('DOMNodeRemoved', this._syncS, false);
 
   Select2.prototype.render = function () {
     var $container = $(
-Nadia '<span class="select2 select2-container">' +
-Nadia   '<span class="selection"></span>' +
-Nadia   '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
-Nadia '</span>'
+      '<span class="select2 select2-container">' +
+        '<span class="selection"></span>' +
+        '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
+      '</span>'
     );
 
     $container.attr('dir', this.options.get('dir'));
@@ -5648,31 +5648,31 @@ S2.define('select2/compat/utils',[
     classes = $.trim($dest.attr('class'));
 
     if (classes) {
-Nadia classes = '' + classes; // for IE which returns object
+      classes = '' + classes; // for IE which returns object
 
-Nadia $(classes.split(/\s+/)).each(function () {
-Nadia   // Save all Select2 classes
-Nadia   if (this.indexOf('select2-') === 0) {
-NadiaNadiareplacements.push(this);
-Nadia   }
-Nadia });
+      $(classes.split(/\s+/)).each(function () {
+        // Save all Select2 classes
+        if (this.indexOf('select2-') === 0) {
+          replacements.push(this);
+        }
+      });
     }
 
     classes = $.trim($src.attr('class'));
 
     if (classes) {
-Nadia classes = '' + classes; // for IE which returns object
+      classes = '' + classes; // for IE which returns object
 
-Nadia $(classes.split(/\s+/)).each(function () {
-Nadia   // Only adapt non-Select2 classes
-Nadia   if (this.indexOf('select2-') !== 0) {
-NadiaNadiaadapted = adapter(this);
+      $(classes.split(/\s+/)).each(function () {
+        // Only adapt non-Select2 classes
+        if (this.indexOf('select2-') !== 0) {
+          adapted = adapter(this);
 
-NadiaNadiaif (adapted != null) {
-NadiaNadia  replacements.push(adapted);
-NadiaNadia}
-Nadia   }
-Nadia });
+          if (adapted != null) {
+            replacements.push(adapted);
+          }
+        }
+      });
     }
 
     $dest.attr('class', replacements.join(' '));
@@ -5700,33 +5700,33 @@ S2.define('select2/compat/containerCss',[
     var containerCssClass = this.options.get('containerCssClass') || '';
 
     if ($.isFunction(containerCssClass)) {
-Nadia containerCssClass = containerCssClass(this.$element);
+      containerCssClass = containerCssClass(this.$element);
     }
 
     var containerCssAdapter = this.options.get('adaptContainerCssClass');
     containerCssAdapter = containerCssAdapter || _containerAdapter;
 
     if (containerCssClass.indexOf(':all:') !== -1) {
-Nadia containerCssClass = containerCssClass.replace(':all:', '');
+      containerCssClass = containerCssClass.replace(':all:', '');
 
-Nadia var _cssAdapter = containerCssAdapter;
+      var _cssAdapter = containerCssAdapter;
 
-Nadia containerCssAdapter = function (clazz) {
-Nadia   var adapted = _cssAdapter(clazz);
+      containerCssAdapter = function (clazz) {
+        var adapted = _cssAdapter(clazz);
 
-Nadia   if (adapted != null) {
-NadiaNadia// Append the old one along with the adapted one
-NadiaNadiareturn adapted + ' ' + clazz;
-Nadia   }
+        if (adapted != null) {
+          // Append the old one along with the adapted one
+          return adapted + ' ' + clazz;
+        }
 
-Nadia   return clazz;
-Nadia };
+        return clazz;
+      };
     }
 
     var containerCss = this.options.get('containerCss') || {};
 
     if ($.isFunction(containerCss)) {
-Nadia containerCss = containerCss(this.$element);
+      containerCss = containerCss(this.$element);
     }
 
     CompatUtils.syncCssClasses($container, this.$element, containerCssAdapter);
@@ -5757,33 +5757,33 @@ S2.define('select2/compat/dropdownCss',[
     var dropdownCssClass = this.options.get('dropdownCssClass') || '';
 
     if ($.isFunction(dropdownCssClass)) {
-Nadia dropdownCssClass = dropdownCssClass(this.$element);
+      dropdownCssClass = dropdownCssClass(this.$element);
     }
 
     var dropdownCssAdapter = this.options.get('adaptDropdownCssClass');
     dropdownCssAdapter = dropdownCssAdapter || _dropdownAdapter;
 
     if (dropdownCssClass.indexOf(':all:') !== -1) {
-Nadia dropdownCssClass = dropdownCssClass.replace(':all:', '');
+      dropdownCssClass = dropdownCssClass.replace(':all:', '');
 
-Nadia var _cssAdapter = dropdownCssAdapter;
+      var _cssAdapter = dropdownCssAdapter;
 
-Nadia dropdownCssAdapter = function (clazz) {
-Nadia   var adapted = _cssAdapter(clazz);
+      dropdownCssAdapter = function (clazz) {
+        var adapted = _cssAdapter(clazz);
 
-Nadia   if (adapted != null) {
-NadiaNadia// Append the old one along with the adapted one
-NadiaNadiareturn adapted + ' ' + clazz;
-Nadia   }
+        if (adapted != null) {
+          // Append the old one along with the adapted one
+          return adapted + ' ' + clazz;
+        }
 
-Nadia   return clazz;
-Nadia };
+        return clazz;
+      };
     }
 
     var dropdownCss = this.options.get('dropdownCss') || {};
 
     if ($.isFunction(dropdownCss)) {
-Nadia dropdownCss = dropdownCss(this.$element);
+      dropdownCss = dropdownCss(this.$element);
     }
 
     CompatUtils.syncCssClasses($dropdown, this.$element, dropdownCssAdapter);
@@ -5802,13 +5802,13 @@ S2.define('select2/compat/initSelection',[
 ], function ($) {
   function InitSelection (decorated, $element, options) {
     if (options.get('debug') && window.console && console.warn) {
-Nadia console.warn(
-Nadia   'Select2: The `initSelection` option has been deprecated in favor' +
-Nadia   ' of a custom data adapter that overrides the `current` method. ' +
-Nadia   'This method is now called multiple times instead of a single ' +
-Nadia   'time when the instance is initialized. Support will be removed ' +
-Nadia   'for the `initSelection` option in future versions of Select2'
-Nadia );
+      console.warn(
+        'Select2: The `initSelection` option has been deprecated in favor' +
+        ' of a custom data adapter that overrides the `current` method. ' +
+        'This method is now called multiple times instead of a single ' +
+        'time when the instance is initialized. Support will be removed ' +
+        'for the `initSelection` option in future versions of Select2'
+      );
     }
 
     this.initSelection = options.get('initSelection');
@@ -5821,19 +5821,19 @@ Nadia );
     var self = this;
 
     if (this._isInitialized) {
-Nadia decorated.call(this, callback);
+      decorated.call(this, callback);
 
-Nadia return;
+      return;
     }
 
     this.initSelection.call(null, this.$element, function (data) {
-Nadia self._isInitialized = true;
+      self._isInitialized = true;
 
-Nadia if (!$.isArray(data)) {
-Nadia   data = [data];
-Nadia }
+      if (!$.isArray(data)) {
+        data = [data];
+      }
 
-Nadia callback(data);
+      callback(data);
     });
   };
 
@@ -5848,13 +5848,13 @@ S2.define('select2/compat/inputData',[
     this._valueSeparator = options.get('valueSeparator') || ',';
 
     if ($element.prop('type') === 'hidden') {
-Nadia if (options.get('debug') && console && console.warn) {
-Nadia   console.warn(
-NadiaNadia'Select2: Using a hidden input with Select2 is no longer ' +
-NadiaNadia'supported and may stop working in the future. It is recommended ' +
-NadiaNadia'to use a `<select>` element instead.'
-Nadia   );
-Nadia }
+      if (options.get('debug') && console && console.warn) {
+        console.warn(
+          'Select2: Using a hidden input with Select2 is no longer ' +
+          'supported and may stop working in the future. It is recommended ' +
+          'to use a `<select>` element instead.'
+        );
+      }
     }
 
     decorated.call(this, $element, options);
@@ -5862,36 +5862,36 @@ Nadia }
 
   InputData.prototype.current = function (_, callback) {
     function getSelected (data, selectedIds) {
-Nadia var selected = [];
+      var selected = [];
 
-Nadia if (data.selected || $.inArray(data.id, selectedIds) !== -1) {
-Nadia   data.selected = true;
-Nadia   selected.push(data);
-Nadia } else {
-Nadia   data.selected = false;
-Nadia }
+      if (data.selected || $.inArray(data.id, selectedIds) !== -1) {
+        data.selected = true;
+        selected.push(data);
+      } else {
+        data.selected = false;
+      }
 
-Nadia if (data.children) {
-Nadia   selected.push.apply(selected, getSelected(data.children, selectedIds));
-Nadia }
+      if (data.children) {
+        selected.push.apply(selected, getSelected(data.children, selectedIds));
+      }
 
-Nadia return selected;
+      return selected;
     }
 
     var selected = [];
 
     for (var d = 0; d < this._currentData.length; d++) {
-Nadia var data = this._currentData[d];
+      var data = this._currentData[d];
 
-Nadia selected.push.apply(
-Nadia   selected,
-Nadia   getSelected(
-NadiaNadiadata,
-NadiaNadiathis.$element.val().split(
-NadiaNadia  this._valueSeparator
-NadiaNadia)
-Nadia   )
-Nadia );
+      selected.push.apply(
+        selected,
+        getSelected(
+          data,
+          this.$element.val().split(
+            this._valueSeparator
+          )
+        )
+      );
     }
 
     callback(selected);
@@ -5899,20 +5899,20 @@ Nadia );
 
   InputData.prototype.select = function (_, data) {
     if (!this.options.get('multiple')) {
-Nadia this.current(function (allData) {
-Nadia   $.map(allData, function (data) {
-NadiaNadiadata.selected = false;
-Nadia   });
-Nadia });
+      this.current(function (allData) {
+        $.map(allData, function (data) {
+          data.selected = false;
+        });
+      });
 
-Nadia this.$element.val(data.id);
-Nadia this.$element.trigger('change');
+      this.$element.val(data.id);
+      this.$element.trigger('change');
     } else {
-Nadia var value = this.$element.val();
-Nadia value += this._valueSeparator + data.id;
+      var value = this.$element.val();
+      value += this._valueSeparator + data.id;
 
-Nadia this.$element.val(value);
-Nadia this.$element.trigger('change');
+      this.$element.val(value);
+      this.$element.trigger('change');
     }
   };
 
@@ -5922,20 +5922,20 @@ Nadia this.$element.trigger('change');
     data.selected = false;
 
     this.current(function (allData) {
-Nadia var values = [];
+      var values = [];
 
-Nadia for (var d = 0; d < allData.length; d++) {
-Nadia   var item = allData[d];
+      for (var d = 0; d < allData.length; d++) {
+        var item = allData[d];
 
-Nadia   if (data.id == item.id) {
-NadiaNadiacontinue;
-Nadia   }
+        if (data.id == item.id) {
+          continue;
+        }
 
-Nadia   values.push(item.id);
-Nadia }
+        values.push(item.id);
+      }
 
-Nadia self.$element.val(values.join(self._valueSeparator));
-Nadia self.$element.trigger('change');
+      self.$element.val(values.join(self._valueSeparator));
+      self.$element.trigger('change');
     });
   };
 
@@ -5943,23 +5943,23 @@ Nadia self.$element.trigger('change');
     var results = [];
 
     for (var d = 0; d < this._currentData.length; d++) {
-Nadia var data = this._currentData[d];
+      var data = this._currentData[d];
 
-Nadia var matches = this.matches(params, data);
+      var matches = this.matches(params, data);
 
-Nadia if (matches !== null) {
-Nadia   results.push(matches);
-Nadia }
+      if (matches !== null) {
+        results.push(matches);
+      }
     }
 
     callback({
-Nadia results: results
+      results: results
     });
   };
 
   InputData.prototype.addOptions = function (_, $options) {
     var options = $.map($options, function ($option) {
-Nadia return $.data($option[0], 'data');
+      return $.data($option[0], 'data');
     });
 
     this._currentData.push.apply(this._currentData, options);
@@ -5973,36 +5973,36 @@ S2.define('select2/compat/matcher',[
 ], function ($) {
   function oldMatcher (matcher) {
     function wrappedMatcher (params, data) {
-Nadia var match = $.extend(true, {}, data);
+      var match = $.extend(true, {}, data);
 
-Nadia if (params.term == null || $.trim(params.term) === '') {
-Nadia   return match;
-Nadia }
+      if (params.term == null || $.trim(params.term) === '') {
+        return match;
+      }
 
-Nadia if (data.children) {
-Nadia   for (var c = data.children.length - 1; c >= 0; c--) {
-NadiaNadiavar child = data.children[c];
+      if (data.children) {
+        for (var c = data.children.length - 1; c >= 0; c--) {
+          var child = data.children[c];
 
-NadiaNadia// Check if the child object matches
-NadiaNadia// The old matcher returned a boolean true or false
-NadiaNadiavar doesMatch = matcher(params.term, child.text, child);
+          // Check if the child object matches
+          // The old matcher returned a boolean true or false
+          var doesMatch = matcher(params.term, child.text, child);
 
-NadiaNadia// If the child didn't match, pop it off
-NadiaNadiaif (!doesMatch) {
-NadiaNadia  match.children.splice(c, 1);
-NadiaNadia}
-Nadia   }
+          // If the child didn't match, pop it off
+          if (!doesMatch) {
+            match.children.splice(c, 1);
+          }
+        }
 
-Nadia   if (match.children.length > 0) {
-NadiaNadiareturn match;
-Nadia   }
-Nadia }
+        if (match.children.length > 0) {
+          return match;
+        }
+      }
 
-Nadia if (matcher(params.term, data.text, data)) {
-Nadia   return match;
-Nadia }
+      if (matcher(params.term, data.text, data)) {
+        return match;
+      }
 
-Nadia return null;
+      return null;
     }
 
     return wrappedMatcher;
@@ -6016,12 +6016,12 @@ S2.define('select2/compat/query',[
 ], function () {
   function Query (decorated, $element, options) {
     if (options.get('debug') && window.console && console.warn) {
-Nadia console.warn(
-Nadia   'Select2: The `query` option has been deprecated in favor of a ' +
-Nadia   'custom data adapter that overrides the `query` method. Support ' +
-Nadia   'will be removed for the `query` option in future versions of ' +
-Nadia   'Select2.'
-Nadia );
+      console.warn(
+        'Select2: The `query` option has been deprecated in favor of a ' +
+        'custom data adapter that overrides the `query` method. Support ' +
+        'will be removed for the `query` option in future versions of ' +
+        'Select2.'
+      );
     }
 
     decorated.call(this, $element, options);
@@ -6089,7 +6089,7 @@ S2.define('select2/dropdown/stopPropagation',[
     ];
 
     this.$dropdown.on(stoppedEvents.join(' '), function (evt) {
-Nadia evt.stopPropagation();
+      evt.stopPropagation();
     });
   };
 
@@ -6105,30 +6105,30 @@ S2.define('select2/selection/stopPropagation',[
     decorated.call(this, container, $container);
 
     var stoppedEvents = [
-Nadia 'blur',
-Nadia 'change',
-Nadia 'click',
-Nadia 'dblclick',
-Nadia 'focus',
-Nadia 'focusin',
-Nadia 'focusout',
-Nadia 'input',
-Nadia 'keydown',
-Nadia 'keyup',
-Nadia 'keypress',
-Nadia 'mousedown',
-Nadia 'mouseenter',
-Nadia 'mouseleave',
-Nadia 'mousemove',
-Nadia 'mouseover',
-Nadia 'mouseup',
-Nadia 'search',
-Nadia 'touchend',
-Nadia 'touchstart'
+      'blur',
+      'change',
+      'click',
+      'dblclick',
+      'focus',
+      'focusin',
+      'focusout',
+      'input',
+      'keydown',
+      'keyup',
+      'keypress',
+      'mousedown',
+      'mouseenter',
+      'mouseleave',
+      'mousemove',
+      'mouseover',
+      'mouseup',
+      'search',
+      'touchend',
+      'touchstart'
     ];
 
     this.$selection.on(stoppedEvents.join(' '), function (evt) {
-Nadia evt.stopPropagation();
+      evt.stopPropagation();
     });
   };
 
@@ -6145,214 +6145,214 @@ Nadia evt.stopPropagation();
 
 (function (factory) {
     if ( typeof S2.define === 'function' && S2.define.amd ) {
-Nadia   // AMD. Register as an anonymous module.
-Nadia   S2.define('jquery-mousewheel',['jquery'], factory);
+        // AMD. Register as an anonymous module.
+        S2.define('jquery-mousewheel',['jquery'], factory);
     } else if (typeof exports === 'object') {
-Nadia   // Node/CommonJS style for Browserify
-Nadia   module.exports = factory;
+        // Node/CommonJS style for Browserify
+        module.exports = factory;
     } else {
-Nadia   // Browser globals
-Nadia   factory(jQuery);
+        // Browser globals
+        factory(jQuery);
     }
 }(function ($) {
 
     var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
-Nadia   toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
-NadiaNadiaNadiaNadia['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
-Nadia   slice  = Array.prototype.slice,
-Nadia   nullLowestDeltaTimeout, lowestDelta;
+        toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
+                    ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
+        slice  = Array.prototype.slice,
+        nullLowestDeltaTimeout, lowestDelta;
 
     if ( $.event.fixHooks ) {
-Nadia   for ( var i = toFix.length; i; ) {
-NadiaNadia  $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
-Nadia   }
+        for ( var i = toFix.length; i; ) {
+            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
+        }
     }
 
     var special = $.event.special.mousewheel = {
-Nadia   version: '3.1.12',
+        version: '3.1.12',
 
-Nadia   setup: function() {
-NadiaNadia  if ( this.addEventListener ) {
-NadiaNadiaNadia for ( var i = toBind.length; i; ) {
-NadiaNadiaNadiaNadiathis.addEventListener( toBind[--i], handler, false );
-NadiaNadiaNadia }
-NadiaNadia  } else {
-NadiaNadiaNadia this.onmousewheel = handler;
-NadiaNadia  }
-NadiaNadia  // Store the line height and page height for this particular element
-NadiaNadia  $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
-NadiaNadia  $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
-Nadia   },
+        setup: function() {
+            if ( this.addEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.addEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = handler;
+            }
+            // Store the line height and page height for this particular element
+            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
+            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+        },
 
-Nadia   teardown: function() {
-NadiaNadia  if ( this.removeEventListener ) {
-NadiaNadiaNadia for ( var i = toBind.length; i; ) {
-NadiaNadiaNadiaNadiathis.removeEventListener( toBind[--i], handler, false );
-NadiaNadiaNadia }
-NadiaNadia  } else {
-NadiaNadiaNadia this.onmousewheel = null;
-NadiaNadia  }
-NadiaNadia  // Clean up the data we added to the element
-NadiaNadia  $.removeData(this, 'mousewheel-line-height');
-NadiaNadia  $.removeData(this, 'mousewheel-page-height');
-Nadia   },
+        teardown: function() {
+            if ( this.removeEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.removeEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = null;
+            }
+            // Clean up the data we added to the element
+            $.removeData(this, 'mousewheel-line-height');
+            $.removeData(this, 'mousewheel-page-height');
+        },
 
-Nadia   getLineHeight: function(elem) {
-NadiaNadia  var $elem = $(elem),
-NadiaNadiaNadia $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
-NadiaNadia  if (!$parent.length) {
-NadiaNadiaNadia $parent = $('body');
-NadiaNadia  }
-NadiaNadia  return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
-Nadia   },
+        getLineHeight: function(elem) {
+            var $elem = $(elem),
+                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
+            if (!$parent.length) {
+                $parent = $('body');
+            }
+            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
+        },
 
-Nadia   getPageHeight: function(elem) {
-NadiaNadia  return $(elem).height();
-Nadia   },
+        getPageHeight: function(elem) {
+            return $(elem).height();
+        },
 
-Nadia   settings: {
-NadiaNadia  adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
-NadiaNadia  normalizeOffset: true  // calls getBoundingClientRect for each event
-Nadia   }
+        settings: {
+            adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
+            normalizeOffset: true  // calls getBoundingClientRect for each event
+        }
     };
 
     $.fn.extend({
-Nadia   mousewheel: function(fn) {
-NadiaNadia  return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
-Nadia   },
+        mousewheel: function(fn) {
+            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+        },
 
-Nadia   unmousewheel: function(fn) {
-NadiaNadia  return this.unbind('mousewheel', fn);
-Nadia   }
+        unmousewheel: function(fn) {
+            return this.unbind('mousewheel', fn);
+        }
     });
 
 
     function handler(event) {
-Nadia   var orgEvent   = event || window.event,
-NadiaNadia  argsNadia  = slice.call(arguments, 1),
-NadiaNadia  deltaNadia = 0,
-NadiaNadia  deltaXNadia= 0,
-NadiaNadia  deltaYNadia= 0,
-NadiaNadia  absDelta   = 0,
-NadiaNadia  offsetX    = 0,
-NadiaNadia  offsetY    = 0;
-Nadia   event = $.event.fix(orgEvent);
-Nadia   event.type = 'mousewheel';
+        var orgEvent   = event || window.event,
+            args       = slice.call(arguments, 1),
+            delta      = 0,
+            deltaX     = 0,
+            deltaY     = 0,
+            absDelta   = 0,
+            offsetX    = 0,
+            offsetY    = 0;
+        event = $.event.fix(orgEvent);
+        event.type = 'mousewheel';
 
-Nadia   // Old school scrollwheel delta
-Nadia   if ( 'detail'Nadia in orgEvent ) { deltaY = orgEvent.detail * -1;Nadia }
-Nadia   if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;Nadia  }
-Nadia   if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;Nadia }
-Nadia   if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
+        // Old school scrollwheel delta
+        if ( 'detail'      in orgEvent ) { deltaY = orgEvent.detail * -1;      }
+        if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;       }
+        if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;      }
+        if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
 
-Nadia   // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
-Nadia   if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
-NadiaNadia  deltaX = deltaY * -1;
-NadiaNadia  deltaY = 0;
-Nadia   }
+        // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
+        if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+            deltaX = deltaY * -1;
+            deltaY = 0;
+        }
 
-Nadia   // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
-Nadia   delta = deltaY === 0 ? deltaX : deltaY;
+        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+        delta = deltaY === 0 ? deltaX : deltaY;
 
-Nadia   // New school wheel delta (wheel event)
-Nadia   if ( 'deltaY' in orgEvent ) {
-NadiaNadia  deltaY = orgEvent.deltaY * -1;
-NadiaNadia  delta  = deltaY;
-Nadia   }
-Nadia   if ( 'deltaX' in orgEvent ) {
-NadiaNadia  deltaX = orgEvent.deltaX;
-NadiaNadia  if ( deltaY === 0 ) { delta  = deltaX * -1; }
-Nadia   }
+        // New school wheel delta (wheel event)
+        if ( 'deltaY' in orgEvent ) {
+            deltaY = orgEvent.deltaY * -1;
+            delta  = deltaY;
+        }
+        if ( 'deltaX' in orgEvent ) {
+            deltaX = orgEvent.deltaX;
+            if ( deltaY === 0 ) { delta  = deltaX * -1; }
+        }
 
-Nadia   // No change actually happened, no reason to go any further
-Nadia   if ( deltaY === 0 && deltaX === 0 ) { return; }
+        // No change actually happened, no reason to go any further
+        if ( deltaY === 0 && deltaX === 0 ) { return; }
 
-Nadia   // Need to convert lines and pages to pixels if we aren't already in pixels
-Nadia   // There are three delta modes:
-Nadia   //   * deltaMode 0 is by pixels, nothing to do
-Nadia   //   * deltaMode 1 is by lines
-Nadia   //   * deltaMode 2 is by pages
-Nadia   if ( orgEvent.deltaMode === 1 ) {
-NadiaNadia  var lineHeight = $.data(this, 'mousewheel-line-height');
-NadiaNadia  delta  *= lineHeight;
-NadiaNadia  deltaY *= lineHeight;
-NadiaNadia  deltaX *= lineHeight;
-Nadia   } else if ( orgEvent.deltaMode === 2 ) {
-NadiaNadia  var pageHeight = $.data(this, 'mousewheel-page-height');
-NadiaNadia  delta  *= pageHeight;
-NadiaNadia  deltaY *= pageHeight;
-NadiaNadia  deltaX *= pageHeight;
-Nadia   }
+        // Need to convert lines and pages to pixels if we aren't already in pixels
+        // There are three delta modes:
+        //   * deltaMode 0 is by pixels, nothing to do
+        //   * deltaMode 1 is by lines
+        //   * deltaMode 2 is by pages
+        if ( orgEvent.deltaMode === 1 ) {
+            var lineHeight = $.data(this, 'mousewheel-line-height');
+            delta  *= lineHeight;
+            deltaY *= lineHeight;
+            deltaX *= lineHeight;
+        } else if ( orgEvent.deltaMode === 2 ) {
+            var pageHeight = $.data(this, 'mousewheel-page-height');
+            delta  *= pageHeight;
+            deltaY *= pageHeight;
+            deltaX *= pageHeight;
+        }
 
-Nadia   // Store lowest absolute delta to normalize the delta values
-Nadia   absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
+        // Store lowest absolute delta to normalize the delta values
+        absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
 
-Nadia   if ( !lowestDelta || absDelta < lowestDelta ) {
-NadiaNadia  lowestDelta = absDelta;
+        if ( !lowestDelta || absDelta < lowestDelta ) {
+            lowestDelta = absDelta;
 
-NadiaNadia  // Adjust older deltas if necessary
-NadiaNadia  if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
-NadiaNadiaNadia lowestDelta /= 40;
-NadiaNadia  }
-Nadia   }
+            // Adjust older deltas if necessary
+            if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+                lowestDelta /= 40;
+            }
+        }
 
-Nadia   // Adjust older deltas if necessary
-Nadia   if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
-NadiaNadia  // Divide all the things by 40!
-NadiaNadia  delta  /= 40;
-NadiaNadia  deltaX /= 40;
-NadiaNadia  deltaY /= 40;
-Nadia   }
+        // Adjust older deltas if necessary
+        if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+            // Divide all the things by 40!
+            delta  /= 40;
+            deltaX /= 40;
+            deltaY /= 40;
+        }
 
-Nadia   // Get a whole, normalized value for the deltas
-Nadia   delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
-Nadia   deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
-Nadia   deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
+        // Get a whole, normalized value for the deltas
+        delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
+        deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
+        deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
 
-Nadia   // Normalise offsetX and offsetY properties
-Nadia   if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
-NadiaNadia  var boundingRect = this.getBoundingClientRect();
-NadiaNadia  offsetX = event.clientX - boundingRect.left;
-NadiaNadia  offsetY = event.clientY - boundingRect.top;
-Nadia   }
+        // Normalise offsetX and offsetY properties
+        if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
+            var boundingRect = this.getBoundingClientRect();
+            offsetX = event.clientX - boundingRect.left;
+            offsetY = event.clientY - boundingRect.top;
+        }
 
-Nadia   // Add information to the event object
-Nadia   event.deltaX = deltaX;
-Nadia   event.deltaY = deltaY;
-Nadia   event.deltaFactor = lowestDelta;
-Nadia   event.offsetX = offsetX;
-Nadia   event.offsetY = offsetY;
-Nadia   // Go ahead and set deltaMode to 0 since we converted to pixels
-Nadia   // Although this is a little odd since we overwrite the deltaX/Y
-Nadia   // properties with normalized deltas.
-Nadia   event.deltaMode = 0;
+        // Add information to the event object
+        event.deltaX = deltaX;
+        event.deltaY = deltaY;
+        event.deltaFactor = lowestDelta;
+        event.offsetX = offsetX;
+        event.offsetY = offsetY;
+        // Go ahead and set deltaMode to 0 since we converted to pixels
+        // Although this is a little odd since we overwrite the deltaX/Y
+        // properties with normalized deltas.
+        event.deltaMode = 0;
 
-Nadia   // Add event and delta to the front of the arguments
-Nadia   args.unshift(event, delta, deltaX, deltaY);
+        // Add event and delta to the front of the arguments
+        args.unshift(event, delta, deltaX, deltaY);
 
-Nadia   // Clearout lowestDelta after sometime to better
-Nadia   // handle multiple device types that give different
-Nadia   // a different lowestDelta
-Nadia   // Ex: trackpad = 3 and mouse wheel = 120
-Nadia   if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
-Nadia   nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+        // Clearout lowestDelta after sometime to better
+        // handle multiple device types that give different
+        // a different lowestDelta
+        // Ex: trackpad = 3 and mouse wheel = 120
+        if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
+        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
 
-Nadia   return ($.event.dispatch || $.event.handle).apply(this, args);
+        return ($.event.dispatch || $.event.handle).apply(this, args);
     }
 
     function nullLowestDelta() {
-Nadia   lowestDelta = null;
+        lowestDelta = null;
     }
 
     function shouldAdjustOldDeltas(orgEvent, absDelta) {
-Nadia   // If this is an older event and the delta is divisable by 120,
-Nadia   // then we are assuming that the browser is treating this as an
-Nadia   // older mouse wheel event and that we should divide the deltas
-Nadia   // by 40 to try and get a more usable deltaFactor.
-Nadia   // Side note, this actually impacts the reported scroll distance
-Nadia   // in older browsers and can cause scrolling to be slower than native.
-Nadia   // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
-Nadia   return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+        // If this is an older event and the delta is divisable by 120,
+        // then we are assuming that the browser is treating this as an
+        // older mouse wheel event and that we should divide the deltas
+        // by 40 to try and get a more usable deltaFactor.
+        // Side note, this actually impacts the reported scroll distance
+        // in older browsers and can cause scrolling to be slower than native.
+        // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
+        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
     }
 
 }));
@@ -6369,42 +6369,42 @@ S2.define('jquery.select2',[
     var thisMethods = ['open', 'close', 'destroy'];
 
     $.fn.select2 = function (options) {
-Nadia options = options || {};
+      options = options || {};
 
-Nadia if (typeof options === 'object') {
-Nadia   this.each(function () {
-NadiaNadiavar instanceOptions = $.extend(true, {}, options);
+      if (typeof options === 'object') {
+        this.each(function () {
+          var instanceOptions = $.extend(true, {}, options);
 
-NadiaNadiavar instance = new Select2($(this), instanceOptions);
-Nadia   });
+          var instance = new Select2($(this), instanceOptions);
+        });
 
-Nadia   return this;
-Nadia } else if (typeof options === 'string') {
-Nadia   var ret;
-Nadia   var args = Array.prototype.slice.call(arguments, 1);
+        return this;
+      } else if (typeof options === 'string') {
+        var ret;
+        var args = Array.prototype.slice.call(arguments, 1);
 
-Nadia   this.each(function () {
-NadiaNadiavar instance = $(this).data('select2');
+        this.each(function () {
+          var instance = $(this).data('select2');
 
-NadiaNadiaif (instance == null && window.console && console.error) {
-NadiaNadia  console.error(
-NadiaNadia    'The select2(\'' + options + '\') method was called on an ' +
-NadiaNadia    'element that is not using Select2.'
-NadiaNadia  );
-NadiaNadia}
+          if (instance == null && window.console && console.error) {
+            console.error(
+              'The select2(\'' + options + '\') method was called on an ' +
+              'element that is not using Select2.'
+            );
+          }
 
-NadiaNadiaret = instance[options].apply(instance, args);
-Nadia   });
+          ret = instance[options].apply(instance, args);
+        });
 
-Nadia   // Check if we should be returning `this`
-Nadia   if ($.inArray(options, thisMethods) > -1) {
-NadiaNadiareturn this;
-Nadia   }
+        // Check if we should be returning `this`
+        if ($.inArray(options, thisMethods) > -1) {
+          return this;
+        }
 
-Nadia   return ret;
-Nadia } else {
-Nadia   throw new Error('Invalid arguments for Select2: ' + options);
-Nadia }
+        return ret;
+      } else {
+        throw new Error('Invalid arguments for Select2: ' + options);
+      }
     };
   }
 

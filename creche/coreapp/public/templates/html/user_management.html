@@ -22,214 +22,214 @@
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-Nadia <div class="row">
-Nadia   <div class="site-logo">
-NadiaNadia<a href="index.html" class="brand">Creche Parentale</a>
-Nadia   </div>
+      <div class="row">
+        <div class="site-logo">
+          <a href="index.html" class="brand">Creche Parentale</a>
+        </div>
 
-Nadia   <!-- Brand and toggle get grouped for better mobile display -->
-Nadia   <div class="navbar-header">
-NadiaNadia<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
-NadiaNadia  <i class="fa fa-bars"></i>
-NadiaNadia</button>
-Nadia   </div>
-Nadia   <!-- Collect the nav links, forms, and other content for toggling -->
-Nadia   <div class="collapse navbar-collapse" id="menu">
-NadiaNadia<ul class="nav navbar-nav navbar-right">
-NadiaNadia  <li><a href="/">Home</a></li>
-NadiaNadia  <li><a href="#about">About Us</a></li>
-NadiaNadia  <li><a href="#portfolio">Portfolio</a></li>
-NadiaNadia  <li><a href="/dashboard">Dashboard</a></li>
-NadiaNadia  <li><a href="/childreport">Daily Child Report</a></li>
-NadiaNadia  {% if request.session.user %}
-NadiaNadia    <li><a href="/logout">Logout</a></li>
-NadiaNadia  {% else %}
-NadiaNadia    <li><a href="/login">Login</a></li>
-NadiaNadia  {% endif %}
-NadiaNadia</ul>
-Nadia   </div>
-Nadia   <!-- /.Navbar-collapse -->
-Nadia </div>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/childreport">Daily Child Report</a></li>
+            {% if request.session.user %}
+              <li><a href="/logout">Logout</a></li>
+            {% else %}
+              <li><a href="/login">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <!-- /.Navbar-collapse -->
+      </div>
     </div>
   </nav>
 
   <div id="home">
-Nadia   <div class="slider"></div>
-Nadia   <section id="portfolio">
-Nadia   <div class="container">
-NadiaNadia<div class="center">
-NadiaNadia  <div class="col-md-6 col-md-offset-3">
-NadiaNadia    <hr>
-NadiaNadia    <h2>{{mdl.display_name}}</h2>
-NadiaNadia    <hr>
-NadiaNadia    <p class="lead"></p>
-NadiaNadia  </div>
-NadiaNadia</div>
-Nadia   </div>
+        <div class="slider"></div>
+        <section id="portfolio">
+        <div class="container">
+          <div class="center">
+            <div class="col-md-6 col-md-offset-3">
+              <hr>
+              <h2>{{mdl.display_name}}</h2>
+              <hr>
+              <p class="lead"></p>
+            </div>
+          </div>
+        </div>
 
-Nadia   <div class="container">
-NadiaNadia  <div class="col-lg-12">
-NadiaNadiaNadia <ul class="portfolio-filter text-center">
-NadiaNadiaNadia   <li><a class="btn btn-default" href="#" data-filter=".users">List User</a></li>
-NadiaNadiaNadia   <li><a class="btn btn-default active" href="#" data-filter=".principal">Add Principal</a></li>
-NadiaNadiaNadia   <li><a class="btn btn-default" href="#" data-filter=".principals">List Principal</a></li>
+        <div class="container">
+            <div class="col-lg-12">
+                <ul class="portfolio-filter text-center">
+                  <li><a class="btn btn-default" href="#" data-filter=".users">List User</a></li>
+                  <li><a class="btn btn-default active" href="#" data-filter=".principal">Add Principal</a></li>
+                  <li><a class="btn btn-default" href="#" data-filter=".principals">List Principal</a></li>
 
-NadiaNadiaNadia </ul>
-NadiaNadiaNadia <!--/#portfolio-filter-->
-NadiaNadiaNadia <hr>
-NadiaNadiaNadia <div class="row">
-NadiaNadiaNadia   <div class="portfolio-items">
+                </ul>
+                <!--/#portfolio-filter-->
+                <hr>
+                <div class="row">
+                  <div class="portfolio-items">
 
-NadiaNadiaNadiaNadia<div class="portfolio-item principal col-xs-12 col-sm-4 col-md-3">
-NadiaNadiaNadiaNadia  <div class="recent-work-wrap">
-NadiaNadiaNadiaNadia  <div class="col-md-12 col-md-offset-2">
+                    <div class="portfolio-item principal col-xs-12 col-sm-4 col-md-3">
+                      <div class="recent-work-wrap">
+                      <div class="col-md-12 col-md-offset-2">
 
-NadiaNadiaNadiaNadia    <form action="/user/" method="post">{% csrf_token %}
-NadiaNadiaNadiaNadiaNadia <h2> Add Principal</h2>
-NadiaNadiaNadiaNadiaNadia <div class="form-group">
-NadiaNadiaNadiaNadiaNadia   {% if principal.success %}
-NadiaNadiaNadiaNadiaNadiaNadia<label class="control-label text-success text-small"><small>{{principal.message}}</small></label>
-NadiaNadiaNadiaNadiaNadia   {% else %}
-NadiaNadiaNadiaNadiaNadiaNadia<label class="control-label text-danger text-small"><small>{{principal.message}}</small></label>
-NadiaNadiaNadiaNadiaNadia   {% endif %}
-NadiaNadiaNadiaNadiaNadia </div>
-NadiaNadiaNadiaNadiaNadia <div class="form-group">
-NadiaNadiaNadiaNadiaNadia   <input type="hidden" class="form-control" name="form_name"  value="principal" required />
-NadiaNadiaNadiaNadiaNadia   <input type="text" class="form-control" name="principal_names"  placeholder="Principal Names" required />
-NadiaNadiaNadiaNadiaNadia </div>
-NadiaNadiaNadiaNadiaNadia <div class="form-group">
-NadiaNadiaNadiaNadiaNadia   <input type="email" name="email" class="form-control" placeholder="Email" required />
-NadiaNadiaNadiaNadiaNadia </div>
-NadiaNadiaNadiaNadiaNadia <div class="form-group">
-NadiaNadiaNadiaNadiaNadia   <input type="tel" name="telephone" class="form-control" placeholder="Telephone" required />
-NadiaNadiaNadiaNadiaNadia </div>
-NadiaNadiaNadiaNadiaNadia <div class="form-group">
-NadiaNadiaNadiaNadiaNadia   <input type="text" name="id_number" class="form-control" placeholder="Identity Number" required />
-NadiaNadiaNadiaNadiaNadia </div>
-NadiaNadiaNadiaNadiaNadia <div class="form-group">
-NadiaNadiaNadiaNadiaNadia   <select class="form-control selectpicker"  name="role" required>
-NadiaNadiaNadiaNadiaNadiaNadia{% for k,v in roles %}
-NadiaNadiaNadiaNadiaNadiaNadia  <option value="{{k}}" >{{v}}</option>
-NadiaNadiaNadiaNadiaNadiaNadia{% endfor %}
-NadiaNadiaNadiaNadiaNadia   </select>
-NadiaNadiaNadiaNadiaNadia </div>
-NadiaNadiaNadiaNadiaNadia <div class="form-group">
-NadiaNadiaNadiaNadiaNadia   <textarea class="form-control" name="full_address" rows="5" data-rule="required" data-msg="Please write your address"
-NadiaNadiaNadiaNadiaNadiaNadiaplaceholder="Full Address"></textarea>
-NadiaNadiaNadiaNadiaNadia   <div class="validation"></div>
-NadiaNadiaNadiaNadiaNadia </div>
+                        <form action="/user/" method="post">{% csrf_token %}
+                          <h2> Add Principal</h2>
+                          <div class="form-group">
+                            {% if principal.success %}
+                              <label class="control-label text-success text-small"><small>{{principal.message}}</small></label>
+                            {% else %}
+                              <label class="control-label text-danger text-small"><small>{{principal.message}}</small></label>
+                            {% endif %}
+                          </div>
+                          <div class="form-group">
+                            <input type="hidden" class="form-control" name="form_name"  value="principal" required />
+                            <input type="text" class="form-control" name="principal_names"  placeholder="Principal Names" required />
+                          </div>
+                          <div class="form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required />
+                          </div>
+                          <div class="form-group">
+                            <input type="tel" name="telephone" class="form-control" placeholder="Telephone" required />
+                          </div>
+                          <div class="form-group">
+                            <input type="text" name="id_number" class="form-control" placeholder="Identity Number" required />
+                          </div>
+                          <div class="form-group">
+                            <select class="form-control selectpicker"  name="role" required>
+                              {% for k,v in roles %}
+                                <option value="{{k}}" >{{v}}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <textarea class="form-control" name="full_address" rows="5" data-rule="required" data-msg="Please write your address"
+                              placeholder="Full Address"></textarea>
+                            <div class="validation"></div>
+                          </div>
 
-NadiaNadiaNadiaNadiaNadia <div class="form-group">
-NadiaNadiaNadiaNadiaNadia   <button class="btn btn-primary btn-lg active" type="submit">Save Principal</button>
-NadiaNadiaNadiaNadiaNadia </div>
-NadiaNadiaNadiaNadia    </form>
-NadiaNadiaNadiaNadia  </div>
-NadiaNadiaNadiaNadia</div>
-NadiaNadiaNadiaNadia</div>
-NadiaNadiaNadiaNadia<!--/.portfolio-item-->
+                          <div class="form-group">
+                            <button class="btn btn-primary btn-lg active" type="submit">Save Principal</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    </div>
+                    <!--/.portfolio-item-->
 
-NadiaNadiaNadiaNadia<div class="portfolio-item users col-xs-12">
-NadiaNadiaNadiaNadia  <div class="recent-work-wrap">
-NadiaNadiaNadiaNadia    <div class="col-md-12 col-md-offset-2">
-NadiaNadiaNadiaNadiaNadia <h2> User List</h2>
-NadiaNadiaNadiaNadiaNadiaNadia <div class="table-responsive">
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia  <table class="table">
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    <thead>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia <tr>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   {% for col in cols %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia<th scope="col">{{col|title}}</th>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   {% endfor %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia </tr>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    </thead>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    <tbody>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia {% for dt in users.records %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   <tr>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia{% for col in cols %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia  <td>{{dt|dict_key:col}}</td>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia{% endfor %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   </tr>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia {% endfor %}
+                    <div class="portfolio-item users col-xs-12">
+                      <div class="recent-work-wrap">
+                        <div class="col-md-12 col-md-offset-2">
+                          <h2> User List</h2>
+                               <div class="table-responsive">
+                                          <table class="table">
+                                            <thead>
+                                              <tr>
+                                                {% for col in cols %}
+                                                  <th scope="col">{{col|title}}</th>
+                                                {% endfor %}
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for dt in users.records %}
+                                                <tr>
+                                                  {% for col in cols %}
+                                                    <td>{{dt|dict_key:col}}</td>
+                                                  {% endfor %}
+                                                </tr>
+                                              {% endfor %}
 
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    </tbody>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia  </table>
-NadiaNadiaNadiaNadiaNadiaNadia</div>
-NadiaNadiaNadiaNadia    </div>
-NadiaNadiaNadiaNadia  </div>
-NadiaNadiaNadiaNadia</div>
-NadiaNadiaNadiaNadia<!--/.portfolio-item-->
+                                            </tbody>
+                                          </table>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.portfolio-item-->
 
-NadiaNadiaNadiaNadia<div class="portfolio-item principals col-xs-12">
-NadiaNadiaNadiaNadia  <div class="recent-work-wrap">
-NadiaNadiaNadiaNadia    <div class="col-md-12 col-md-offset-2">
-NadiaNadiaNadiaNadiaNadia <h2> Principal List</h2>
-NadiaNadiaNadiaNadiaNadiaNadia <div class="table-responsive">
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia  <table class="table">
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    <thead>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia <tr>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   {% for col in principals.records|dict_cols %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia<th scope="col">{{col|title}}</th>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   {% endfor %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia </tr>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    </thead>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    <tbody>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia {% for dt in principals.records %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   <tr>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia{% for col in principals.records|dict_cols %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia  <td>{{dt|dict_key:col}}</td>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia{% endfor %}
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   </tr>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia {% endfor %}
+                    <div class="portfolio-item principals col-xs-12">
+                      <div class="recent-work-wrap">
+                        <div class="col-md-12 col-md-offset-2">
+                          <h2> Principal List</h2>
+                               <div class="table-responsive">
+                                          <table class="table">
+                                            <thead>
+                                              <tr>
+                                                {% for col in principals.records|dict_cols %}
+                                                  <th scope="col">{{col|title}}</th>
+                                                {% endfor %}
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for dt in principals.records %}
+                                                <tr>
+                                                  {% for col in principals.records|dict_cols %}
+                                                    <td>{{dt|dict_key:col}}</td>
+                                                  {% endfor %}
+                                                </tr>
+                                              {% endfor %}
 
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia    </tbody>
-NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia  </table>
-NadiaNadiaNadiaNadiaNadiaNadia</div>
-NadiaNadiaNadiaNadia    </div>
-NadiaNadiaNadiaNadia  </div>
-NadiaNadiaNadiaNadia</div>
-NadiaNadiaNadiaNadia<!--/.portfolio-item-->
+                                            </tbody>
+                                          </table>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.portfolio-item-->
 
-NadiaNadiaNadia   </div>
+                  </div>
 
-NadiaNadiaNadia </div>
-NadiaNadia  </div>
-Nadia   </div>
-Nadia   </section>
+                </div>
+            </div>
+        </div>
+        </section>
   </div>
 
 
   <footer id="footer" class="midnight-blue">
     <div class="container">
-Nadia <div class="row">
-Nadia   <div class="col-md-6 col-md-offset-3">
-NadiaNadia<div class="text-center">
-NadiaNadia  <a href="#home" class="scrollup"><i class="fa fa-angle-up fa-3x"></i></a>
-NadiaNadia</div>
-NadiaNadia&copy; OnePage Theme. All Rights Reserved.
-NadiaNadia<div class="credits">
-NadiaNadia  <!--
-NadiaNadia    All the links in the footer should remain intact.
-NadiaNadia    You can delete the links only if you purchased the pro version.
-NadiaNadia    Licensing information: https://bootstrapmade.com/license/
-NadiaNadia    Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=OnePage
-NadiaNadia  -->
-NadiaNadia  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-NadiaNadia</div>
-Nadia   </div>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="text-center">
+            <a href="#home" class="scrollup"><i class="fa fa-angle-up fa-3x"></i></a>
+          </div>
+          &copy; OnePage Theme. All Rights Reserved.
+          <div class="credits">
+            <!--
+              All the links in the footer should remain intact.
+              You can delete the links only if you purchased the pro version.
+              Licensing information: https://bootstrapmade.com/license/
+              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=OnePage
+            -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
 
-Nadia   <div class="top-bar">
-NadiaNadia<div class="col-lg-12">
-NadiaNadia  <div class="social">
-NadiaNadia    <ul class="social-share">
-NadiaNadiaNadia <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-NadiaNadiaNadia <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-NadiaNadiaNadia <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-NadiaNadiaNadia <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-NadiaNadiaNadia <li><a href="#"><i class="fa fa-skype"></i></a></li>
-NadiaNadia    </ul>
-NadiaNadia  </div>
-NadiaNadia</div>
-Nadia   </div>
-Nadia </div>
+        <div class="top-bar">
+          <div class="col-lg-12">
+            <div class="social">
+              <ul class="social-share">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
   <!--/#footer-->

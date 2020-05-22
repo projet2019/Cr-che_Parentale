@@ -4,7 +4,7 @@
 
 ##
 ##
-## @author   Joel
+## @author Nadia
 ## nadia@gmail.com/joel@gmail.com
 ##
 
@@ -18,24 +18,24 @@ class AppSessionAuthMiddleware(MiddlewareMixin):
 
     def process_view(self, request, view_func, view_args, view_kwargs):
 
-Nadia   self.omitActions = ['home', 'logout', 'login', 'signup', 'forgotpass']
+        self.omitActions = ['home', 'logout', 'login', 'signup', 'forgotpass']
 
-Nadia   if request.session.get('user', 0):
-NadiaNadia  # TODO
-NadiaNadia  #self.log_access(request.session['login_audit_id'], request.path)
-NadiaNadia  return None
-Nadia   else:
-NadiaNadia  if view_func.__name__ in self.omitActions:
-NadiaNadiaNadia return None
-NadiaNadia  user_agent = request.META['HTTP_USER_AGENT']
-NadiaNadia  BROWSER_AGENT_RE = re.compile(r".*(mozilla|safari|chrome|firexox|MSIE)", re.IGNORECASE)
-NadiaNadia  # print(user_agent)
-NadiaNadia  if BROWSER_AGENT_RE.match(user_agent):
-NadiaNadiaNadia request.session['error'] = 'Please Login'
-NadiaNadiaNadia return login(request)
-NadiaNadia  return HttpResponse('login_redirection')
+        if request.session.get('user', 0):
+            # TODO
+            #self.log_access(request.session['login_audit_id'], request.path)
+            return None
+        else:
+            if view_func.__name__ in self.omitActions:
+                return None
+            user_agent = request.META['HTTP_USER_AGENT']
+            BROWSER_AGENT_RE = re.compile(r".*(mozilla|safari|chrome|firexox|MSIE)", re.IGNORECASE)
+            # print(user_agent)
+            if BROWSER_AGENT_RE.match(user_agent):
+                request.session['error'] = 'Please Login'
+                return login(request)
+            return HttpResponse('login_redirection')
 
-Nadia   
+        
     def log_access(self, login_audit_id, request_path):
-Nadia   # TODO
-Nadia   pass
+        # TODO
+        pass

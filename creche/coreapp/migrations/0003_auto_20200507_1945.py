@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-Nadia   ('coreapp', '0002_auto_20200507_1118'),
+        ('coreapp', '0002_auto_20200507_1118'),
     ]
 
     operations = [
-Nadia   migrations.RenameField(
-NadiaNadia  model_name='crecheparent',
-NadiaNadia  old_name='full_addres',
-NadiaNadia  new_name='full_address',
-Nadia   ),
-Nadia   migrations.RenameField(
-NadiaNadia  model_name='crecheprincipal',
-NadiaNadia  old_name='full_addres',
-NadiaNadia  new_name='full_address',
-Nadia   ),
-Nadia   migrations.AlterField(
-NadiaNadia  model_name='crecheprincipal',
-NadiaNadia  name='role',
-NadiaNadia  field=models.CharField(choices=[('Accueillante', 'Accueillante'), ('Directrice', 'Directrice'), ('Directeur', 'Directeur'), ('Teacher', 'Teacher')], default='Accueillante', max_length=20),
-Nadia   ),
+        migrations.RenameField(
+            model_name='crecheparent',
+            old_name='full_addres',
+            new_name='full_address',
+        ),
+        migrations.RenameField(
+            model_name='crecheprincipal',
+            old_name='full_addres',
+            new_name='full_address',
+        ),
+        migrations.AlterField(
+            model_name='crecheprincipal',
+            name='role',
+            field=models.CharField(choices=[('Accueillante', 'Accueillante'), ('Directrice', 'Directrice'), ('Directeur', 'Directeur'), ('Teacher', 'Teacher')], default='Accueillante', max_length=20),
+        ),
     ]

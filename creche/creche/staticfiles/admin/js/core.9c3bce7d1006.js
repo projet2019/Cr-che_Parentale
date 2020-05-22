@@ -9,12 +9,12 @@ function quickElement() {
     'use strict';
     var obj = document.createElement(arguments[0]);
     if (arguments[2]) {
-Nadia   var textNode = document.createTextNode(arguments[2]);
-Nadia   obj.appendChild(textNode);
+        var textNode = document.createTextNode(arguments[2]);
+        obj.appendChild(textNode);
     }
     var len = arguments.length;
     for (var i = 3; i < len; i += 2) {
-Nadia   obj.setAttribute(arguments[i], arguments[i + 1]);
+        obj.setAttribute(arguments[i], arguments[i + 1]);
     }
     arguments[1].appendChild(obj);
     return obj;
@@ -24,7 +24,7 @@ Nadia   obj.setAttribute(arguments[i], arguments[i + 1]);
 function removeChildren(a) {
     'use strict';
     while (a.hasChildNodes()) {
-Nadia   a.removeChild(a.lastChild);
+        a.removeChild(a.lastChild);
     }
 }
 
@@ -36,16 +36,16 @@ function findPosX(obj) {
     'use strict';
     var curleft = 0;
     if (obj.offsetParent) {
-Nadia   while (obj.offsetParent) {
-NadiaNadia  curleft += obj.offsetLeft - ((isOpera) ? 0 : obj.scrollLeft);
-NadiaNadia  obj = obj.offsetParent;
-Nadia   }
-Nadia   // IE offsetParent does not include the top-level
-Nadia   if (isIE && obj.parentElement) {
-NadiaNadia  curleft += obj.offsetLeft - obj.scrollLeft;
-Nadia   }
+        while (obj.offsetParent) {
+            curleft += obj.offsetLeft - ((isOpera) ? 0 : obj.scrollLeft);
+            obj = obj.offsetParent;
+        }
+        // IE offsetParent does not include the top-level
+        if (isIE && obj.parentElement) {
+            curleft += obj.offsetLeft - obj.scrollLeft;
+        }
     } else if (obj.x) {
-Nadia   curleft += obj.x;
+        curleft += obj.x;
     }
     return curleft;
 }
@@ -54,16 +54,16 @@ function findPosY(obj) {
     'use strict';
     var curtop = 0;
     if (obj.offsetParent) {
-Nadia   while (obj.offsetParent) {
-NadiaNadia  curtop += obj.offsetTop - ((isOpera) ? 0 : obj.scrollTop);
-NadiaNadia  obj = obj.offsetParent;
-Nadia   }
-Nadia   // IE offsetParent does not include the top-level
-Nadia   if (isIE && obj.parentElement) {
-NadiaNadia  curtop += obj.offsetTop - obj.scrollTop;
-Nadia   }
+        while (obj.offsetParent) {
+            curtop += obj.offsetTop - ((isOpera) ? 0 : obj.scrollTop);
+            obj = obj.offsetParent;
+        }
+        // IE offsetParent does not include the top-level
+        if (isIE && obj.parentElement) {
+            curtop += obj.offsetTop - obj.scrollTop;
+        }
     } else if (obj.y) {
-Nadia   curtop += obj.y;
+        curtop += obj.y;
     }
     return curtop;
 }
@@ -74,122 +74,122 @@ Nadia   curtop += obj.y;
 (function() {
     'use strict';
     Date.prototype.getTwelveHours = function() {
-Nadia   var hours = this.getHours();
-Nadia   if (hours === 0) {
-NadiaNadia  return 12;
-Nadia   }
-Nadia   else {
-NadiaNadia  return hours <= 12 ? hours : hours - 12;
-Nadia   }
+        var hours = this.getHours();
+        if (hours === 0) {
+            return 12;
+        }
+        else {
+            return hours <= 12 ? hours : hours - 12;
+        }
     };
 
     Date.prototype.getTwoDigitMonth = function() {
-Nadia   return (this.getMonth() < 9) ? '0' + (this.getMonth() + 1) : (this.getMonth() + 1);
+        return (this.getMonth() < 9) ? '0' + (this.getMonth() + 1) : (this.getMonth() + 1);
     };
 
     Date.prototype.getTwoDigitDate = function() {
-Nadia   return (this.getDate() < 10) ? '0' + this.getDate() : this.getDate();
+        return (this.getDate() < 10) ? '0' + this.getDate() : this.getDate();
     };
 
     Date.prototype.getTwoDigitTwelveHour = function() {
-Nadia   return (this.getTwelveHours() < 10) ? '0' + this.getTwelveHours() : this.getTwelveHours();
+        return (this.getTwelveHours() < 10) ? '0' + this.getTwelveHours() : this.getTwelveHours();
     };
 
     Date.prototype.getTwoDigitHour = function() {
-Nadia   return (this.getHours() < 10) ? '0' + this.getHours() : this.getHours();
+        return (this.getHours() < 10) ? '0' + this.getHours() : this.getHours();
     };
 
     Date.prototype.getTwoDigitMinute = function() {
-Nadia   return (this.getMinutes() < 10) ? '0' + this.getMinutes() : this.getMinutes();
+        return (this.getMinutes() < 10) ? '0' + this.getMinutes() : this.getMinutes();
     };
 
     Date.prototype.getTwoDigitSecond = function() {
-Nadia   return (this.getSeconds() < 10) ? '0' + this.getSeconds() : this.getSeconds();
+        return (this.getSeconds() < 10) ? '0' + this.getSeconds() : this.getSeconds();
     };
 
     Date.prototype.getHourMinute = function() {
-Nadia   return this.getTwoDigitHour() + ':' + this.getTwoDigitMinute();
+        return this.getTwoDigitHour() + ':' + this.getTwoDigitMinute();
     };
 
     Date.prototype.getHourMinuteSecond = function() {
-Nadia   return this.getTwoDigitHour() + ':' + this.getTwoDigitMinute() + ':' + this.getTwoDigitSecond();
+        return this.getTwoDigitHour() + ':' + this.getTwoDigitMinute() + ':' + this.getTwoDigitSecond();
     };
 
     Date.prototype.getFullMonthName = function() {
-Nadia   return typeof window.CalendarNamespace === "undefined"
-NadiaNadia  ? this.getTwoDigitMonth()
-NadiaNadia  : window.CalendarNamespace.monthsOfYear[this.getMonth()];
+        return typeof window.CalendarNamespace === "undefined"
+            ? this.getTwoDigitMonth()
+            : window.CalendarNamespace.monthsOfYear[this.getMonth()];
     };
 
     Date.prototype.strftime = function(format) {
-Nadia   var fields = {
-NadiaNadia  B: this.getFullMonthName(),
-NadiaNadia  c: this.toString(),
-NadiaNadia  d: this.getTwoDigitDate(),
-NadiaNadia  H: this.getTwoDigitHour(),
-NadiaNadia  I: this.getTwoDigitTwelveHour(),
-NadiaNadia  m: this.getTwoDigitMonth(),
-NadiaNadia  M: this.getTwoDigitMinute(),
-NadiaNadia  p: (this.getHours() >= 12) ? 'PM' : 'AM',
-NadiaNadia  S: this.getTwoDigitSecond(),
-NadiaNadia  w: '0' + this.getDay(),
-NadiaNadia  x: this.toLocaleDateString(),
-NadiaNadia  X: this.toLocaleTimeString(),
-NadiaNadia  y: ('' + this.getFullYear()).substr(2, 4),
-NadiaNadia  Y: '' + this.getFullYear(),
-NadiaNadia  '%': '%'
-Nadia   };
-Nadia   var result = '', i = 0;
-Nadia   while (i < format.length) {
-NadiaNadia  if (format.charAt(i) === '%') {
-NadiaNadiaNadia result = result + fields[format.charAt(i + 1)];
-NadiaNadiaNadia ++i;
-NadiaNadia  }
-NadiaNadia  else {
-NadiaNadiaNadia result = result + format.charAt(i);
-NadiaNadia  }
-NadiaNadia  ++i;
-Nadia   }
-Nadia   return result;
+        var fields = {
+            B: this.getFullMonthName(),
+            c: this.toString(),
+            d: this.getTwoDigitDate(),
+            H: this.getTwoDigitHour(),
+            I: this.getTwoDigitTwelveHour(),
+            m: this.getTwoDigitMonth(),
+            M: this.getTwoDigitMinute(),
+            p: (this.getHours() >= 12) ? 'PM' : 'AM',
+            S: this.getTwoDigitSecond(),
+            w: '0' + this.getDay(),
+            x: this.toLocaleDateString(),
+            X: this.toLocaleTimeString(),
+            y: ('' + this.getFullYear()).substr(2, 4),
+            Y: '' + this.getFullYear(),
+            '%': '%'
+        };
+        var result = '', i = 0;
+        while (i < format.length) {
+            if (format.charAt(i) === '%') {
+                result = result + fields[format.charAt(i + 1)];
+                ++i;
+            }
+            else {
+                result = result + format.charAt(i);
+            }
+            ++i;
+        }
+        return result;
     };
 
 // ----------------------------------------------------------------------------
 // String object extensions
 // ----------------------------------------------------------------------------
     String.prototype.pad_left = function(pad_length, pad_string) {
-Nadia   var new_string = this;
-Nadia   for (var i = 0; new_string.length < pad_length; i++) {
-NadiaNadia  new_string = pad_string + new_string;
-Nadia   }
-Nadia   return new_string;
+        var new_string = this;
+        for (var i = 0; new_string.length < pad_length; i++) {
+            new_string = pad_string + new_string;
+        }
+        return new_string;
     };
 
     String.prototype.strptime = function(format) {
-Nadia   var split_format = format.split(/[.\-/]/);
-Nadia   var date = this.split(/[.\-/]/);
-Nadia   var i = 0;
-Nadia   var day, month, year;
-Nadia   while (i < split_format.length) {
-NadiaNadia  switch (split_format[i]) {
-NadiaNadiaNadia case "%d":
-NadiaNadiaNadiaNadiaday = date[i];
-NadiaNadiaNadiaNadiabreak;
-NadiaNadiaNadia case "%m":
-NadiaNadiaNadiaNadiamonth = date[i] - 1;
-NadiaNadiaNadiaNadiabreak;
-NadiaNadiaNadia case "%Y":
-NadiaNadiaNadiaNadiayear = date[i];
-NadiaNadiaNadiaNadiabreak;
-NadiaNadiaNadia case "%y":
-NadiaNadiaNadiaNadiayear = date[i];
-NadiaNadiaNadiaNadiabreak;
-NadiaNadia  }
-NadiaNadia  ++i;
-Nadia   }
-Nadia   // Create Date object from UTC since the parsed value is supposed to be
-Nadia   // in UTC, not local time. Also, the calendar uses UTC functions for
-Nadia   // date extraction.
-Nadia   return new Date(Date.UTC(year, month, day));
+        var split_format = format.split(/[.\-/]/);
+        var date = this.split(/[.\-/]/);
+        var i = 0;
+        var day, month, year;
+        while (i < split_format.length) {
+            switch (split_format[i]) {
+                case "%d":
+                    day = date[i];
+                    break;
+                case "%m":
+                    month = date[i] - 1;
+                    break;
+                case "%Y":
+                    year = date[i];
+                    break;
+                case "%y":
+                    year = date[i];
+                    break;
+            }
+            ++i;
+        }
+        // Create Date object from UTC since the parsed value is supposed to be
+        // in UTC, not local time. Also, the calendar uses UTC functions for
+        // date extraction.
+        return new Date(Date.UTC(year, month, day));
     };
 
 })();
@@ -200,13 +200,13 @@ function getStyle(oElm, strCssRule) {
     'use strict';
     var strValue = "";
     if(document.defaultView && document.defaultView.getComputedStyle) {
-Nadia   strValue = document.defaultView.getComputedStyle(oElm, "").getPropertyValue(strCssRule);
+        strValue = document.defaultView.getComputedStyle(oElm, "").getPropertyValue(strCssRule);
     }
     else if(oElm.currentStyle) {
-Nadia   strCssRule = strCssRule.replace(/\-(\w)/g, function(strMatch, p1) {
-NadiaNadia  return p1.toUpperCase();
-Nadia   });
-Nadia   strValue = oElm.currentStyle[strCssRule];
+        strCssRule = strCssRule.replace(/\-(\w)/g, function(strMatch, p1) {
+            return p1.toUpperCase();
+        });
+        strValue = oElm.currentStyle[strCssRule];
     }
     return strValue;
 }

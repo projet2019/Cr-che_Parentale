@@ -12,279 +12,279 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-Nadia   migrations.CreateModel(
-NadiaNadia  name='ChildActivity',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('name', models.CharField(max_length=50, unique=True)),
-NadiaNadiaNadia ('category', models.CharField(choices=[('Art', 'Art'), ('Lecture', 'Lecture'), ('Picnic', 'Picnic')], max_length=20)),
-NadiaNadiaNadia ('unit_price', models.FloatField(blank=True, null=True)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'activity',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='ComposantRepas',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('component_name', models.CharField(max_length=50, unique=True)),
-NadiaNadiaNadia ('description', models.TextField(blank=True, null=True)),
-NadiaNadia  ],
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='CrecheChild',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('regno', models.CharField(max_length=6, unique=True)),
-NadiaNadiaNadia ('names', models.CharField(max_length=200)),
-NadiaNadiaNadia ('date_of_birth', models.DateField(blank=True)),
-NadiaNadiaNadia ('group', models.CharField(choices=[('Grand', 'Grand'), ('Petit', 'Petit')], default='Petit', max_length=20)),
-NadiaNadiaNadia ('gender', models.CharField(choices=[('Male', 'Male'), ('Female', 'Female')], default='Male', max_length=20)),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(auto_now_add=True)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'kid',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='CrechePrincipal',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('names', models.CharField(blank=True, max_length=200)),
-NadiaNadiaNadia ('telephone', models.CharField(blank=True, max_length=20)),
-NadiaNadiaNadia ('identity_document', models.CharField(max_length=50, unique=True)),
-NadiaNadiaNadia ('full_addres', models.TextField(blank=True)),
-NadiaNadiaNadia ('email', models.CharField(max_length=100, unique=True)),
-NadiaNadiaNadia ('role', models.CharField(choices=[('Accueillabte', 'Accueillabte'), ('Directrice', 'Directrice'), ('Directeur', 'Directeur')], default='Accueillante', max_length=20)),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(auto_now_add=True)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'principal',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='EventType',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.IntegerField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('name', models.CharField(max_length=192, unique=True)),
-NadiaNadiaNadia ('is_public', models.IntegerField()),
-NadiaNadiaNadia ('template_path', models.CharField(max_length=765)),
-NadiaNadiaNadia ('parameter', models.CharField(blank=True, max_length=765)),
-NadiaNadiaNadia ('from_email', models.CharField(max_length=765)),
-NadiaNadiaNadia ('group_text', models.CharField(blank=True, max_length=96)),
-NadiaNadiaNadia ('description', models.TextField(blank=True)),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(auto_now_add=True)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'event_type',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='LoginAudit',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('created_by_id', models.IntegerField()),
-NadiaNadiaNadia ('ip_address', models.CharField(max_length=765)),
-NadiaNadiaNadia ('logout_date', models.DateTimeField(blank=True, null=True)),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(blank=True, null=True)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'login_audit',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='Module',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('name', models.CharField(max_length=48)),
-NadiaNadiaNadia ('display_name', models.CharField(max_length=96)),
-NadiaNadiaNadia ('handler', models.CharField(max_length=192)),
-NadiaNadiaNadia ('icon_file', models.CharField(max_length=96)),
-NadiaNadiaNadia ('description', models.CharField(max_length=765)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'module',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='WebEmailAudit',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('latest_test', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('issue_number', models.IntegerField()),
-NadiaNadiaNadia ('is_abort', models.IntegerField()),
-NadiaNadiaNadia ('prepared_at', models.DateTimeField()),
-NadiaNadiaNadia ('date_created', models.DateTimeField(blank=True, null=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(blank=True, null=True)),
-NadiaNadiaNadia ('email_body', models.TextField(blank=True)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'web_email_audit',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='WebUserDetail',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('user_id', models.IntegerField(unique=True)),
-NadiaNadiaNadia ('full_name', models.CharField(blank=True, max_length=192, null=True)),
-NadiaNadiaNadia ('description', models.TextField(blank=True, null=True)),
-NadiaNadiaNadia ('can_use_admin', models.IntegerField(default=False)),
-NadiaNadiaNadia ('alert_frequency', models.TextField(blank=True, null=True)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'web_user_detail',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='WebUsers',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('uid', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('name', models.CharField(max_length=180, unique=True)),
-NadiaNadiaNadia ('pass_field', models.CharField(db_column='pass', max_length=384)),
-NadiaNadiaNadia ('mail', models.CharField(blank=True, max_length=762)),
-NadiaNadiaNadia ('theme', models.CharField(max_length=765)),
-NadiaNadiaNadia ('signature', models.CharField(max_length=765)),
-NadiaNadiaNadia ('signature_format', models.CharField(blank=True, max_length=765)),
-NadiaNadiaNadia ('created', models.IntegerField()),
-NadiaNadiaNadia ('access', models.IntegerField()),
-NadiaNadiaNadia ('login', models.IntegerField()),
-NadiaNadiaNadia ('status', models.IntegerField()),
-NadiaNadiaNadia ('timezone', models.CharField(blank=True, max_length=96)),
-NadiaNadiaNadia ('language', models.CharField(max_length=36)),
-NadiaNadiaNadia ('init', models.CharField(blank=True, max_length=762)),
-NadiaNadiaNadia ('data', models.TextField(blank=True)),
-NadiaNadiaNadia ('picture', models.IntegerField()),
-NadiaNadiaNadia ('uuid', models.CharField(max_length=108)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'web_users',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='UserModule',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('module', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.Module')),
-NadiaNadiaNadia ('system_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.WebUsers')),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'user_module_perm',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='SystemUserEventType',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('event_type_id', models.IntegerField()),
-NadiaNadiaNadia ('system_user_id', models.IntegerField()),
-NadiaNadiaNadia ('can_unsubscribe', models.IntegerField()),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(auto_now_add=True)),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'system_user_has_event_type',
-NadiaNadiaNadia 'unique_together': {('event_type_id', 'system_user_id')},
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='Repas',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('date_time', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('unit_price', models.FloatField(blank=True, null=True)),
-NadiaNadiaNadia ('menu', models.ManyToManyField(related_name='components', to='coreapp.ComposantRepas')),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'repas',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='Event',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('entity_reference_id', models.IntegerField(blank=True, null=True)),
-NadiaNadiaNadia ('date_generated', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('name', models.CharField(max_length=255)),
-NadiaNadiaNadia ('processed', models.IntegerField()),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('event_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.EventType')),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'event',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='EmailSchedule',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('to_email', models.CharField(max_length=765)),
-NadiaNadiaNadia ('scheduled_for_relay', models.IntegerField()),
-NadiaNadiaNadia ('sent_at', models.DateTimeField(blank=True, null=True)),
-NadiaNadiaNadia ('from_email', models.CharField(max_length=765)),
-NadiaNadiaNadia ('subject', models.CharField(blank=True, max_length=192)),
-NadiaNadiaNadia ('message_body', models.TextField(blank=True)),
-NadiaNadiaNadia ('delivery_date', models.DateTimeField(blank=True, null=True)),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('event', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.Event')),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'email_schedule',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='DailyChildReport',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('day', models.DateField(auto_now_add=True)),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('day_price', models.FloatField(default=7.5)),
-NadiaNadiaNadia ('accueillante', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.CrechePrincipal')),
-NadiaNadiaNadia ('activities', models.ManyToManyField(related_name='activities', to='coreapp.ChildActivity')),
-NadiaNadiaNadia ('child', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.CrecheChild')),
-NadiaNadiaNadia ('repas', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.Repas')),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'report',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='CrecheParent',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('names', models.CharField(max_length=200)),
-NadiaNadiaNadia ('telephone', models.CharField(max_length=20)),
-NadiaNadiaNadia ('identity_document', models.CharField(max_length=50, unique=True)),
-NadiaNadiaNadia ('full_addres', models.TextField(blank=True)),
-NadiaNadiaNadia ('email', models.CharField(max_length=100, unique=True)),
-NadiaNadiaNadia ('relationship', models.CharField(choices=[('Father', 'Father'), ('Mother', 'Mother'), ('Guardian', 'Guardian')], default='Guardian', max_length=20)),
-NadiaNadiaNadia ('date_created', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('last_updated', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('children', models.ManyToManyField(related_name='parents', to='coreapp.CrecheChild')),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'guardian',
-NadiaNadia  },
-Nadia   ),
-Nadia   migrations.CreateModel(
-NadiaNadia  name='Bill',
-NadiaNadia  fields=[
-NadiaNadiaNadia ('id', models.AutoField(primary_key=True, serialize=False)),
-NadiaNadiaNadia ('bill_no', models.CharField(max_length=12, unique=True)),
-NadiaNadiaNadia ('month', models.IntegerField(default=0)),
-NadiaNadiaNadia ('year', models.IntegerField(default=0)),
-NadiaNadiaNadia ('date_time', models.DateTimeField(auto_now_add=True)),
-NadiaNadiaNadia ('child', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.CrecheChild')),
-NadiaNadia  ],
-NadiaNadia  options={
-NadiaNadiaNadia 'db_table': 'bill',
-NadiaNadia  },
-Nadia   ),
+        migrations.CreateModel(
+            name='ChildActivity',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=50, unique=True)),
+                ('category', models.CharField(choices=[('Art', 'Art'), ('Lecture', 'Lecture'), ('Picnic', 'Picnic')], max_length=20)),
+                ('unit_price', models.FloatField(blank=True, null=True)),
+            ],
+            options={
+                'db_table': 'activity',
+            },
+        ),
+        migrations.CreateModel(
+            name='ComposantRepas',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('component_name', models.CharField(max_length=50, unique=True)),
+                ('description', models.TextField(blank=True, null=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='CrecheChild',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('regno', models.CharField(max_length=6, unique=True)),
+                ('names', models.CharField(max_length=200)),
+                ('date_of_birth', models.DateField(blank=True)),
+                ('group', models.CharField(choices=[('Grand', 'Grand'), ('Petit', 'Petit')], default='Petit', max_length=20)),
+                ('gender', models.CharField(choices=[('Male', 'Male'), ('Female', 'Female')], default='Male', max_length=20)),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now_add=True)),
+            ],
+            options={
+                'db_table': 'kid',
+            },
+        ),
+        migrations.CreateModel(
+            name='CrechePrincipal',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('names', models.CharField(blank=True, max_length=200)),
+                ('telephone', models.CharField(blank=True, max_length=20)),
+                ('identity_document', models.CharField(max_length=50, unique=True)),
+                ('full_addres', models.TextField(blank=True)),
+                ('email', models.CharField(max_length=100, unique=True)),
+                ('role', models.CharField(choices=[('Accueillabte', 'Accueillabte'), ('Directrice', 'Directrice'), ('Directeur', 'Directeur')], default='Accueillante', max_length=20)),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now_add=True)),
+            ],
+            options={
+                'db_table': 'principal',
+            },
+        ),
+        migrations.CreateModel(
+            name='EventType',
+            fields=[
+                ('id', models.IntegerField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=192, unique=True)),
+                ('is_public', models.IntegerField()),
+                ('template_path', models.CharField(max_length=765)),
+                ('parameter', models.CharField(blank=True, max_length=765)),
+                ('from_email', models.CharField(max_length=765)),
+                ('group_text', models.CharField(blank=True, max_length=96)),
+                ('description', models.TextField(blank=True)),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now_add=True)),
+            ],
+            options={
+                'db_table': 'event_type',
+            },
+        ),
+        migrations.CreateModel(
+            name='LoginAudit',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('created_by_id', models.IntegerField()),
+                ('ip_address', models.CharField(max_length=765)),
+                ('logout_date', models.DateTimeField(blank=True, null=True)),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(blank=True, null=True)),
+            ],
+            options={
+                'db_table': 'login_audit',
+            },
+        ),
+        migrations.CreateModel(
+            name='Module',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=48)),
+                ('display_name', models.CharField(max_length=96)),
+                ('handler', models.CharField(max_length=192)),
+                ('icon_file', models.CharField(max_length=96)),
+                ('description', models.CharField(max_length=765)),
+            ],
+            options={
+                'db_table': 'module',
+            },
+        ),
+        migrations.CreateModel(
+            name='WebEmailAudit',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('latest_test', models.DateTimeField(auto_now_add=True)),
+                ('issue_number', models.IntegerField()),
+                ('is_abort', models.IntegerField()),
+                ('prepared_at', models.DateTimeField()),
+                ('date_created', models.DateTimeField(blank=True, null=True)),
+                ('last_updated', models.DateTimeField(blank=True, null=True)),
+                ('email_body', models.TextField(blank=True)),
+            ],
+            options={
+                'db_table': 'web_email_audit',
+            },
+        ),
+        migrations.CreateModel(
+            name='WebUserDetail',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('user_id', models.IntegerField(unique=True)),
+                ('full_name', models.CharField(blank=True, max_length=192, null=True)),
+                ('description', models.TextField(blank=True, null=True)),
+                ('can_use_admin', models.IntegerField(default=False)),
+                ('alert_frequency', models.TextField(blank=True, null=True)),
+            ],
+            options={
+                'db_table': 'web_user_detail',
+            },
+        ),
+        migrations.CreateModel(
+            name='WebUsers',
+            fields=[
+                ('uid', models.AutoField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=180, unique=True)),
+                ('pass_field', models.CharField(db_column='pass', max_length=384)),
+                ('mail', models.CharField(blank=True, max_length=762)),
+                ('theme', models.CharField(max_length=765)),
+                ('signature', models.CharField(max_length=765)),
+                ('signature_format', models.CharField(blank=True, max_length=765)),
+                ('created', models.IntegerField()),
+                ('access', models.IntegerField()),
+                ('login', models.IntegerField()),
+                ('status', models.IntegerField()),
+                ('timezone', models.CharField(blank=True, max_length=96)),
+                ('language', models.CharField(max_length=36)),
+                ('init', models.CharField(blank=True, max_length=762)),
+                ('data', models.TextField(blank=True)),
+                ('picture', models.IntegerField()),
+                ('uuid', models.CharField(max_length=108)),
+            ],
+            options={
+                'db_table': 'web_users',
+            },
+        ),
+        migrations.CreateModel(
+            name='UserModule',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('module', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.Module')),
+                ('system_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.WebUsers')),
+            ],
+            options={
+                'db_table': 'user_module_perm',
+            },
+        ),
+        migrations.CreateModel(
+            name='SystemUserEventType',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('event_type_id', models.IntegerField()),
+                ('system_user_id', models.IntegerField()),
+                ('can_unsubscribe', models.IntegerField()),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now_add=True)),
+            ],
+            options={
+                'db_table': 'system_user_has_event_type',
+                'unique_together': {('event_type_id', 'system_user_id')},
+            },
+        ),
+        migrations.CreateModel(
+            name='Repas',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('date_time', models.DateTimeField(auto_now_add=True)),
+                ('unit_price', models.FloatField(blank=True, null=True)),
+                ('menu', models.ManyToManyField(related_name='components', to='coreapp.ComposantRepas')),
+            ],
+            options={
+                'db_table': 'repas',
+            },
+        ),
+        migrations.CreateModel(
+            name='Event',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('entity_reference_id', models.IntegerField(blank=True, null=True)),
+                ('date_generated', models.DateTimeField(auto_now_add=True)),
+                ('name', models.CharField(max_length=255)),
+                ('processed', models.IntegerField()),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now_add=True)),
+                ('event_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.EventType')),
+            ],
+            options={
+                'db_table': 'event',
+            },
+        ),
+        migrations.CreateModel(
+            name='EmailSchedule',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('to_email', models.CharField(max_length=765)),
+                ('scheduled_for_relay', models.IntegerField()),
+                ('sent_at', models.DateTimeField(blank=True, null=True)),
+                ('from_email', models.CharField(max_length=765)),
+                ('subject', models.CharField(blank=True, max_length=192)),
+                ('message_body', models.TextField(blank=True)),
+                ('delivery_date', models.DateTimeField(blank=True, null=True)),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now_add=True)),
+                ('event', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.Event')),
+            ],
+            options={
+                'db_table': 'email_schedule',
+            },
+        ),
+        migrations.CreateModel(
+            name='DailyChildReport',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('day', models.DateField(auto_now_add=True)),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('day_price', models.FloatField(default=7.5)),
+                ('accueillante', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.CrechePrincipal')),
+                ('activities', models.ManyToManyField(related_name='activities', to='coreapp.ChildActivity')),
+                ('child', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.CrecheChild')),
+                ('repas', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.Repas')),
+            ],
+            options={
+                'db_table': 'report',
+            },
+        ),
+        migrations.CreateModel(
+            name='CrecheParent',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('names', models.CharField(max_length=200)),
+                ('telephone', models.CharField(max_length=20)),
+                ('identity_document', models.CharField(max_length=50, unique=True)),
+                ('full_addres', models.TextField(blank=True)),
+                ('email', models.CharField(max_length=100, unique=True)),
+                ('relationship', models.CharField(choices=[('Father', 'Father'), ('Mother', 'Mother'), ('Guardian', 'Guardian')], default='Guardian', max_length=20)),
+                ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now_add=True)),
+                ('children', models.ManyToManyField(related_name='parents', to='coreapp.CrecheChild')),
+            ],
+            options={
+                'db_table': 'guardian',
+            },
+        ),
+        migrations.CreateModel(
+            name='Bill',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('bill_no', models.CharField(max_length=12, unique=True)),
+                ('month', models.IntegerField(default=0)),
+                ('year', models.IntegerField(default=0)),
+                ('date_time', models.DateTimeField(auto_now_add=True)),
+                ('child', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coreapp.CrecheChild')),
+            ],
+            options={
+                'db_table': 'bill',
+            },
+        ),
     ]

@@ -73,11 +73,11 @@ var support = {};
 
 var isFunction = function isFunction( obj ) {
 
-Nadia // Support: Chrome <=57, Firefox <=52
-Nadia // In some browsers, typeof returns "function" for HTML <object> elements
-Nadia // (i.e., `typeof document.createElement( "object" ) === "function"`).
-Nadia // We don't want to classify *any* DOM node as a function.
-Nadia return typeof obj === "function" && typeof obj.nodeType !== "number";
+      // Support: Chrome <=57, Firefox <=52
+      // In some browsers, typeof returns "function" for HTML <object> elements
+      // (i.e., `typeof document.createElement( "object" ) === "function"`).
+      // We don't want to classify *any* DOM node as a function.
+      return typeof obj === "function" && typeof obj.nodeType !== "number";
   };
 
 
@@ -1487,7 +1487,7 @@ Sizzle.matchesSelector = function( elem, expr ) {
 	if ( support.matchesSelector && documentIsHTML &&
 		!compilerCache[ expr + " " ] &&
 		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
-		( !rbuggyQSANadia|| !rbuggyQSA.test( expr ) ) ) {
+		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
 
 		try {
 			var ret = matches.call( elem, expr );
@@ -3147,18 +3147,18 @@ jQuery.each( {
 		return siblings( elem.firstChild );
 	},
 	contents: function( elem ) {
-Nadia   if ( nodeName( elem, "iframe" ) ) {
-NadiaNadia  return elem.contentDocument;
-Nadia   }
+        if ( nodeName( elem, "iframe" ) ) {
+            return elem.contentDocument;
+        }
 
-Nadia   // Support: IE 9 - 11 only, iOS 7 only, Android Browser <=4.3 only
-Nadia   // Treat the template element as a regular one in browsers that
-Nadia   // don't support it.
-Nadia   if ( nodeName( elem, "template" ) ) {
-NadiaNadia  elem = elem.content || elem;
-Nadia   }
+        // Support: IE 9 - 11 only, iOS 7 only, Android Browser <=4.3 only
+        // Treat the template element as a regular one in browsers that
+        // don't support it.
+        if ( nodeName( elem, "template" ) ) {
+            elem = elem.content || elem;
+        }
 
-Nadia   return jQuery.merge( [], elem.childNodes );
+        return jQuery.merge( [], elem.childNodes );
 	}
 }, function( name, fn ) {
 	jQuery.fn[ name ] = function( until, selector ) {

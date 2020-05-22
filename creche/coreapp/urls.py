@@ -4,7 +4,7 @@
 
 ##
 ##
-## @author   Joel
+## @author Nadia
 ## nadia@gmail.com/joel@gmail.com
 ##
 
@@ -41,6 +41,6 @@ urlpatterns = [
     url(r'^event/', signup),
     url(r'^profile/', signup),
 
-NadiaNadiaNadiaNadia   
+                       
     
 ]

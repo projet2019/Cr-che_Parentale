@@ -9,153 +9,153 @@ input[type="submit"], button {
     /* Basic */
 
     html {
-Nadia   -webkit-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
     }
 
     td, th {
-Nadia   padding: 10px;
-Nadia   font-size: 14px;
+        padding: 10px;
+        font-size: 14px;
     }
 
     .small {
-Nadia   font-size: 12px;
+        font-size: 12px;
     }
 
     /* Layout */
 
     #container {
-Nadia   min-width: 0;
+        min-width: 0;
     }
 
     #content {
-Nadia   padding: 20px 30px 30px;
+        padding: 20px 30px 30px;
     }
 
     div.breadcrumbs {
-Nadia   padding: 10px 30px;
+        padding: 10px 30px;
     }
 
     /* Header */
 
     #header {
-Nadia   flex-direction: column;
-Nadia   padding: 15px 30px;
-Nadia   justify-content: flex-start;
+        flex-direction: column;
+        padding: 15px 30px;
+        justify-content: flex-start;
     }
 
     #branding h1 {
-Nadia   margin: 0 0 8px;
-Nadia   font-size: 20px;
-Nadia   line-height: 1.2;
+        margin: 0 0 8px;
+        font-size: 20px;
+        line-height: 1.2;
     }
 
     #user-tools {
-Nadia   margin: 0;
-Nadia   font-weight: 400;
-Nadia   line-height: 1.85;
-Nadia   text-align: left;
+        margin: 0;
+        font-weight: 400;
+        line-height: 1.85;
+        text-align: left;
     }
 
     #user-tools a {
-Nadia   display: inline-block;
-Nadia   line-height: 1.4;
+        display: inline-block;
+        line-height: 1.4;
     }
 
     /* Dashboard */
 
     .dashboard #content {
-Nadia   width: auto;
+        width: auto;
     }
 
     #content-related {
-Nadia   margin-right: -290px;
+        margin-right: -290px;
     }
 
     .colSM #content-related {
-Nadia   margin-left: -290px;
+        margin-left: -290px;
     }
 
     .colMS {
-Nadia   margin-right: 290px;
+        margin-right: 290px;
     }
 
     .colSM {
-Nadia   margin-left: 290px;
+        margin-left: 290px;
     }
 
     .dashboard .module table td a {
-Nadia   padding-right: 0;
+        padding-right: 0;
     }
 
     td .changelink, td .addlink {
-Nadia   font-size: 13px;
+        font-size: 13px;
     }
 
     /* Changelist */
 
     #changelist #toolbar {
-Nadia   border: none;
-Nadia   padding: 15px;
+        border: none;
+        padding: 15px;
     }
 
     #changelist-search > div {
-Nadia   display: -webkit-flex;
-Nadia   display: flex;
-Nadia   -webkit-flex-wrap: wrap;
-Nadia   flex-wrap: wrap;
-Nadia   max-width: 480px;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        max-width: 480px;
     }
 
     #changelist-search label {
-Nadia   line-height: 22px;
+        line-height: 22px;
     }
 
     #changelist #toolbar form #searchbar {
-Nadia   -webkit-flex: 1 0 auto;
-Nadia   flex: 1 0 auto;
-Nadia   width: 0;
-Nadia   height: 22px;
-Nadia   margin: 0 10px 0 6px;
+        -webkit-flex: 1 0 auto;
+        flex: 1 0 auto;
+        width: 0;
+        height: 22px;
+        margin: 0 10px 0 6px;
     }
 
     #changelist-search .quiet {
-Nadia   width: 100%;
-Nadia   margin: 5px 0 0 25px;
+        width: 100%;
+        margin: 5px 0 0 25px;
     }
 
     #changelist .actions {
-Nadia   display: flex;
-Nadia   flex-wrap: wrap;
-Nadia   padding: 15px 0;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 15px 0;
     }
 
     #changelist .actions.selected {
-Nadia   border: none;
+        border: none;
     }
 
     #changelist .actions label {
-Nadia   display: flex;
+        display: flex;
     }
 
     #changelist .actions select {
-Nadia   background: #fff;
+        background: #fff;
     }
 
     #changelist .actions .button {
-Nadia   min-width: 48px;
-Nadia   margin: 0 10px;
+        min-width: 48px;
+        margin: 0 10px;
     }
 
     #changelist .actions span.all,
     #changelist .actions span.clear,
     #changelist .actions span.question,
     #changelist .actions span.action-counter {
-Nadia   font-size: 11px;
-Nadia   margin: 0 10px 0 0;
+        font-size: 11px;
+        margin: 0 10px 0 0;
     }
 
     #changelist-filter {
-Nadia   width: 200px;
+        width: 200px;
     }
 
     .change-list .filtered .results,
@@ -163,21 +163,21 @@ Nadia   width: 200px;
     .filtered #toolbar,
     .filtered .actions,
     .filtered div.xfull {
-Nadia   margin-right: 230px;
+        margin-right: 230px;
     }
 
     #changelist .paginator {
-Nadia   border-top-color: #eee;
+        border-top-color: #eee;
     }
 
     #changelist .results + .paginator {
-Nadia   border-top: none;
+        border-top: none;
     }
 
     /* Forms */
 
     label {
-Nadia   font-size: 14px;
+        font-size: 14px;
     }
 
     .form-row input[type=text],
@@ -189,258 +189,258 @@ Nadia   font-size: 14px;
     .form-row textarea,
     .form-row select,
     .form-row .vTextField {
-Nadia   box-sizing: border-box;
-Nadia   margin: 0;
-Nadia   padding: 6px 8px;
-Nadia   min-height: 36px;
-Nadia   font-size: 14px;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 6px 8px;
+        min-height: 36px;
+        font-size: 14px;
     }
 
     .form-row select {
-Nadia   height: 36px;
+        height: 36px;
     }
 
     .form-row select[multiple] {
-Nadia   height: auto;
-Nadia   min-height: 0;
+        height: auto;
+        min-height: 0;
     }
 
     fieldset .fieldBox {
-Nadia   float: none;
-Nadia   margin: 0 -10px;
-Nadia   padding: 0 10px;
+        float: none;
+        margin: 0 -10px;
+        padding: 0 10px;
     }
 
     fieldset .fieldBox + .fieldBox {
-Nadia   margin-top: 10px;
-Nadia   padding-top: 10px;
-Nadia   border-top: 1px solid #eee;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
     }
 
     textarea {
-Nadia   max-width: 518px;
-Nadia   max-height: 120px;
+        max-width: 518px;
+        max-height: 120px;
     }
 
     .aligned label {
-Nadia   padding-top: 6px;
+        padding-top: 6px;
     }
 
     .aligned .add-another,
     .aligned .related-lookup,
     .aligned .datetimeshortcuts,
     .aligned .related-lookup + strong {
-Nadia   align-self: center;
-Nadia   margin-left: 15px;
+        align-self: center;
+        margin-left: 15px;
     }
 
     form .aligned ul.radiolist {
-Nadia   margin-left: 2px;
+        margin-left: 2px;
     }
 
     /* Related widget */
 
     .related-widget-wrapper {
-Nadia   float: none;
+        float: none;
     }
 
     .related-widget-wrapper-link + .selector {
-Nadia   max-width: calc(100% - 30px);
-Nadia   margin-right: 15px;
+        max-width: calc(100% - 30px);
+        margin-right: 15px;
     }
 
     select + .related-widget-wrapper-link,
     .related-widget-wrapper-link + .related-widget-wrapper-link {
-Nadia   margin-left: 10px;
+        margin-left: 10px;
     }
 
     /* Selector */
 
     .selector {
-Nadia   display: flex;
-Nadia   width: 100%;
+        display: flex;
+        width: 100%;
     }
 
     .selector .selector-filter {
-Nadia   display: flex;
-Nadia   align-items: center;
+        display: flex;
+        align-items: center;
     }
 
     .selector .selector-filter label {
-Nadia   margin: 0 8px 0 0;
+        margin: 0 8px 0 0;
     }
 
     .selector .selector-filter input {
-Nadia   width: auto;
-Nadia   min-height: 0;
-Nadia   flex: 1 1;
+        width: auto;
+        min-height: 0;
+        flex: 1 1;
     }
 
     .selector-available, .selector-chosen {
-Nadia   width: auto;
-Nadia   flex: 1 1;
-Nadia   display: flex;
-Nadia   flex-direction: column;
+        width: auto;
+        flex: 1 1;
+        display: flex;
+        flex-direction: column;
     }
 
     .selector select {
-Nadia   width: 100%;
-Nadia   flex: 1 0 auto;
-Nadia   margin-bottom: 5px;
+        width: 100%;
+        flex: 1 0 auto;
+        margin-bottom: 5px;
     }
 
     .selector ul.selector-chooser {
-Nadia   width: 26px;
-Nadia   height: 52px;
-Nadia   padding: 2px 0;
-Nadia   margin: auto 15px;
-Nadia   border-radius: 20px;
-Nadia   transform: translateY(-10px);
+        width: 26px;
+        height: 52px;
+        padding: 2px 0;
+        margin: auto 15px;
+        border-radius: 20px;
+        transform: translateY(-10px);
     }
 
     .selector-add, .selector-remove {
-Nadia   width: 20px;
-Nadia   height: 20px;
-Nadia   background-size: 20px auto;
+        width: 20px;
+        height: 20px;
+        background-size: 20px auto;
     }
 
     .selector-add {
-Nadia   background-position: 0 -120px;
+        background-position: 0 -120px;
     }
 
     .selector-remove {
-Nadia   background-position: 0 -80px;
+        background-position: 0 -80px;
     }
 
     a.selector-chooseall, a.selector-clearall {
-Nadia   align-self: center;
+        align-self: center;
     }
 
     .stacked {
-Nadia   flex-direction: column;
-Nadia   max-width: 480px;
+        flex-direction: column;
+        max-width: 480px;
     }
 
     .stacked > * {
-Nadia   flex: 0 1 auto;
+        flex: 0 1 auto;
     }
 
     .stacked select {
-Nadia   margin-bottom: 0;
+        margin-bottom: 0;
     }
 
     .stacked .selector-available, .stacked .selector-chosen {
-Nadia   width: auto;
+        width: auto;
     }
 
     .stacked ul.selector-chooser {
-Nadia   width: 52px;
-Nadia   height: 26px;
-Nadia   padding: 0 2px;
-Nadia   margin: 15px auto;
-Nadia   transform: none;
+        width: 52px;
+        height: 26px;
+        padding: 0 2px;
+        margin: 15px auto;
+        transform: none;
     }
 
     .stacked .selector-chooser li {
-Nadia   padding: 3px;
+        padding: 3px;
     }
 
     .stacked .selector-add, .stacked .selector-remove {
-Nadia   background-size: 20px auto;
+        background-size: 20px auto;
     }
 
     .stacked .selector-add {
-Nadia   background-position: 0 -40px;
+        background-position: 0 -40px;
     }
 
     .stacked .active.selector-add {
-Nadia   background-position: 0 -60px;
+        background-position: 0 -60px;
     }
 
     .stacked .selector-remove {
-Nadia   background-position: 0 0;
+        background-position: 0 0;
     }
 
     .stacked .active.selector-remove {
-Nadia   background-position: 0 -20px;
+        background-position: 0 -20px;
     }
 
     .help-tooltip, .selector .help-icon {
-Nadia   display: none;
+        display: none;
     }
 
     form .form-row p.datetime {
-Nadia   width: 100%;
+        width: 100%;
     }
 
     .datetime input {
-Nadia   width: 50%;
-Nadia   max-width: 120px;
+        width: 50%;
+        max-width: 120px;
     }
 
     .datetime span {
-Nadia   font-size: 13px;
+        font-size: 13px;
     }
 
     .datetime .timezonewarning {
-Nadia   display: block;
-Nadia   font-size: 11px;
-Nadia   color: #999;
+        display: block;
+        font-size: 11px;
+        color: #999;
     }
 
     .datetimeshortcuts {
-Nadia   color: #ccc;
+        color: #ccc;
     }
 
     .inline-group {
-Nadia   overflow: auto;
+        overflow: auto;
     }
 
     /* Messages */
 
     ul.messagelist li {
-Nadia   padding-left: 55px;
-Nadia   background-position: 30px 12px;
+        padding-left: 55px;
+        background-position: 30px 12px;
     }
 
     ul.messagelist li.error {
-Nadia   background-position: 30px 12px;
+        background-position: 30px 12px;
     }
 
     ul.messagelist li.warning {
-Nadia   background-position: 30px 14px;
+        background-position: 30px 14px;
     }
 
     /* Login */
 
     .login #header {
-Nadia   padding: 15px 20px;
+        padding: 15px 20px;
     }
 
     .login #branding h1 {
-Nadia   margin: 0;
+        margin: 0;
     }
 
     /* GIS */
 
     div.olMap {
-Nadia   max-width: calc(100vw - 30px);
-Nadia   max-height: 300px;
+        max-width: calc(100vw - 30px);
+        max-height: 300px;
     }
 
     .olMap + .clear_features {
-Nadia   display: block;
-Nadia   margin-top: 10px;
+        display: block;
+        margin-top: 10px;
     }
 
     /* Docs */
 
     .module table.xfull {
-Nadia   width: 100%;
+        width: 100%;
     }
 
     pre.literal-block {
-Nadia   overflow: auto;
+        overflow: auto;
     }
 }
 
@@ -450,543 +450,543 @@ Nadia   overflow: auto;
     /* Layout */
 
     #header, #content, #footer {
-Nadia   padding: 15px;
+        padding: 15px;
     }
 
     #footer:empty {
-Nadia   padding: 0;
+        padding: 0;
     }
 
     div.breadcrumbs {
-Nadia   padding: 10px 15px;
+        padding: 10px 15px;
     }
 
     /* Dashboard */
 
     .colMS, .colSM {
-Nadia   margin: 0;
+        margin: 0;
     }
 
     #content-related, .colSM #content-related {
-Nadia   width: 100%;
-Nadia   margin: 0;
+        width: 100%;
+        margin: 0;
     }
 
     #content-related .module {
-Nadia   margin-bottom: 0;
+        margin-bottom: 0;
     }
 
     #content-related .module h2 {
-Nadia   padding: 10px 15px;
-Nadia   font-size: 16px;
+        padding: 10px 15px;
+        font-size: 16px;
     }
 
     /* Changelist */
 
     #changelist {
-Nadia   display: flex;
-Nadia   flex-direction: column;
+        display: flex;
+        flex-direction: column;
     }
 
     #changelist #toolbar {
-Nadia   order: 1;
-Nadia   padding: 10px;
+        order: 1;
+        padding: 10px;
     }
 
     #changelist .xfull {
-Nadia   order: 2;
+        order: 2;
     }
 
     #changelist-form {
-Nadia   order: 3;
+        order: 3;
     }
 
     #changelist-filter {
-Nadia   order: 4;
+        order: 4;
     }
 
     #changelist .actions label {
-Nadia   flex: 1 1;
+        flex: 1 1;
     }
 
     #changelist .actions select {
-Nadia   flex: 1 0;
-Nadia   width: 100%;
+        flex: 1 0;
+        width: 100%;
     }
 
     #changelist .actions span {
-Nadia   flex: 1 0 100%;
+        flex: 1 0 100%;
     }
 
     .change-list .filtered .results, .change-list .filtered .paginator,
     .filtered #toolbar, .filtered .actions, .filtered div.xfull {
-Nadia   margin-right: 0;
+        margin-right: 0;
     }
 
     #changelist-filter {
-Nadia   position: static;
-Nadia   width: auto;
-Nadia   margin-top: 30px;
+        position: static;
+        width: auto;
+        margin-top: 30px;
     }
 
     .object-tools {
-Nadia   float: none;
-Nadia   margin: 0 0 15px;
-Nadia   padding: 0;
-Nadia   overflow: hidden;
+        float: none;
+        margin: 0 0 15px;
+        padding: 0;
+        overflow: hidden;
     }
 
     .object-tools li {
-Nadia   height: auto;
-Nadia   margin-left: 0;
+        height: auto;
+        margin-left: 0;
     }
 
     .object-tools li + li {
-Nadia   margin-left: 15px;
+        margin-left: 15px;
     }
 
     /* Forms */
 
     .form-row {
-Nadia   padding: 15px 0;
+        padding: 15px 0;
     }
 
     .aligned .form-row,
     .aligned .form-row > div {
-Nadia   display: flex;
-Nadia   flex-wrap: wrap;
-Nadia   max-width: 100vw;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 100vw;
     }
 
     .aligned .form-row > div {
-Nadia   width: calc(100vw - 30px);
+        width: calc(100vw - 30px);
     }
 
     textarea {
-Nadia   max-width: none;
+        max-width: none;
     }
 
     .vURLField {
-Nadia   width: auto;
+        width: auto;
     }
 
     fieldset .fieldBox + .fieldBox {
-Nadia   margin-top: 15px;
-Nadia   padding-top: 15px;
+        margin-top: 15px;
+        padding-top: 15px;
     }
 
     fieldset.collapsed .form-row {
-Nadia   display: none;
+        display: none;
     }
 
     .aligned label {
-Nadia   width: 100%;
-Nadia   padding: 0 0 10px;
+        width: 100%;
+        padding: 0 0 10px;
     }
 
     .aligned label:after {
-Nadia   max-height: 0;
+        max-height: 0;
     }
 
     .aligned .form-row input,
     .aligned .form-row select,
     .aligned .form-row textarea {
-Nadia   flex: 1 1 auto;
-Nadia   max-width: 100%;
+        flex: 1 1 auto;
+        max-width: 100%;
     }
 
     .aligned .checkbox-row {
-Nadia   align-items: center;
+        align-items: center;
     }
 
     .aligned .checkbox-row input {
-Nadia   flex: 0 1 auto;
-Nadia   margin: 0;
+        flex: 0 1 auto;
+        margin: 0;
     }
 
     .aligned .vCheckboxLabel {
-Nadia   flex: 1 0;
-Nadia   padding: 1px 0 0 5px;
+        flex: 1 0;
+        padding: 1px 0 0 5px;
     }
 
     .aligned label + p,
     .aligned label + div.help,
     .aligned label + div.readonly {
-Nadia   padding: 0;
-Nadia   margin-left: 0;
+        padding: 0;
+        margin-left: 0;
     }
 
     .aligned p.file-upload {
-Nadia   margin-left: 0;
-Nadia   font-size: 13px;
+        margin-left: 0;
+        font-size: 13px;
     }
 
     span.clearable-file-input {
-Nadia   margin-left: 15px;
+        margin-left: 15px;
     }
 
     span.clearable-file-input label {
-Nadia   font-size: 13px;
-Nadia   padding-bottom: 0;
+        font-size: 13px;
+        padding-bottom: 0;
     }
 
     .aligned .timezonewarning {
-Nadia   flex: 1 0 100%;
-Nadia   margin-top: 5px;
+        flex: 1 0 100%;
+        margin-top: 5px;
     }
 
     form .aligned .form-row div.help {
-Nadia   width: 100%;
-Nadia   margin: 5px 0 0;
-Nadia   padding: 0;
+        width: 100%;
+        margin: 5px 0 0;
+        padding: 0;
     }
 
     form .aligned ul {
-Nadia   margin-left: 0;
-Nadia   padding-left: 0;
+        margin-left: 0;
+        padding-left: 0;
     }
 
     form .aligned ul.radiolist {
-Nadia   margin-right: 15px;
-Nadia   margin-bottom: -3px;
+        margin-right: 15px;
+        margin-bottom: -3px;
     }
 
     form .aligned ul.radiolist li + li {
-Nadia   margin-top: 5px;
+        margin-top: 5px;
     }
 
     /* Related widget */
 
     .related-widget-wrapper {
-Nadia   width: 100%;
-Nadia   display: flex;
-Nadia   align-items: flex-start;
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
     }
 
     .related-widget-wrapper .selector {
-Nadia   order: 1;
+        order: 1;
     }
 
     .related-widget-wrapper > a {
-Nadia   order: 2;
+        order: 2;
     }
 
     .related-widget-wrapper .radiolist ~ a {
-Nadia   align-self: flex-end;
+        align-self: flex-end;
     }
 
     .related-widget-wrapper > select ~ a {
-Nadia   align-self: center;
+        align-self: center;
     }
 
     select + .related-widget-wrapper-link,
     .related-widget-wrapper-link + .related-widget-wrapper-link {
-Nadia   margin-left: 15px;
+        margin-left: 15px;
     }
 
     /* Selector */
 
     .selector {
-Nadia   flex-direction: column;
+        flex-direction: column;
     }
 
     .selector > * {
-Nadia   float: none;
+        float: none;
     }
 
     .selector-available, .selector-chosen {
-Nadia   margin-bottom: 0;
-Nadia   flex: 1 1 auto;
+        margin-bottom: 0;
+        flex: 1 1 auto;
     }
 
     .selector select {
-Nadia   max-height: 96px;
+        max-height: 96px;
     }
 
     .selector ul.selector-chooser {
-Nadia   display: block;
-Nadia   float: none;
-Nadia   width: 52px;
-Nadia   height: 26px;
-Nadia   padding: 0 2px;
-Nadia   margin: 15px auto 20px;
-Nadia   transform: none;
+        display: block;
+        float: none;
+        width: 52px;
+        height: 26px;
+        padding: 0 2px;
+        margin: 15px auto 20px;
+        transform: none;
     }
 
     .selector ul.selector-chooser li {
-Nadia   float: left;
+        float: left;
     }
 
     .selector-remove {
-Nadia   background-position: 0 0;
+        background-position: 0 0;
     }
 
     .selector-add  {
-Nadia   background-position: 0 -40px;
+        background-position: 0 -40px;
     }
 
     /* Inlines */
 
     .inline-group[data-inline-type="stacked"] .inline-related {
-Nadia   border: 2px solid #eee;
-Nadia   border-radius: 4px;
-Nadia   margin-top: 15px;
-Nadia   overflow: auto;
+        border: 2px solid #eee;
+        border-radius: 4px;
+        margin-top: 15px;
+        overflow: auto;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related > * {
-Nadia   box-sizing: border-box;
+        box-sizing: border-box;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related + .inline-related {
-Nadia   margin-top: 30px;
+        margin-top: 30px;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related .module {
-Nadia   padding: 0 10px;
+        padding: 0 10px;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related .module .form-row:last-child {
-Nadia   border-bottom: none;
+        border-bottom: none;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related h3 {
-Nadia   padding: 10px;
-Nadia   border-top-width: 0;
-Nadia   border-bottom-width: 2px;
-Nadia   display: flex;
-Nadia   flex-wrap: wrap;
-Nadia   align-items: center;
+        padding: 10px;
+        border-top-width: 0;
+        border-bottom-width: 2px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related h3 .inline_label {
-Nadia   margin-right: auto;
+        margin-right: auto;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related h3 span.delete {
-Nadia   float: none;
-Nadia   flex: 1 1 100%;
-Nadia   margin-top: 5px;
+        float: none;
+        flex: 1 1 100%;
+        margin-top: 5px;
     }
 
     .inline-group[data-inline-type="stacked"] .aligned .form-row > div:not([class]) {
-Nadia   width: 100%;
+        width: 100%;
     }
 
     .inline-group[data-inline-type="stacked"] .aligned label {
-Nadia   width: 100%;
+        width: 100%;
     }
 
     .inline-group[data-inline-type="stacked"] div.add-row {
-Nadia   margin-top: 15px;
-Nadia   border: 1px solid #eee;
-Nadia   border-radius: 4px;
+        margin-top: 15px;
+        border: 1px solid #eee;
+        border-radius: 4px;
     }
 
     .inline-group div.add-row,
     .inline-group .tabular tr.add-row td {
-Nadia   padding: 0;
+        padding: 0;
     }
 
     .inline-group div.add-row a,
     .inline-group .tabular tr.add-row td a {
-Nadia   display: block;
-Nadia   padding: 8px 10px 8px 26px;
-Nadia   background-position: 8px 9px;
+        display: block;
+        padding: 8px 10px 8px 26px;
+        background-position: 8px 9px;
     }
 
     /* Submit row */
 
     .submit-row {
-Nadia   padding: 10px 10px 0;
-Nadia   margin: 0 0 15px;
-Nadia   display: flex;
-Nadia   flex-direction: column;
+        padding: 10px 10px 0;
+        margin: 0 0 15px;
+        display: flex;
+        flex-direction: column;
     }
 
     .submit-row > * {
-Nadia   width: 100%;
+        width: 100%;
     }
 
     .submit-row input, .submit-row input.default, .submit-row a, .submit-row a.closelink {
-Nadia   float: none;
-Nadia   margin: 0 0 10px;
-Nadia   text-align: center;
+        float: none;
+        margin: 0 0 10px;
+        text-align: center;
     }
 
     .submit-row a.closelink {
-Nadia   padding: 10px 0;
+        padding: 10px 0;
     }
 
     .submit-row p.deletelink-box {
-Nadia   order: 4;
+        order: 4;
     }
 
     /* Messages */
 
     ul.messagelist li {
-Nadia   padding-left: 40px;
-Nadia   background-position: 15px 12px;
+        padding-left: 40px;
+        background-position: 15px 12px;
     }
 
     ul.messagelist li.error {
-Nadia   background-position: 15px 12px;
+        background-position: 15px 12px;
     }
 
     ul.messagelist li.warning {
-Nadia   background-position: 15px 14px;
+        background-position: 15px 14px;
     }
 
     /* Paginator */
 
     .paginator .this-page, .paginator a:link, .paginator a:visited {
-Nadia   padding: 4px 10px;
+        padding: 4px 10px;
     }
 
     /* Login */
 
     body.login {
-Nadia   padding: 0 15px;
+        padding: 0 15px;
     }
 
     .login #container {
-Nadia   width: auto;
-Nadia   max-width: 480px;
-Nadia   margin: 50px auto;
+        width: auto;
+        max-width: 480px;
+        margin: 50px auto;
     }
 
     .login #header,
     .login #content {
-Nadia   padding: 15px;
+        padding: 15px;
     }
 
     .login #content-main {
-Nadia   float: none;
+        float: none;
     }
 
     .login .form-row {
-Nadia   padding: 0;
+        padding: 0;
     }
 
     .login .form-row + .form-row {
-Nadia   margin-top: 15px;
+        margin-top: 15px;
     }
 
     .login .form-row label {
-Nadia   display: block;
-Nadia   margin: 0 0 5px;
-Nadia   padding: 0;
-Nadia   line-height: 1.2;
+        display: block;
+        margin: 0 0 5px;
+        padding: 0;
+        line-height: 1.2;
     }
 
     .login .submit-row {
-Nadia   padding: 15px 0 0;
+        padding: 15px 0 0;
     }
 
     .login br, .login .submit-row label {
-Nadia   display: none;
+        display: none;
     }
 
     .login .submit-row input {
-Nadia   margin: 0;
-Nadia   text-transform: uppercase;
+        margin: 0;
+        text-transform: uppercase;
     }
 
     .errornote {
-Nadia   margin: 0 0 20px;
-Nadia   padding: 8px 12px;
-Nadia   font-size: 13px;
+        margin: 0 0 20px;
+        padding: 8px 12px;
+        font-size: 13px;
     }
 
     /* Calendar and clock */
 
     .calendarbox, .clockbox {
-Nadia   position: fixed !important;
-Nadia   top: 50% !important;
-Nadia   left: 50% !important;
-Nadia   transform: translate(-50%, -50%);
-Nadia   margin: 0;
-Nadia   border: none;
-Nadia   overflow: visible;
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        border: none;
+        overflow: visible;
     }
 
     .calendarbox:before, .clockbox:before {
-Nadia   content: '';
-Nadia   position: fixed;
-Nadia   top: 50%;
-Nadia   left: 50%;
-Nadia   width: 100vw;
-Nadia   height: 100vh;
-Nadia   background: rgba(0, 0, 0, 0.75);
-Nadia   transform: translate(-50%, -50%);
+        content: '';
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        transform: translate(-50%, -50%);
     }
 
     .calendarbox > *, .clockbox > * {
-Nadia   position: relative;
-Nadia   z-index: 1;
+        position: relative;
+        z-index: 1;
     }
 
     .calendarbox > div:first-child {
-Nadia   z-index: 2;
+        z-index: 2;
     }
 
     .calendarbox .calendar, .clockbox h2 {
-Nadia   border-radius: 4px 4px 0 0;
-Nadia   overflow: hidden;
+        border-radius: 4px 4px 0 0;
+        overflow: hidden;
     }
 
     .calendarbox .calendar-cancel, .clockbox .calendar-cancel {
-Nadia   border-radius: 0 0 4px 4px;
-Nadia   overflow: hidden;
+        border-radius: 0 0 4px 4px;
+        overflow: hidden;
     }
 
     .calendar-shortcuts {
-Nadia   padding: 10px 0;
-Nadia   font-size: 12px;
-Nadia   line-height: 12px;
+        padding: 10px 0;
+        font-size: 12px;
+        line-height: 12px;
     }
 
     .calendar-shortcuts a {
-Nadia   margin: 0 4px;
+        margin: 0 4px;
     }
 
     .timelist a {
-Nadia   background: #fff;
-Nadia   padding: 4px;
+        background: #fff;
+        padding: 4px;
     }
 
     .calendar-cancel {
-Nadia   padding: 8px 10px;
+        padding: 8px 10px;
     }
 
     .clockbox h2 {
-Nadia   padding: 8px 15px;
+        padding: 8px 15px;
     }
 
     .calendar caption {
-Nadia   padding: 10px;
+        padding: 10px;
     }
 
     .calendarbox .calendarnav-previous, .calendarbox .calendarnav-next {
-Nadia   z-index: 1;
-Nadia   top: 10px;
+        z-index: 1;
+        top: 10px;
     }
 
     /* History */
 
     table#change-history tbody th, table#change-history tbody td {
-Nadia   font-size: 13px;
-Nadia   word-break: break-word;
+        font-size: 13px;
+        word-break: break-word;
     }
 
     table#change-history tbody th {
-Nadia   width: auto;
+        width: auto;
     }
 
     /* Docs */
 
     table.model tbody th, table.model tbody td {
-Nadia   font-size: 13px;
-Nadia   word-break: break-word;
+        font-size: 13px;
+        word-break: break-word;
     }
 }

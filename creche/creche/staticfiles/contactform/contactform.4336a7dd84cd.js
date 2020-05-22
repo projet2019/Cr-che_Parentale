@@ -4,113 +4,113 @@ jQuery(document).ready(function($) {
   //Contact
   $('form.contactForm').submit(function() {
     var f = $(this).find('.form-group'),
-Nadia ferror = false,
-Nadia emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
+      ferror = false,
+      emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
 
     f.children('input').each(function() { // run all inputs
 
-Nadia var i = $(this); // current input
-Nadia var rule = i.attr('data-rule');
+      var i = $(this); // current input
+      var rule = i.attr('data-rule');
 
-Nadia if (rule !== undefined) {
-Nadia   var ierror = false; // error flag for current input
-Nadia   var pos = rule.indexOf(':', 0);
-Nadia   if (pos >= 0) {
-NadiaNadiavar exp = rule.substr(pos + 1, rule.length);
-NadiaNadiarule = rule.substr(0, pos);
-Nadia   } else {
-NadiaNadiarule = rule.substr(pos + 1, rule.length);
-Nadia   }
+      if (rule !== undefined) {
+        var ierror = false; // error flag for current input
+        var pos = rule.indexOf(':', 0);
+        if (pos >= 0) {
+          var exp = rule.substr(pos + 1, rule.length);
+          rule = rule.substr(0, pos);
+        } else {
+          rule = rule.substr(pos + 1, rule.length);
+        }
 
-Nadia   switch (rule) {
-NadiaNadiacase 'required':
-NadiaNadia  if (i.val() === '') {
-NadiaNadia    ferror = ierror = true;
-NadiaNadia  }
-NadiaNadia  break;
+        switch (rule) {
+          case 'required':
+            if (i.val() === '') {
+              ferror = ierror = true;
+            }
+            break;
 
-NadiaNadiacase 'minlen':
-NadiaNadia  if (i.val().length < parseInt(exp)) {
-NadiaNadia    ferror = ierror = true;
-NadiaNadia  }
-NadiaNadia  break;
+          case 'minlen':
+            if (i.val().length < parseInt(exp)) {
+              ferror = ierror = true;
+            }
+            break;
 
-NadiaNadiacase 'email':
-NadiaNadia  if (!emailExp.test(i.val())) {
-NadiaNadia    ferror = ierror = true;
-NadiaNadia  }
-NadiaNadia  break;
+          case 'email':
+            if (!emailExp.test(i.val())) {
+              ferror = ierror = true;
+            }
+            break;
 
-NadiaNadiacase 'checked':
-NadiaNadia  if (! i.is(':checked')) {
-NadiaNadia    ferror = ierror = true;
-NadiaNadia  }
-NadiaNadia  break;
+          case 'checked':
+            if (! i.is(':checked')) {
+              ferror = ierror = true;
+            }
+            break;
 
-NadiaNadiacase 'regexp':
-NadiaNadia  exp = new RegExp(exp);
-NadiaNadia  if (!exp.test(i.val())) {
-NadiaNadia    ferror = ierror = true;
-NadiaNadia  }
-NadiaNadia  break;
-Nadia   }
-Nadia   i.next('.validation').html((ierror ? (i.attr('data-msg') !== undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
-Nadia }
+          case 'regexp':
+            exp = new RegExp(exp);
+            if (!exp.test(i.val())) {
+              ferror = ierror = true;
+            }
+            break;
+        }
+        i.next('.validation').html((ierror ? (i.attr('data-msg') !== undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
+      }
     });
     f.children('textarea').each(function() { // run all inputs
 
-Nadia var i = $(this); // current input
-Nadia var rule = i.attr('data-rule');
+      var i = $(this); // current input
+      var rule = i.attr('data-rule');
 
-Nadia if (rule !== undefined) {
-Nadia   var ierror = false; // error flag for current input
-Nadia   var pos = rule.indexOf(':', 0);
-Nadia   if (pos >= 0) {
-NadiaNadiavar exp = rule.substr(pos + 1, rule.length);
-NadiaNadiarule = rule.substr(0, pos);
-Nadia   } else {
-NadiaNadiarule = rule.substr(pos + 1, rule.length);
-Nadia   }
+      if (rule !== undefined) {
+        var ierror = false; // error flag for current input
+        var pos = rule.indexOf(':', 0);
+        if (pos >= 0) {
+          var exp = rule.substr(pos + 1, rule.length);
+          rule = rule.substr(0, pos);
+        } else {
+          rule = rule.substr(pos + 1, rule.length);
+        }
 
-Nadia   switch (rule) {
-NadiaNadiacase 'required':
-NadiaNadia  if (i.val() === '') {
-NadiaNadia    ferror = ierror = true;
-NadiaNadia  }
-NadiaNadia  break;
+        switch (rule) {
+          case 'required':
+            if (i.val() === '') {
+              ferror = ierror = true;
+            }
+            break;
 
-NadiaNadiacase 'minlen':
-NadiaNadia  if (i.val().length < parseInt(exp)) {
-NadiaNadia    ferror = ierror = true;
-NadiaNadia  }
-NadiaNadia  break;
-Nadia   }
-Nadia   i.next('.validation').html((ierror ? (i.attr('data-msg') != undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
-Nadia }
+          case 'minlen':
+            if (i.val().length < parseInt(exp)) {
+              ferror = ierror = true;
+            }
+            break;
+        }
+        i.next('.validation').html((ierror ? (i.attr('data-msg') != undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
+      }
     });
     if (ferror) return false;
     else var str = $(this).serialize();
     var action = $(this).attr('action');
     if( ! action ) {
-Nadia action = 'contactform/contactform.php';
+      action = 'contactform/contactform.php';
     }
     $.ajax({
-Nadia type: "POST",
-Nadia url: action,
-Nadia data: str,
-Nadia success: function(msg) {
-Nadia   // alert(msg);
-Nadia   if (msg == 'OK') {
-NadiaNadia$("#sendmessage").addClass("show");
-NadiaNadia$("#errormessage").removeClass("show");
-NadiaNadia$('.contactForm').find("input, textarea").val("");
-Nadia   } else {
-NadiaNadia$("#sendmessage").removeClass("show");
-NadiaNadia$("#errormessage").addClass("show");
-NadiaNadia$('#errormessage').html(msg);
-Nadia   }
+      type: "POST",
+      url: action,
+      data: str,
+      success: function(msg) {
+        // alert(msg);
+        if (msg == 'OK') {
+          $("#sendmessage").addClass("show");
+          $("#errormessage").removeClass("show");
+          $('.contactForm').find("input, textarea").val("");
+        } else {
+          $("#sendmessage").removeClass("show");
+          $("#errormessage").addClass("show");
+          $('#errormessage').html(msg);
+        }
 
-Nadia }
+      }
     });
     return false;
   });
