@@ -1,9 +1,12 @@
-
+#!  /usr/bin/env python
 # encoding: utf-8
 # vim: ai ts=4 sts=4 et sw=4
 
 ##
-
+##
+## @author   Joel
+## nadia@gmail.com/joel@gmail.com
+##
 
 import MySQLdb
 from datetime import datetime
@@ -15,200 +18,200 @@ class SysEventService:
 
     def __init__(self):
 
-        self.connection = MySQLdb.connect (host=settings.DATABASES['default']['HOST'],
-                                           user=settings.DATABASES['default']['USER'],
-                                           passwd=settings.DATABASES['default']['PASSWORD'],
-                                           db=settings.DATABASES['default']['NAME'])
+Nadia   self.connection = MySQLdb.connect (host=settings.DATABASES['default']['HOST'],
+NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   user=settings.DATABASES['default']['USER'],
+NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   passwd=settings.DATABASES['default']['PASSWORD'],
+NadiaNadiaNadiaNadiaNadiaNadiaNadiaNadia   db=settings.DATABASES['default']['NAME'])
 
-        self.connection.set_character_set('utf8')#important because the data we are dealing with is unicode
+Nadia   self.connection.set_character_set('utf8')#important because the data we are dealing with is unicode
 
     def createSysEvent(self, params, expressions=None):
-        """Utility method that will be utilized for making an entry about an event"""
+Nadia   """Utility method that will be utilized for making an entry about an event"""
 
-        cursor = self.connection.cursor()
+Nadia   cursor = self.connection.cursor()
 
-        params['date_generated'] = datetime.now()
-        params['last_updated'] = datetime.now()
-        params['date_created'] = datetime.now()
-        params['processed'] = False
-        #in the params dict we expect the name to have been specified
+Nadia   params['date_generated'] = datetime.now()
+Nadia   params['last_updated'] = datetime.now()
+Nadia   params['date_created'] = datetime.now()
+Nadia   params['processed'] = False
+Nadia   #in the params dict we expect the name to have been specified
 
-        fields = ', '.join(params.keys())
-        values = ', '.join(['%%(%s)s' % x for x in params])
-        
-        query = 'INSERT INTO event (%s) VALUES (%s)' % (fields, values)
-        
-        cursor.execute(query, params)
+Nadia   fields = ', '.join(params.keys())
+Nadia   values = ', '.join(['%%(%s)s' % x for x in params])
+Nadia   
+Nadia   query = 'INSERT INTO event (%s) VALUES (%s)' % (fields, values)
+Nadia   
+Nadia   cursor.execute(query, params)
 
-        eventId = cursor.lastrowid
+Nadia   eventId = cursor.lastrowid
 
-        result = {}
-        result['eventId'] = eventId
+Nadia   result = {}
+Nadia   result['eventId'] = eventId
 
-        cursor.close()
+Nadia   cursor.close()
 
-        if expressions:
-            expressions['event_type_id'] = params['event_type_id']
-            result = self.__scheduleGenericNotification(eventId, expressions)
-            
-        self.connection.commit()
+Nadia   if expressions:
+NadiaNadia  expressions['event_type_id'] = params['event_type_id']
+NadiaNadia  result = self.__scheduleGenericNotification(eventId, expressions)
+NadiaNadia  
+Nadia   self.connection.commit()
 
-        return result
+Nadia   return result
 
     def scheduleEmailRecipient(self, params, language):
-        """Utility method that schedules email recipients"""
+Nadia   """Utility method that schedules email recipients"""
 
-        cursor = self.connection.cursor()
-        event = None
-        subject_suffix = ''
+Nadia   cursor = self.connection.cursor()
+Nadia   event = None
+Nadia   subject_suffix = ''
 
-        #for i in range(1, 10000):
-        
-        #we must get the from email and the proposed subject
-        cursor.execute("""SELECT et.from_email, et.email_subject
-                FROM event_type et
-                WHERE et.id = %d""" % (params['event_type_id']))
-        event_type = cursor.fetchone()
-        
-        from_email = event_type[0]
-        subject = event_type[1]
+Nadia   #for i in range(1, 10000):
+Nadia   
+Nadia   #we must get the from email and the proposed subject
+Nadia   cursor.execute("""SELECT et.from_email, et.email_subject
+NadiaNadiaNadia FROM event_type et
+NadiaNadiaNadia WHERE et.id = %d""" % (params['event_type_id']))
+Nadia   event_type = cursor.fetchone()
+Nadia   
+Nadia   from_email = event_type[0]
+Nadia   subject = event_type[1]
 
-        if params['event_type_id'] != settings.APPLICATION_SETTINGS['TEST_EMAIL']:
-            cursor.execute("""SELECT e.id
-                FROM event e
-                WHERE e.entity_reference_id = %d AND e.event_type_id = %d""" % (params['entity_reference_id'], params['event_type_id']))
-            event = cursor.fetchone()
+Nadia   if params['event_type_id'] != settings.APPLICATION_SETTINGS['TEST_EMAIL']:
+NadiaNadia  cursor.execute("""SELECT e.id
+NadiaNadiaNadia FROM event e
+NadiaNadiaNadia WHERE e.entity_reference_id = %d AND e.event_type_id = %d""" % (params['entity_reference_id'], params['event_type_id']))
+NadiaNadia  event = cursor.fetchone()
 
-        if event:
-            eventId = event[0]
-        else:
-            params['date_generated'] = datetime.now()
-            params['last_updated'] = datetime.now()
-            params['date_created'] = datetime.now()
-            params['processed'] = True#it ensure that we know that this is an email not an event
-            #in the params dict we expect the name to have been specified
+Nadia   if event:
+NadiaNadia  eventId = event[0]
+Nadia   else:
+NadiaNadia  params['date_generated'] = datetime.now()
+NadiaNadia  params['last_updated'] = datetime.now()
+NadiaNadia  params['date_created'] = datetime.now()
+NadiaNadia  params['processed'] = True#it ensure that we know that this is an email not an event
+NadiaNadia  #in the params dict we expect the name to have been specified
 
-            fields = ', '.join(params.keys())
-            values = ', '.join(['%%(%s)s' % x for x in params])
+NadiaNadia  fields = ', '.join(params.keys())
+NadiaNadia  values = ', '.join(['%%(%s)s' % x for x in params])
 
-            query = 'INSERT INTO event (%s) VALUES (%s)' % (fields, values)
-            cursor.execute(query, params)
+NadiaNadia  query = 'INSERT INTO event (%s) VALUES (%s)' % (fields, values)
+NadiaNadia  cursor.execute(query, params)
 
-            cursor.execute("""SELECT from_email
-            FROM event_type
-            WHERE id = %d""" % (params['event_type_id']))
-            event_type = cursor.fetchone()
+NadiaNadia  cursor.execute("""SELECT from_email
+NadiaNadia  FROM event_type
+NadiaNadia  WHERE id = %d""" % (params['event_type_id']))
+NadiaNadia  event_type = cursor.fetchone()
 
-            eventId = cursor.lastrowid
-            from_email = event_type[0]
+NadiaNadia  eventId = cursor.lastrowid
+NadiaNadia  from_email = event_type[0]
 
-            self.connection.commit()#lets commit this asap so that any other preparation request doesn't start queueing guys again.
+NadiaNadia  self.connection.commit()#lets commit this asap so that any other preparation request doesn't start queueing guys again.
 
-        if params['event_type_id'] == settings.APPLICATION_SETTINGS['TEST_EMAIL']:
-            #lets add the No. of tests to the subject of the test email
-            cursor.execute("""SELECT COUNT(e.id)
-                FROM event_type et INNER JOIN event e ON e.event_type_id = et.id
-                WHERE e.event_type_id = %d AND e.entity_reference_id = %d""" % (params['event_type_id'], params['entity_reference_id']))
-            test_event = cursor.fetchone()
+Nadia   if params['event_type_id'] == settings.APPLICATION_SETTINGS['TEST_EMAIL']:
+NadiaNadia  #lets add the No. of tests to the subject of the test email
+NadiaNadia  cursor.execute("""SELECT COUNT(e.id)
+NadiaNadiaNadia FROM event_type et INNER JOIN event e ON e.event_type_id = et.id
+NadiaNadiaNadia WHERE e.event_type_id = %d AND e.entity_reference_id = %d""" % (params['event_type_id'], params['entity_reference_id']))
+NadiaNadia  test_event = cursor.fetchone()
 
-            subject_suffix = ' [Test No. ' + str(test_event[0]) + ']'
+NadiaNadia  subject_suffix = ' [Test No. ' + str(test_event[0]) + ']'
 
-        #schedule the emails
-        expressions = {}
-        expressions['from_email'] = from_email
-        expressions['message_body'] = ' '
-        expressions['subject'] = subject + ' ' + str(params['entity_reference_id']) + subject_suffix
-        expressions['scheduled_for_relay'] = False
-        expressions['event_id'] = eventId
-        expressions['last_updated'] = datetime.now()
-        expressions['date_created'] = datetime.now()
+Nadia   #schedule the emails
+Nadia   expressions = {}
+Nadia   expressions['from_email'] = from_email
+Nadia   expressions['message_body'] = ' '
+Nadia   expressions['subject'] = subject + ' ' + str(params['entity_reference_id']) + subject_suffix
+Nadia   expressions['scheduled_for_relay'] = False
+Nadia   expressions['event_id'] = eventId
+Nadia   expressions['last_updated'] = datetime.now()
+Nadia   expressions['date_created'] = datetime.now()
 
-        cursor.execute("""
-            SELECT wu.mail
-                FROM web_users wu
-                INNER JOIN system_user_has_event_type suhet ON suhet.system_user_id = wu.uid
-                INNER JOIN event_type et ON suhet.event_type_id = et.id
-            WHERE et.id = %d""" % params['event_type_id'])
+Nadia   cursor.execute("""
+NadiaNadia  SELECT wu.mail
+NadiaNadiaNadia FROM web_users wu
+NadiaNadiaNadia INNER JOIN system_user_has_event_type suhet ON suhet.system_user_id = wu.uid
+NadiaNadiaNadia INNER JOIN event_type et ON suhet.event_type_id = et.id
+NadiaNadia  WHERE et.id = %d""" % params['event_type_id'])
 
-        subscribers = cursor.fetchall()
+Nadia   subscribers = cursor.fetchall()
 
-        for user in subscribers:
-            #check to see if we already have queued this recipient/subscriber
-            em = user[0].replace("'", "\\'")
-            cursor.execute("SELECT id FROM email_schedule WHERE event_id = %d AND to_email = '%s'" % (eventId, em))
-            recipient = cursor.fetchone()
+Nadia   for user in subscribers:
+NadiaNadia  #check to see if we already have queued this recipient/subscriber
+NadiaNadia  em = user[0].replace("'", "\\'")
+NadiaNadia  cursor.execute("SELECT id FROM email_schedule WHERE event_id = %d AND to_email = '%s'" % (eventId, em))
+NadiaNadia  recipient = cursor.fetchone()
 
-            if not recipient:
+NadiaNadia  if not recipient:
 
-                expressions['to_email'] = user[0]
+NadiaNadiaNadia expressions['to_email'] = user[0]
 
-                fields = ', '.join(expressions.keys())
-                values = ', '.join(['%%(%s)s' % x for x in expressions])
+NadiaNadiaNadia fields = ', '.join(expressions.keys())
+NadiaNadiaNadia values = ', '.join(['%%(%s)s' % x for x in expressions])
 
-                query = 'INSERT INTO email_schedule (%s) VALUES (%s)' % (fields, values)
-                cursor.execute(query, expressions)
+NadiaNadiaNadia query = 'INSERT INTO email_schedule (%s) VALUES (%s)' % (fields, values)
+NadiaNadiaNadia cursor.execute(query, expressions)
 
-                self.connection.commit()#lets commit this asap so that any other preparation request doesn't start queueing guys again.
+NadiaNadiaNadia self.connection.commit()#lets commit this asap so that any other preparation request doesn't start queueing guys again.
 
-        #get the total number of subscribers
-        cursor.execute("SELECT count(*) FROM email_schedule WHERE event_id = %d " % (eventId))
-        subscriber_count = cursor.fetchone()
+Nadia   #get the total number of subscribers
+Nadia   cursor.execute("SELECT count(*) FROM email_schedule WHERE event_id = %d " % (eventId))
+Nadia   subscriber_count = cursor.fetchone()
 
-        #get the total number of queued subscribers
-        cursor.execute("SELECT count(*) FROM email_schedule WHERE event_id = %d AND delivery_date IS NULL" % (eventId))
-        queued_subscribers = cursor.fetchone()
+Nadia   #get the total number of queued subscribers
+Nadia   cursor.execute("SELECT count(*) FROM email_schedule WHERE event_id = %d AND delivery_date IS NULL" % (eventId))
+Nadia   queued_subscribers = cursor.fetchone()
 
-        cursor.close()
-        self.connection.commit()
-        self.connection.close()
+Nadia   cursor.close()
+Nadia   self.connection.commit()
+Nadia   self.connection.close()
 
-        return [str(subscriber_count[0]), str(queued_subscribers[0]), eventId]
+Nadia   return [str(subscriber_count[0]), str(queued_subscribers[0]), eventId]
 
     def __scheduleGenericNotification(self, eventId, expressions):
-        """Schedule email for any user who would wish to be notified of a notification."""
-        #first pick the template path that we are to use for building the email body
-        cursor = self.connection.cursor()
+Nadia   """Schedule email for any user who would wish to be notified of a notification."""
+Nadia   #first pick the template path that we are to use for building the email body
+Nadia   cursor = self.connection.cursor()
 
-        cursor.execute("SELECT template_path, from_email FROM event_type et INNER JOIN event e ON e.event_type_id = et.id WHERE e.id = %d" % eventId)
-        record = cursor.fetchone()
+Nadia   cursor.execute("SELECT template_path, from_email FROM event_type et INNER JOIN event e ON e.event_type_id = et.id WHERE e.id = %d" % eventId)
+Nadia   record = cursor.fetchone()
 
-        template = Template(filename=settings.APPLICATION_SETTINGS['COREAPP_HOME'] + record[0], input_encoding='utf-8')
-        template.output_encoding = 'utf-8'
+Nadia   template = Template(filename=settings.APPLICATION_SETTINGS['COREAPP_HOME'] + record[0], input_encoding='utf-8')
+Nadia   template.output_encoding = 'utf-8'
 
-        params = {}
-        params['from_email'] = record[1]
-        params['subject'] = 'Creche Parentale Notification'
-        params['scheduled_for_relay'] = True
-        params['event_id'] = eventId
-        params['last_updated'] = datetime.now()
-        params['date_created'] = datetime.now()
+Nadia   params = {}
+Nadia   params['from_email'] = record[1]
+Nadia   params['subject'] = 'Creche Parentale Notification'
+Nadia   params['scheduled_for_relay'] = True
+Nadia   params['event_id'] = eventId
+Nadia   params['last_updated'] = datetime.now()
+Nadia   params['date_created'] = datetime.now()
 
-        cursor.execute("""
-            SELECT wu.mail, wud.full_name
-                FROM web_users wu
-                INNER JOIN system_user_has_event_type suhet ON suhet.system_user_id = wu.uid
-                INNER JOIN web_user_detail wud ON wud.user_id = wu.uid
-                INNER JOIN event_type et ON suhet.event_type_id = et.id
-            WHERE et.id = %d""" % expressions['event_type_id'])
+Nadia   cursor.execute("""
+NadiaNadia  SELECT wu.mail, wud.full_name
+NadiaNadiaNadia FROM web_users wu
+NadiaNadiaNadia INNER JOIN system_user_has_event_type suhet ON suhet.system_user_id = wu.uid
+NadiaNadiaNadia INNER JOIN web_user_detail wud ON wud.user_id = wu.uid
+NadiaNadiaNadia INNER JOIN event_type et ON suhet.event_type_id = et.id
+NadiaNadia  WHERE et.id = %d""" % expressions['event_type_id'])
 
-        subscribers = cursor.fetchall()
+Nadia   subscribers = cursor.fetchall()
 
-        for user in subscribers:
-            recipient = 'User'
-            if user[1]:
-                recipient = user[1]
+Nadia   for user in subscribers:
+NadiaNadia  recipient = 'User'
+NadiaNadia  if user[1]:
+NadiaNadiaNadia recipient = user[1]
 
-            expressions['recipient'] = recipient
+NadiaNadia  expressions['recipient'] = recipient
 
-            params['message_body'] = template.render(params=expressions)#message to be relayed to the subscribers
-            params['to_email'] = user[0]
+NadiaNadia  params['message_body'] = template.render(params=expressions)#message to be relayed to the subscribers
+NadiaNadia  params['to_email'] = user[0]
 
-            fields = ', '.join(params.keys())
-            values = ', '.join(['%%(%s)s' % x for x in params])
+NadiaNadia  fields = ', '.join(params.keys())
+NadiaNadia  values = ', '.join(['%%(%s)s' % x for x in params])
 
-            query = 'INSERT INTO email_schedule (%s) VALUES (%s)' % (fields, values)
-            cursor.execute(query, params)
+NadiaNadia  query = 'INSERT INTO email_schedule (%s) VALUES (%s)' % (fields, values)
+NadiaNadia  cursor.execute(query, params)
 
-        cursor.close()
+Nadia   cursor.close()
 
-        return params
+Nadia   return params

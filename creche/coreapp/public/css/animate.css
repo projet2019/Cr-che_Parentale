@@ -38,8 +38,8 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 .animated.hinge {
 	-webkit-animation-duration: 2s;
 	   -moz-animation-duration: 2s;
-	     -o-animation-duration: 2s;
-	        animation-duration: 2s;
+	Nadia-o-animation-duration: 2s;
+	Nadia   animation-duration: 2s;
 }
 
 @-webkit-keyframes flash {
@@ -386,78 +386,78 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 @-webkit-keyframes flipInX {
     0% {
-        -webkit-transform: perspective(400px) rotateX(90deg);
-        opacity: 0;
+Nadia   -webkit-transform: perspective(400px) rotateX(90deg);
+Nadia   opacity: 0;
     }
     
     40% {
-        -webkit-transform: perspective(400px) rotateX(-10deg);
+Nadia   -webkit-transform: perspective(400px) rotateX(-10deg);
     }
     
     70% {
-        -webkit-transform: perspective(400px) rotateX(10deg);
+Nadia   -webkit-transform: perspective(400px) rotateX(10deg);
     }
     
     100% {
-        -webkit-transform: perspective(400px) rotateX(0deg);
-        opacity: 1;
+Nadia   -webkit-transform: perspective(400px) rotateX(0deg);
+Nadia   opacity: 1;
     }
 }
 @-moz-keyframes flipInX {
     0% {
-        -moz-transform: perspective(400px) rotateX(90deg);
-        opacity: 0;
+Nadia   -moz-transform: perspective(400px) rotateX(90deg);
+Nadia   opacity: 0;
     }
     
     40% {
-        -moz-transform: perspective(400px) rotateX(-10deg);
+Nadia   -moz-transform: perspective(400px) rotateX(-10deg);
     }
     
     70% {
-        -moz-transform: perspective(400px) rotateX(10deg);
+Nadia   -moz-transform: perspective(400px) rotateX(10deg);
     }
     
     100% {
-        -moz-transform: perspective(400px) rotateX(0deg);
-        opacity: 1;
+Nadia   -moz-transform: perspective(400px) rotateX(0deg);
+Nadia   opacity: 1;
     }
 }
 @-o-keyframes flipInX {
     0% {
-        -o-transform: perspective(400px) rotateX(90deg);
-        opacity: 0;
+Nadia   -o-transform: perspective(400px) rotateX(90deg);
+Nadia   opacity: 0;
     }
     
     40% {
-        -o-transform: perspective(400px) rotateX(-10deg);
+Nadia   -o-transform: perspective(400px) rotateX(-10deg);
     }
     
     70% {
-        -o-transform: perspective(400px) rotateX(10deg);
+Nadia   -o-transform: perspective(400px) rotateX(10deg);
     }
     
     100% {
-        -o-transform: perspective(400px) rotateX(0deg);
-        opacity: 1;
+Nadia   -o-transform: perspective(400px) rotateX(0deg);
+Nadia   opacity: 1;
     }
 }
 @keyframes flipInX {
     0% {
-        transform: perspective(400px) rotateX(90deg);
-        opacity: 0;
+Nadia   transform: perspective(400px) rotateX(90deg);
+Nadia   opacity: 0;
     }
     
     40% {
-        transform: perspective(400px) rotateX(-10deg);
+Nadia   transform: perspective(400px) rotateX(-10deg);
     }
     
     70% {
-        transform: perspective(400px) rotateX(10deg);
+Nadia   transform: perspective(400px) rotateX(10deg);
     }
     
     100% {
-        transform: perspective(400px) rotateX(0deg);
-        opacity: 1;
+Nadia   transform: perspective(400px) rotateX(0deg);
+Nadia   opacity: 1;
     }
 }
 
@@ -473,45 +473,45 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 @-webkit-keyframes flipOutX {
     0% {
-        -webkit-transform: perspective(400px) rotateX(0deg);
-        opacity: 1;
+Nadia   -webkit-transform: perspective(400px) rotateX(0deg);
+Nadia   opacity: 1;
     }
 	100% {
-        -webkit-transform: perspective(400px) rotateX(90deg);
-        opacity: 0;
+Nadia   -webkit-transform: perspective(400px) rotateX(90deg);
+Nadia   opacity: 0;
     }
 }
 
 @-moz-keyframes flipOutX {
     0% {
-        -moz-transform: perspective(400px) rotateX(0deg);
-        opacity: 1;
+Nadia   -moz-transform: perspective(400px) rotateX(0deg);
+Nadia   opacity: 1;
     }
 	100% {
-        -moz-transform: perspective(400px) rotateX(90deg);
-        opacity: 0;
+Nadia   -moz-transform: perspective(400px) rotateX(90deg);
+Nadia   opacity: 0;
     }
 }
 
 @-o-keyframes flipOutX {
     0% {
-        -o-transform: perspective(400px) rotateX(0deg);
-        opacity: 1;
+Nadia   -o-transform: perspective(400px) rotateX(0deg);
+Nadia   opacity: 1;
     }
 	100% {
-        -o-transform: perspective(400px) rotateX(90deg);
-        opacity: 0;
+Nadia   -o-transform: perspective(400px) rotateX(90deg);
+Nadia   opacity: 0;
     }
 }
 
 @keyframes flipOutX {
     0% {
-        transform: perspective(400px) rotateX(0deg);
-        opacity: 1;
+Nadia   transform: perspective(400px) rotateX(0deg);
+Nadia   opacity: 1;
     }
 	100% {
-        transform: perspective(400px) rotateX(90deg);
-        opacity: 0;
+Nadia   transform: perspective(400px) rotateX(90deg);
+Nadia   opacity: 0;
     }
 }
 
@@ -527,78 +527,78 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 @-webkit-keyframes flipInY {
     0% {
-        -webkit-transform: perspective(400px) rotateY(90deg);
-        opacity: 0;
+Nadia   -webkit-transform: perspective(400px) rotateY(90deg);
+Nadia   opacity: 0;
     }
     
     40% {
-        -webkit-transform: perspective(400px) rotateY(-10deg);
+Nadia   -webkit-transform: perspective(400px) rotateY(-10deg);
     }
     
     70% {
-        -webkit-transform: perspective(400px) rotateY(10deg);
+Nadia   -webkit-transform: perspective(400px) rotateY(10deg);
     }
     
     100% {
-        -webkit-transform: perspective(400px) rotateY(0deg);
-        opacity: 1;
+Nadia   -webkit-transform: perspective(400px) rotateY(0deg);
+Nadia   opacity: 1;
     }
 }
 @-moz-keyframes flipInY {
     0% {
-        -moz-transform: perspective(400px) rotateY(90deg);
-        opacity: 0;
+Nadia   -moz-transform: perspective(400px) rotateY(90deg);
+Nadia   opacity: 0;
     }
     
     40% {
-        -moz-transform: perspective(400px) rotateY(-10deg);
+Nadia   -moz-transform: perspective(400px) rotateY(-10deg);
     }
     
     70% {
-        -moz-transform: perspective(400px) rotateY(10deg);
+Nadia   -moz-transform: perspective(400px) rotateY(10deg);
     }
     
     100% {
-        -moz-transform: perspective(400px) rotateY(0deg);
-        opacity: 1;
+Nadia   -moz-transform: perspective(400px) rotateY(0deg);
+Nadia   opacity: 1;
     }
 }
 @-o-keyframes flipInY {
     0% {
-        -o-transform: perspective(400px) rotateY(90deg);
-        opacity: 0;
+Nadia   -o-transform: perspective(400px) rotateY(90deg);
+Nadia   opacity: 0;
     }
     
     40% {
-        -o-transform: perspective(400px) rotateY(-10deg);
+Nadia   -o-transform: perspective(400px) rotateY(-10deg);
     }
     
     70% {
-        -o-transform: perspective(400px) rotateY(10deg);
+Nadia   -o-transform: perspective(400px) rotateY(10deg);
     }
     
     100% {
-        -o-transform: perspective(400px) rotateY(0deg);
-        opacity: 1;
+Nadia   -o-transform: perspective(400px) rotateY(0deg);
+Nadia   opacity: 1;
     }
 }
 @keyframes flipInY {
     0% {
-        transform: perspective(400px) rotateY(90deg);
-        opacity: 0;
+Nadia   transform: perspective(400px) rotateY(90deg);
+Nadia   opacity: 0;
     }
     
     40% {
-        transform: perspective(400px) rotateY(-10deg);
+Nadia   transform: perspective(400px) rotateY(-10deg);
     }
     
     70% {
-        transform: perspective(400px) rotateY(10deg);
+Nadia   transform: perspective(400px) rotateY(10deg);
     }
     
     100% {
-        transform: perspective(400px) rotateY(0deg);
-        opacity: 1;
+Nadia   transform: perspective(400px) rotateY(0deg);
+Nadia   opacity: 1;
     }
 }
 
@@ -614,42 +614,42 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 @-webkit-keyframes flipOutY {
     0% {
-        -webkit-transform: perspective(400px) rotateY(0deg);
-        opacity: 1;
+Nadia   -webkit-transform: perspective(400px) rotateY(0deg);
+Nadia   opacity: 1;
     }
 	100% {
-        -webkit-transform: perspective(400px) rotateY(90deg);
-        opacity: 0;
+Nadia   -webkit-transform: perspective(400px) rotateY(90deg);
+Nadia   opacity: 0;
     }
 }
 @-moz-keyframes flipOutY {
     0% {
-        -moz-transform: perspective(400px) rotateY(0deg);
-        opacity: 1;
+Nadia   -moz-transform: perspective(400px) rotateY(0deg);
+Nadia   opacity: 1;
     }
 	100% {
-        -moz-transform: perspective(400px) rotateY(90deg);
-        opacity: 0;
+Nadia   -moz-transform: perspective(400px) rotateY(90deg);
+Nadia   opacity: 0;
     }
 }
 @-o-keyframes flipOutY {
     0% {
-        -o-transform: perspective(400px) rotateY(0deg);
-        opacity: 1;
+Nadia   -o-transform: perspective(400px) rotateY(0deg);
+Nadia   opacity: 1;
     }
 	100% {
-        -o-transform: perspective(400px) rotateY(90deg);
-        opacity: 0;
+Nadia   -o-transform: perspective(400px) rotateY(90deg);
+Nadia   opacity: 0;
     }
 }
 @keyframes flipOutY {
     0% {
-        transform: perspective(400px) rotateY(0deg);
-        opacity: 1;
+Nadia   transform: perspective(400px) rotateY(0deg);
+Nadia   opacity: 1;
     }
 	100% {
-        transform: perspective(400px) rotateY(90deg);
-        opacity: 0;
+Nadia   transform: perspective(400px) rotateY(90deg);
+Nadia   opacity: 0;
     }
 }
 

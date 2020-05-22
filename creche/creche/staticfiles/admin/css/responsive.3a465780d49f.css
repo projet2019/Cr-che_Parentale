@@ -9,153 +9,153 @@ input[type="submit"], button {
     /* Basic */
 
     html {
-        -webkit-text-size-adjust: 100%;
+Nadia   -webkit-text-size-adjust: 100%;
     }
 
     td, th {
-        padding: 10px;
-        font-size: 14px;
+Nadia   padding: 10px;
+Nadia   font-size: 14px;
     }
 
     .small {
-        font-size: 12px;
+Nadia   font-size: 12px;
     }
 
     /* Layout */
 
     #container {
-        min-width: 0;
+Nadia   min-width: 0;
     }
 
     #content {
-        padding: 20px 30px 30px;
+Nadia   padding: 20px 30px 30px;
     }
 
     div.breadcrumbs {
-        padding: 10px 30px;
+Nadia   padding: 10px 30px;
     }
 
     /* Header */
 
     #header {
-        flex-direction: column;
-        padding: 15px 30px;
-        justify-content: flex-start;
+Nadia   flex-direction: column;
+Nadia   padding: 15px 30px;
+Nadia   justify-content: flex-start;
     }
 
     #branding h1 {
-        margin: 0 0 8px;
-        font-size: 20px;
-        line-height: 1.2;
+Nadia   margin: 0 0 8px;
+Nadia   font-size: 20px;
+Nadia   line-height: 1.2;
     }
 
     #user-tools {
-        margin: 0;
-        font-weight: 400;
-        line-height: 1.85;
-        text-align: left;
+Nadia   margin: 0;
+Nadia   font-weight: 400;
+Nadia   line-height: 1.85;
+Nadia   text-align: left;
     }
 
     #user-tools a {
-        display: inline-block;
-        line-height: 1.4;
+Nadia   display: inline-block;
+Nadia   line-height: 1.4;
     }
 
     /* Dashboard */
 
     .dashboard #content {
-        width: auto;
+Nadia   width: auto;
     }
 
     #content-related {
-        margin-right: -290px;
+Nadia   margin-right: -290px;
     }
 
     .colSM #content-related {
-        margin-left: -290px;
+Nadia   margin-left: -290px;
     }
 
     .colMS {
-        margin-right: 290px;
+Nadia   margin-right: 290px;
     }
 
     .colSM {
-        margin-left: 290px;
+Nadia   margin-left: 290px;
     }
 
     .dashboard .module table td a {
-        padding-right: 0;
+Nadia   padding-right: 0;
     }
 
     td .changelink, td .addlink {
-        font-size: 13px;
+Nadia   font-size: 13px;
     }
 
     /* Changelist */
 
     #changelist #toolbar {
-        border: none;
-        padding: 15px;
+Nadia   border: none;
+Nadia   padding: 15px;
     }
 
     #changelist-search > div {
-        display: -webkit-flex;
-        display: flex;
-        -webkit-flex-wrap: wrap;
-        flex-wrap: wrap;
-        max-width: 480px;
+Nadia   display: -webkit-flex;
+Nadia   display: flex;
+Nadia   -webkit-flex-wrap: wrap;
+Nadia   flex-wrap: wrap;
+Nadia   max-width: 480px;
     }
 
     #changelist-search label {
-        line-height: 22px;
+Nadia   line-height: 22px;
     }
 
     #changelist #toolbar form #searchbar {
-        -webkit-flex: 1 0 auto;
-        flex: 1 0 auto;
-        width: 0;
-        height: 22px;
-        margin: 0 10px 0 6px;
+Nadia   -webkit-flex: 1 0 auto;
+Nadia   flex: 1 0 auto;
+Nadia   width: 0;
+Nadia   height: 22px;
+Nadia   margin: 0 10px 0 6px;
     }
 
     #changelist-search .quiet {
-        width: 100%;
-        margin: 5px 0 0 25px;
+Nadia   width: 100%;
+Nadia   margin: 5px 0 0 25px;
     }
 
     #changelist .actions {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 15px 0;
+Nadia   display: flex;
+Nadia   flex-wrap: wrap;
+Nadia   padding: 15px 0;
     }
 
     #changelist .actions.selected {
-        border: none;
+Nadia   border: none;
     }
 
     #changelist .actions label {
-        display: flex;
+Nadia   display: flex;
     }
 
     #changelist .actions select {
-        background: #fff;
+Nadia   background: #fff;
     }
 
     #changelist .actions .button {
-        min-width: 48px;
-        margin: 0 10px;
+Nadia   min-width: 48px;
+Nadia   margin: 0 10px;
     }
 
     #changelist .actions span.all,
     #changelist .actions span.clear,
     #changelist .actions span.question,
     #changelist .actions span.action-counter {
-        font-size: 11px;
-        margin: 0 10px 0 0;
+Nadia   font-size: 11px;
+Nadia   margin: 0 10px 0 0;
     }
 
     #changelist-filter {
-        width: 200px;
+Nadia   width: 200px;
     }
 
     .change-list .filtered .results,
@@ -163,21 +163,21 @@ input[type="submit"], button {
     .filtered #toolbar,
     .filtered .actions,
     .filtered div.xfull {
-        margin-right: 230px;
+Nadia   margin-right: 230px;
     }
 
     #changelist .paginator {
-        border-top-color: #eee;
+Nadia   border-top-color: #eee;
     }
 
     #changelist .results + .paginator {
-        border-top: none;
+Nadia   border-top: none;
     }
 
     /* Forms */
 
     label {
-        font-size: 14px;
+Nadia   font-size: 14px;
     }
 
     .form-row input[type=text],
@@ -189,258 +189,258 @@ input[type="submit"], button {
     .form-row textarea,
     .form-row select,
     .form-row .vTextField {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 6px 8px;
-        min-height: 36px;
-        font-size: 14px;
+Nadia   box-sizing: border-box;
+Nadia   margin: 0;
+Nadia   padding: 6px 8px;
+Nadia   min-height: 36px;
+Nadia   font-size: 14px;
     }
 
     .form-row select {
-        height: 36px;
+Nadia   height: 36px;
     }
 
     .form-row select[multiple] {
-        height: auto;
-        min-height: 0;
+Nadia   height: auto;
+Nadia   min-height: 0;
     }
 
     fieldset .fieldBox {
-        float: none;
-        margin: 0 -10px;
-        padding: 0 10px;
+Nadia   float: none;
+Nadia   margin: 0 -10px;
+Nadia   padding: 0 10px;
     }
 
     fieldset .fieldBox + .fieldBox {
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid #eee;
+Nadia   margin-top: 10px;
+Nadia   padding-top: 10px;
+Nadia   border-top: 1px solid #eee;
     }
 
     textarea {
-        max-width: 518px;
-        max-height: 120px;
+Nadia   max-width: 518px;
+Nadia   max-height: 120px;
     }
 
     .aligned label {
-        padding-top: 6px;
+Nadia   padding-top: 6px;
     }
 
     .aligned .add-another,
     .aligned .related-lookup,
     .aligned .datetimeshortcuts,
     .aligned .related-lookup + strong {
-        align-self: center;
-        margin-left: 15px;
+Nadia   align-self: center;
+Nadia   margin-left: 15px;
     }
 
     form .aligned ul.radiolist {
-        margin-left: 2px;
+Nadia   margin-left: 2px;
     }
 
     /* Related widget */
 
     .related-widget-wrapper {
-        float: none;
+Nadia   float: none;
     }
 
     .related-widget-wrapper-link + .selector {
-        max-width: calc(100% - 30px);
-        margin-right: 15px;
+Nadia   max-width: calc(100% - 30px);
+Nadia   margin-right: 15px;
     }
 
     select + .related-widget-wrapper-link,
     .related-widget-wrapper-link + .related-widget-wrapper-link {
-        margin-left: 10px;
+Nadia   margin-left: 10px;
     }
 
     /* Selector */
 
     .selector {
-        display: flex;
-        width: 100%;
+Nadia   display: flex;
+Nadia   width: 100%;
     }
 
     .selector .selector-filter {
-        display: flex;
-        align-items: center;
+Nadia   display: flex;
+Nadia   align-items: center;
     }
 
     .selector .selector-filter label {
-        margin: 0 8px 0 0;
+Nadia   margin: 0 8px 0 0;
     }
 
     .selector .selector-filter input {
-        width: auto;
-        min-height: 0;
-        flex: 1 1;
+Nadia   width: auto;
+Nadia   min-height: 0;
+Nadia   flex: 1 1;
     }
 
     .selector-available, .selector-chosen {
-        width: auto;
-        flex: 1 1;
-        display: flex;
-        flex-direction: column;
+Nadia   width: auto;
+Nadia   flex: 1 1;
+Nadia   display: flex;
+Nadia   flex-direction: column;
     }
 
     .selector select {
-        width: 100%;
-        flex: 1 0 auto;
-        margin-bottom: 5px;
+Nadia   width: 100%;
+Nadia   flex: 1 0 auto;
+Nadia   margin-bottom: 5px;
     }
 
     .selector ul.selector-chooser {
-        width: 26px;
-        height: 52px;
-        padding: 2px 0;
-        margin: auto 15px;
-        border-radius: 20px;
-        transform: translateY(-10px);
+Nadia   width: 26px;
+Nadia   height: 52px;
+Nadia   padding: 2px 0;
+Nadia   margin: auto 15px;
+Nadia   border-radius: 20px;
+Nadia   transform: translateY(-10px);
     }
 
     .selector-add, .selector-remove {
-        width: 20px;
-        height: 20px;
-        background-size: 20px auto;
+Nadia   width: 20px;
+Nadia   height: 20px;
+Nadia   background-size: 20px auto;
     }
 
     .selector-add {
-        background-position: 0 -120px;
+Nadia   background-position: 0 -120px;
     }
 
     .selector-remove {
-        background-position: 0 -80px;
+Nadia   background-position: 0 -80px;
     }
 
     a.selector-chooseall, a.selector-clearall {
-        align-self: center;
+Nadia   align-self: center;
     }
 
     .stacked {
-        flex-direction: column;
-        max-width: 480px;
+Nadia   flex-direction: column;
+Nadia   max-width: 480px;
     }
 
     .stacked > * {
-        flex: 0 1 auto;
+Nadia   flex: 0 1 auto;
     }
 
     .stacked select {
-        margin-bottom: 0;
+Nadia   margin-bottom: 0;
     }
 
     .stacked .selector-available, .stacked .selector-chosen {
-        width: auto;
+Nadia   width: auto;
     }
 
     .stacked ul.selector-chooser {
-        width: 52px;
-        height: 26px;
-        padding: 0 2px;
-        margin: 15px auto;
-        transform: none;
+Nadia   width: 52px;
+Nadia   height: 26px;
+Nadia   padding: 0 2px;
+Nadia   margin: 15px auto;
+Nadia   transform: none;
     }
 
     .stacked .selector-chooser li {
-        padding: 3px;
+Nadia   padding: 3px;
     }
 
     .stacked .selector-add, .stacked .selector-remove {
-        background-size: 20px auto;
+Nadia   background-size: 20px auto;
     }
 
     .stacked .selector-add {
-        background-position: 0 -40px;
+Nadia   background-position: 0 -40px;
     }
 
     .stacked .active.selector-add {
-        background-position: 0 -60px;
+Nadia   background-position: 0 -60px;
     }
 
     .stacked .selector-remove {
-        background-position: 0 0;
+Nadia   background-position: 0 0;
     }
 
     .stacked .active.selector-remove {
-        background-position: 0 -20px;
+Nadia   background-position: 0 -20px;
     }
 
     .help-tooltip, .selector .help-icon {
-        display: none;
+Nadia   display: none;
     }
 
     form .form-row p.datetime {
-        width: 100%;
+Nadia   width: 100%;
     }
 
     .datetime input {
-        width: 50%;
-        max-width: 120px;
+Nadia   width: 50%;
+Nadia   max-width: 120px;
     }
 
     .datetime span {
-        font-size: 13px;
+Nadia   font-size: 13px;
     }
 
     .datetime .timezonewarning {
-        display: block;
-        font-size: 11px;
-        color: #999;
+Nadia   display: block;
+Nadia   font-size: 11px;
+Nadia   color: #999;
     }
 
     .datetimeshortcuts {
-        color: #ccc;
+Nadia   color: #ccc;
     }
 
     .inline-group {
-        overflow: auto;
+Nadia   overflow: auto;
     }
 
     /* Messages */
 
     ul.messagelist li {
-        padding-left: 55px;
-        background-position: 30px 12px;
+Nadia   padding-left: 55px;
+Nadia   background-position: 30px 12px;
     }
 
     ul.messagelist li.error {
-        background-position: 30px 12px;
+Nadia   background-position: 30px 12px;
     }
 
     ul.messagelist li.warning {
-        background-position: 30px 14px;
+Nadia   background-position: 30px 14px;
     }
 
     /* Login */
 
     .login #header {
-        padding: 15px 20px;
+Nadia   padding: 15px 20px;
     }
 
     .login #branding h1 {
-        margin: 0;
+Nadia   margin: 0;
     }
 
     /* GIS */
 
     div.olMap {
-        max-width: calc(100vw - 30px);
-        max-height: 300px;
+Nadia   max-width: calc(100vw - 30px);
+Nadia   max-height: 300px;
     }
 
     .olMap + .clear_features {
-        display: block;
-        margin-top: 10px;
+Nadia   display: block;
+Nadia   margin-top: 10px;
     }
 
     /* Docs */
 
     .module table.xfull {
-        width: 100%;
+Nadia   width: 100%;
     }
 
     pre.literal-block {
-        overflow: auto;
+Nadia   overflow: auto;
     }
 }
 
@@ -450,543 +450,543 @@ input[type="submit"], button {
     /* Layout */
 
     #header, #content, #footer {
-        padding: 15px;
+Nadia   padding: 15px;
     }
 
     #footer:empty {
-        padding: 0;
+Nadia   padding: 0;
     }
 
     div.breadcrumbs {
-        padding: 10px 15px;
+Nadia   padding: 10px 15px;
     }
 
     /* Dashboard */
 
     .colMS, .colSM {
-        margin: 0;
+Nadia   margin: 0;
     }
 
     #content-related, .colSM #content-related {
-        width: 100%;
-        margin: 0;
+Nadia   width: 100%;
+Nadia   margin: 0;
     }
 
     #content-related .module {
-        margin-bottom: 0;
+Nadia   margin-bottom: 0;
     }
 
     #content-related .module h2 {
-        padding: 10px 15px;
-        font-size: 16px;
+Nadia   padding: 10px 15px;
+Nadia   font-size: 16px;
     }
 
     /* Changelist */
 
     #changelist {
-        display: flex;
-        flex-direction: column;
+Nadia   display: flex;
+Nadia   flex-direction: column;
     }
 
     #changelist #toolbar {
-        order: 1;
-        padding: 10px;
+Nadia   order: 1;
+Nadia   padding: 10px;
     }
 
     #changelist .xfull {
-        order: 2;
+Nadia   order: 2;
     }
 
     #changelist-form {
-        order: 3;
+Nadia   order: 3;
     }
 
     #changelist-filter {
-        order: 4;
+Nadia   order: 4;
     }
 
     #changelist .actions label {
-        flex: 1 1;
+Nadia   flex: 1 1;
     }
 
     #changelist .actions select {
-        flex: 1 0;
-        width: 100%;
+Nadia   flex: 1 0;
+Nadia   width: 100%;
     }
 
     #changelist .actions span {
-        flex: 1 0 100%;
+Nadia   flex: 1 0 100%;
     }
 
     .change-list .filtered .results, .change-list .filtered .paginator,
     .filtered #toolbar, .filtered .actions, .filtered div.xfull {
-        margin-right: 0;
+Nadia   margin-right: 0;
     }
 
     #changelist-filter {
-        position: static;
-        width: auto;
-        margin-top: 30px;
+Nadia   position: static;
+Nadia   width: auto;
+Nadia   margin-top: 30px;
     }
 
     .object-tools {
-        float: none;
-        margin: 0 0 15px;
-        padding: 0;
-        overflow: hidden;
+Nadia   float: none;
+Nadia   margin: 0 0 15px;
+Nadia   padding: 0;
+Nadia   overflow: hidden;
     }
 
     .object-tools li {
-        height: auto;
-        margin-left: 0;
+Nadia   height: auto;
+Nadia   margin-left: 0;
     }
 
     .object-tools li + li {
-        margin-left: 15px;
+Nadia   margin-left: 15px;
     }
 
     /* Forms */
 
     .form-row {
-        padding: 15px 0;
+Nadia   padding: 15px 0;
     }
 
     .aligned .form-row,
     .aligned .form-row > div {
-        display: flex;
-        flex-wrap: wrap;
-        max-width: 100vw;
+Nadia   display: flex;
+Nadia   flex-wrap: wrap;
+Nadia   max-width: 100vw;
     }
 
     .aligned .form-row > div {
-        width: calc(100vw - 30px);
+Nadia   width: calc(100vw - 30px);
     }
 
     textarea {
-        max-width: none;
+Nadia   max-width: none;
     }
 
     .vURLField {
-        width: auto;
+Nadia   width: auto;
     }
 
     fieldset .fieldBox + .fieldBox {
-        margin-top: 15px;
-        padding-top: 15px;
+Nadia   margin-top: 15px;
+Nadia   padding-top: 15px;
     }
 
     fieldset.collapsed .form-row {
-        display: none;
+Nadia   display: none;
     }
 
     .aligned label {
-        width: 100%;
-        padding: 0 0 10px;
+Nadia   width: 100%;
+Nadia   padding: 0 0 10px;
     }
 
     .aligned label:after {
-        max-height: 0;
+Nadia   max-height: 0;
     }
 
     .aligned .form-row input,
     .aligned .form-row select,
     .aligned .form-row textarea {
-        flex: 1 1 auto;
-        max-width: 100%;
+Nadia   flex: 1 1 auto;
+Nadia   max-width: 100%;
     }
 
     .aligned .checkbox-row {
-        align-items: center;
+Nadia   align-items: center;
     }
 
     .aligned .checkbox-row input {
-        flex: 0 1 auto;
-        margin: 0;
+Nadia   flex: 0 1 auto;
+Nadia   margin: 0;
     }
 
     .aligned .vCheckboxLabel {
-        flex: 1 0;
-        padding: 1px 0 0 5px;
+Nadia   flex: 1 0;
+Nadia   padding: 1px 0 0 5px;
     }
 
     .aligned label + p,
     .aligned label + div.help,
     .aligned label + div.readonly {
-        padding: 0;
-        margin-left: 0;
+Nadia   padding: 0;
+Nadia   margin-left: 0;
     }
 
     .aligned p.file-upload {
-        margin-left: 0;
-        font-size: 13px;
+Nadia   margin-left: 0;
+Nadia   font-size: 13px;
     }
 
     span.clearable-file-input {
-        margin-left: 15px;
+Nadia   margin-left: 15px;
     }
 
     span.clearable-file-input label {
-        font-size: 13px;
-        padding-bottom: 0;
+Nadia   font-size: 13px;
+Nadia   padding-bottom: 0;
     }
 
     .aligned .timezonewarning {
-        flex: 1 0 100%;
-        margin-top: 5px;
+Nadia   flex: 1 0 100%;
+Nadia   margin-top: 5px;
     }
 
     form .aligned .form-row div.help {
-        width: 100%;
-        margin: 5px 0 0;
-        padding: 0;
+Nadia   width: 100%;
+Nadia   margin: 5px 0 0;
+Nadia   padding: 0;
     }
 
     form .aligned ul {
-        margin-left: 0;
-        padding-left: 0;
+Nadia   margin-left: 0;
+Nadia   padding-left: 0;
     }
 
     form .aligned ul.radiolist {
-        margin-right: 15px;
-        margin-bottom: -3px;
+Nadia   margin-right: 15px;
+Nadia   margin-bottom: -3px;
     }
 
     form .aligned ul.radiolist li + li {
-        margin-top: 5px;
+Nadia   margin-top: 5px;
     }
 
     /* Related widget */
 
     .related-widget-wrapper {
-        width: 100%;
-        display: flex;
-        align-items: flex-start;
+Nadia   width: 100%;
+Nadia   display: flex;
+Nadia   align-items: flex-start;
     }
 
     .related-widget-wrapper .selector {
-        order: 1;
+Nadia   order: 1;
     }
 
     .related-widget-wrapper > a {
-        order: 2;
+Nadia   order: 2;
     }
 
     .related-widget-wrapper .radiolist ~ a {
-        align-self: flex-end;
+Nadia   align-self: flex-end;
     }
 
     .related-widget-wrapper > select ~ a {
-        align-self: center;
+Nadia   align-self: center;
     }
 
     select + .related-widget-wrapper-link,
     .related-widget-wrapper-link + .related-widget-wrapper-link {
-        margin-left: 15px;
+Nadia   margin-left: 15px;
     }
 
     /* Selector */
 
     .selector {
-        flex-direction: column;
+Nadia   flex-direction: column;
     }
 
     .selector > * {
-        float: none;
+Nadia   float: none;
     }
 
     .selector-available, .selector-chosen {
-        margin-bottom: 0;
-        flex: 1 1 auto;
+Nadia   margin-bottom: 0;
+Nadia   flex: 1 1 auto;
     }
 
     .selector select {
-        max-height: 96px;
+Nadia   max-height: 96px;
     }
 
     .selector ul.selector-chooser {
-        display: block;
-        float: none;
-        width: 52px;
-        height: 26px;
-        padding: 0 2px;
-        margin: 15px auto 20px;
-        transform: none;
+Nadia   display: block;
+Nadia   float: none;
+Nadia   width: 52px;
+Nadia   height: 26px;
+Nadia   padding: 0 2px;
+Nadia   margin: 15px auto 20px;
+Nadia   transform: none;
     }
 
     .selector ul.selector-chooser li {
-        float: left;
+Nadia   float: left;
     }
 
     .selector-remove {
-        background-position: 0 0;
+Nadia   background-position: 0 0;
     }
 
     .selector-add  {
-        background-position: 0 -40px;
+Nadia   background-position: 0 -40px;
     }
 
     /* Inlines */
 
     .inline-group[data-inline-type="stacked"] .inline-related {
-        border: 2px solid #eee;
-        border-radius: 4px;
-        margin-top: 15px;
-        overflow: auto;
+Nadia   border: 2px solid #eee;
+Nadia   border-radius: 4px;
+Nadia   margin-top: 15px;
+Nadia   overflow: auto;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related > * {
-        box-sizing: border-box;
+Nadia   box-sizing: border-box;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related + .inline-related {
-        margin-top: 30px;
+Nadia   margin-top: 30px;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related .module {
-        padding: 0 10px;
+Nadia   padding: 0 10px;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related .module .form-row:last-child {
-        border-bottom: none;
+Nadia   border-bottom: none;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related h3 {
-        padding: 10px;
-        border-top-width: 0;
-        border-bottom-width: 2px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
+Nadia   padding: 10px;
+Nadia   border-top-width: 0;
+Nadia   border-bottom-width: 2px;
+Nadia   display: flex;
+Nadia   flex-wrap: wrap;
+Nadia   align-items: center;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related h3 .inline_label {
-        margin-right: auto;
+Nadia   margin-right: auto;
     }
 
     .inline-group[data-inline-type="stacked"] .inline-related h3 span.delete {
-        float: none;
-        flex: 1 1 100%;
-        margin-top: 5px;
+Nadia   float: none;
+Nadia   flex: 1 1 100%;
+Nadia   margin-top: 5px;
     }
 
     .inline-group[data-inline-type="stacked"] .aligned .form-row > div:not([class]) {
-        width: 100%;
+Nadia   width: 100%;
     }
 
     .inline-group[data-inline-type="stacked"] .aligned label {
-        width: 100%;
+Nadia   width: 100%;
     }
 
     .inline-group[data-inline-type="stacked"] div.add-row {
-        margin-top: 15px;
-        border: 1px solid #eee;
-        border-radius: 4px;
+Nadia   margin-top: 15px;
+Nadia   border: 1px solid #eee;
+Nadia   border-radius: 4px;
     }
 
     .inline-group div.add-row,
     .inline-group .tabular tr.add-row td {
-        padding: 0;
+Nadia   padding: 0;
     }
 
     .inline-group div.add-row a,
     .inline-group .tabular tr.add-row td a {
-        display: block;
-        padding: 8px 10px 8px 26px;
-        background-position: 8px 9px;
+Nadia   display: block;
+Nadia   padding: 8px 10px 8px 26px;
+Nadia   background-position: 8px 9px;
     }
 
     /* Submit row */
 
     .submit-row {
-        padding: 10px 10px 0;
-        margin: 0 0 15px;
-        display: flex;
-        flex-direction: column;
+Nadia   padding: 10px 10px 0;
+Nadia   margin: 0 0 15px;
+Nadia   display: flex;
+Nadia   flex-direction: column;
     }
 
     .submit-row > * {
-        width: 100%;
+Nadia   width: 100%;
     }
 
     .submit-row input, .submit-row input.default, .submit-row a, .submit-row a.closelink {
-        float: none;
-        margin: 0 0 10px;
-        text-align: center;
+Nadia   float: none;
+Nadia   margin: 0 0 10px;
+Nadia   text-align: center;
     }
 
     .submit-row a.closelink {
-        padding: 10px 0;
+Nadia   padding: 10px 0;
     }
 
     .submit-row p.deletelink-box {
-        order: 4;
+Nadia   order: 4;
     }
 
     /* Messages */
 
     ul.messagelist li {
-        padding-left: 40px;
-        background-position: 15px 12px;
+Nadia   padding-left: 40px;
+Nadia   background-position: 15px 12px;
     }
 
     ul.messagelist li.error {
-        background-position: 15px 12px;
+Nadia   background-position: 15px 12px;
     }
 
     ul.messagelist li.warning {
-        background-position: 15px 14px;
+Nadia   background-position: 15px 14px;
     }
 
     /* Paginator */
 
     .paginator .this-page, .paginator a:link, .paginator a:visited {
-        padding: 4px 10px;
+Nadia   padding: 4px 10px;
     }
 
     /* Login */
 
     body.login {
-        padding: 0 15px;
+Nadia   padding: 0 15px;
     }
 
     .login #container {
-        width: auto;
-        max-width: 480px;
-        margin: 50px auto;
+Nadia   width: auto;
+Nadia   max-width: 480px;
+Nadia   margin: 50px auto;
     }
 
     .login #header,
     .login #content {
-        padding: 15px;
+Nadia   padding: 15px;
     }
 
     .login #content-main {
-        float: none;
+Nadia   float: none;
     }
 
     .login .form-row {
-        padding: 0;
+Nadia   padding: 0;
     }
 
     .login .form-row + .form-row {
-        margin-top: 15px;
+Nadia   margin-top: 15px;
     }
 
     .login .form-row label {
-        display: block;
-        margin: 0 0 5px;
-        padding: 0;
-        line-height: 1.2;
+Nadia   display: block;
+Nadia   margin: 0 0 5px;
+Nadia   padding: 0;
+Nadia   line-height: 1.2;
     }
 
     .login .submit-row {
-        padding: 15px 0 0;
+Nadia   padding: 15px 0 0;
     }
 
     .login br, .login .submit-row label {
-        display: none;
+Nadia   display: none;
     }
 
     .login .submit-row input {
-        margin: 0;
-        text-transform: uppercase;
+Nadia   margin: 0;
+Nadia   text-transform: uppercase;
     }
 
     .errornote {
-        margin: 0 0 20px;
-        padding: 8px 12px;
-        font-size: 13px;
+Nadia   margin: 0 0 20px;
+Nadia   padding: 8px 12px;
+Nadia   font-size: 13px;
     }
 
     /* Calendar and clock */
 
     .calendarbox, .clockbox {
-        position: fixed !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%);
-        margin: 0;
-        border: none;
-        overflow: visible;
+Nadia   position: fixed !important;
+Nadia   top: 50% !important;
+Nadia   left: 50% !important;
+Nadia   transform: translate(-50%, -50%);
+Nadia   margin: 0;
+Nadia   border: none;
+Nadia   overflow: visible;
     }
 
     .calendarbox:before, .clockbox:before {
-        content: '';
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.75);
-        transform: translate(-50%, -50%);
+Nadia   content: '';
+Nadia   position: fixed;
+Nadia   top: 50%;
+Nadia   left: 50%;
+Nadia   width: 100vw;
+Nadia   height: 100vh;
+Nadia   background: rgba(0, 0, 0, 0.75);
+Nadia   transform: translate(-50%, -50%);
     }
 
     .calendarbox > *, .clockbox > * {
-        position: relative;
-        z-index: 1;
+Nadia   position: relative;
+Nadia   z-index: 1;
     }
 
     .calendarbox > div:first-child {
-        z-index: 2;
+Nadia   z-index: 2;
     }
 
     .calendarbox .calendar, .clockbox h2 {
-        border-radius: 4px 4px 0 0;
-        overflow: hidden;
+Nadia   border-radius: 4px 4px 0 0;
+Nadia   overflow: hidden;
     }
 
     .calendarbox .calendar-cancel, .clockbox .calendar-cancel {
-        border-radius: 0 0 4px 4px;
-        overflow: hidden;
+Nadia   border-radius: 0 0 4px 4px;
+Nadia   overflow: hidden;
     }
 
     .calendar-shortcuts {
-        padding: 10px 0;
-        font-size: 12px;
-        line-height: 12px;
+Nadia   padding: 10px 0;
+Nadia   font-size: 12px;
+Nadia   line-height: 12px;
     }
 
     .calendar-shortcuts a {
-        margin: 0 4px;
+Nadia   margin: 0 4px;
     }
 
     .timelist a {
-        background: #fff;
-        padding: 4px;
+Nadia   background: #fff;
+Nadia   padding: 4px;
     }
 
     .calendar-cancel {
-        padding: 8px 10px;
+Nadia   padding: 8px 10px;
     }
 
     .clockbox h2 {
-        padding: 8px 15px;
+Nadia   padding: 8px 15px;
     }
 
     .calendar caption {
-        padding: 10px;
+Nadia   padding: 10px;
     }
 
     .calendarbox .calendarnav-previous, .calendarbox .calendarnav-next {
-        z-index: 1;
-        top: 10px;
+Nadia   z-index: 1;
+Nadia   top: 10px;
     }
 
     /* History */
 
     table#change-history tbody th, table#change-history tbody td {
-        font-size: 13px;
-        word-break: break-word;
+Nadia   font-size: 13px;
+Nadia   word-break: break-word;
     }
 
     table#change-history tbody th {
-        width: auto;
+Nadia   width: auto;
     }
 
     /* Docs */
 
     table.model tbody th, table.model tbody td {
-        font-size: 13px;
-        word-break: break-word;
+Nadia   font-size: 13px;
+Nadia   word-break: break-word;
     }
 }

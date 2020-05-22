@@ -4,7 +4,9 @@
 
 ##
 ##
-
+## @author   Joel
+## nadia@gmail.com/joel@gmail.com
+##
 
 from password_hasher import PasswordHasher
 

@@ -20,11 +20,18 @@ COREAPP_ROOT = os.path.join(BASE_DIR, 'coreapp')
 
 APPLICATION_SETTINGS = {
     'common': {
-        'smtp_host': 'localhost',
-        'admin_to_email': 'creche@localhost',
-        'admin_from_email': 'admin@localhost',
-        'event_notification_from_email': 'noreply@localhost',
-        'local_repo': 'data-repo'
+Nadia   'smtp_host': 'localhost',
+Nadia   'admin_to_email': 'joel@gmail.com',
+Nadia   'admin_from_email': 'zigama@localhost',
+Nadia   'event_notification_from_email': 'noreply@localhost',
+Nadia   'local_repo': 'data-repo',
+Nadia   'creche_name':'Creche Parentale',
+Nadia   'creche_avenue': "Avenue de l'Espinette,16",
+Nadia   'creche_road':'1348 Louvain-La-Neuve',
+Nadia   'creche_telephone':'010235487',
+Nadia   'creche_email':'info@crecheparentale.com',
+Nadia   'creche_web':'crecheparentale.com',
+Nadia   'creche_zip':''
     },
     'development': {
 
@@ -52,7 +59,7 @@ SECRET_KEY = 'x)1il2bug2b8o-=((ifhit^-#k&5w!0=rpu%_6ar1j5akjg*3!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', '192.168.43.126']
 
 
 # Application definition
@@ -75,6 +82,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'coreapp.util.app_session_auth_middleware.AppSessionAuthMiddleware',
+]
+
+MIDDLEWARE_CLASSES = [
+
+    #'coreapp.util.app_session_auth_middleware.AppSessionAuthMiddleware',
 
 ]
 
@@ -83,17 +96,17 @@ ROOT_URLCONF = 'creche.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [APPLICATION_SETTINGS['COREAPP_HOME'] + '/public/templates/html/'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
+Nadia   'BACKEND': 'django.template.backends.django.DjangoTemplates',
+Nadia   'DIRS': [APPLICATION_SETTINGS['COREAPP_HOME'] + '/public/templates/html/'],
+Nadia   'APP_DIRS': True,
+Nadia   'OPTIONS': {
+NadiaNadia  'context_processors': [
+NadiaNadiaNadia 'django.template.context_processors.debug',
+NadiaNadiaNadia 'django.template.context_processors.request',
+NadiaNadiaNadia 'django.contrib.auth.context_processors.auth',
+NadiaNadiaNadia 'django.contrib.messages.context_processors.messages',
+NadiaNadia  ],
+Nadia   },
     },
 ]
 
@@ -105,12 +118,12 @@ WSGI_APPLICATION = 'creche.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'creche',
-        'USER': 'creche', # Not used with sqlite3.
-        'PASSWORD':  'cReche@123!', # Not used with sqlite3.
-        'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '', # Set to empty string for default. Not used with sqlite3.
+Nadia   'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+Nadia   'NAME': 'creche',
+Nadia   'USER': 'creche', # Not used with sqlite3.
+Nadia   'PASSWORD':  'cReche@123!', # Not used with sqlite3.
+Nadia   'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
+Nadia   'PORT': '', # Set to empty string for default. Not used with sqlite3.
 	"CONN_MAX_AGE": 0,
     }
 }
@@ -121,16 +134,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+Nadia   'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+Nadia   'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+Nadia   'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+Nadia   'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 

@@ -1,9 +1,12 @@
-
+#!  /usr/bin/env python
 # encoding: utf-8
 # vim: ai ts=4 sts=4 et sw=4
 
 ##
-
+##
+## @author   Joel
+## nadia@gmail.com/joel@gmail.com
+##
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -23,199 +26,199 @@ from creche import settings
 class EmailService(BaseService):
 
     def __init__(self):
-        BaseService.__init__(self)
-        self.connection = MySQLdb.connect (host=settings.DATABASES['default']['HOST'],
-                                  user=settings.DATABASES['default']['USER'],
-                                  passwd=settings.DATABASES['default']['PASSWORD'],
-                                  db=settings.DATABASES['default']['NAME'])
+Nadia   BaseService.__init__(self)
+Nadia   self.connection = MySQLdb.connect (host=settings.DATABASES['default']['HOST'],
+NadiaNadiaNadiaNadiaNadiaNadia    user=settings.DATABASES['default']['USER'],
+NadiaNadiaNadiaNadiaNadiaNadia    passwd=settings.DATABASES['default']['PASSWORD'],
+NadiaNadiaNadiaNadiaNadiaNadia    db=settings.DATABASES['default']['NAME'])
 
-        self.smtpObj = smtplib.SMTP(settings.APPLICATION_SETTINGS['common']['smtp_host'])
-        # TODO
-        # Remember to comment the debug line in production
-        self.smtpObj.set_debuglevel(1)
-        
+Nadia   self.smtpObj = smtplib.SMTP(settings.APPLICATION_SETTINGS['common']['smtp_host'])
+Nadia   # TODO
+Nadia   # Remember to comment the debug line in production
+Nadia   self.smtpObj.set_debuglevel(1)
+Nadia   
     def processEmailQueue(self, eventId=None, eventTypeId=None, language = 'English'):
-        """Process all the queued email in the database"""
+Nadia   """Process all the queued email in the database"""
 
-        recipients = None
-        #before running, ensure that there is no other COREAPP email process running
-        #check if the pid file is present
-        pidFile = settings.APPLICATION_SETTINGS['COREAPP_HOME'] + '/pidfile/message_' + language + '.pid'
-        if AppUtil.checkFileExistence(pidFile):
-            raise CriticalError({"message": "Email relay process halted.<br/>There is another process that has a lock on the email relay pid file (" + language + ")."})
-        else:
-            #create the file, to indicate that the message relay process is active
-            f = open(pidFile, 'w')
-            f.write(str(datetime.now()))
-            f.close()
+Nadia   recipients = None
+Nadia   #before running, ensure that there is no other COREAPP email process running
+Nadia   #check if the pid file is present
+Nadia   pidFile = settings.APPLICATION_SETTINGS['COREAPP_HOME'] + '/pidfile/message_' + language + '.pid'
+Nadia   if AppUtil.checkFileExistence(pidFile):
+NadiaNadia  raise CriticalError({"message": "Email relay process halted.<br/>There is another process that has a lock on the email relay pid file (" + language + ")."})
+Nadia   else:
+NadiaNadia  #create the file, to indicate that the message relay process is active
+NadiaNadia  f = open(pidFile, 'w')
+NadiaNadia  f.write(str(datetime.now()))
+NadiaNadia  f.close()
 
-            #proceed with the email relaying process
-            queuedEmails = self.__retrieveQueue(eventId, eventTypeId)
+NadiaNadia  #proceed with the email relaying process
+NadiaNadia  queuedEmails = self.__retrieveQueue(eventId, eventTypeId)
 
-            recipients = self.__relayEmails(queuedEmails, eventId, eventTypeId, language)
-            
-            #clean up
-            self.connection.commit()
-            self.connection.close()
-            self.smtpObj.quit();
+NadiaNadia  recipients = self.__relayEmails(queuedEmails, eventId, eventTypeId, language)
+NadiaNadia  
+NadiaNadia  #clean up
+NadiaNadia  self.connection.commit()
+NadiaNadia  self.connection.close()
+NadiaNadia  self.smtpObj.quit();
 
-            os.unlink(pidFile)
+NadiaNadia  os.unlink(pidFile)
 
-        return recipients
+Nadia   return recipients
 
     def __relayEmails(self, queuedEmails, eventId, eventTypeId, language):
-        """Send emails"""
+Nadia   """Send emails"""
 
-        emailBody = None
+Nadia   emailBody = None
 
-        if self.__isEmailRelay(eventTypeId):
-            #for special cases like facturation, the email body is gotten from a text file, as opposed to the db
-            sql = 'SELECT entity_reference_id FROM event WHERE id = %d'
-            cursor = self.connection.cursor()
+Nadia   if self.__isEmailRelay(eventTypeId):
+NadiaNadia  #for special cases like facturation, the email body is gotten from a text file, as opposed to the db
+NadiaNadia  sql = 'SELECT entity_reference_id FROM event WHERE id = %d'
+NadiaNadia  cursor = self.connection.cursor()
 
-            cursor.execute(sql % (eventId))
-            event = cursor.fetchone()
-            issue_number = event[0]
+NadiaNadia  cursor.execute(sql % (eventId))
+NadiaNadia  event = cursor.fetchone()
+NadiaNadia  issue_number = event[0]
 
 
-            file_name = 'Document' + "-" + str(issue_number) + ".htm"
-            if 'French' == language:
-                file_name = 'Document-FR' + "-" + str(issue_number) + ".htm"
+NadiaNadia  file_name = 'Document' + "-" + str(issue_number) + ".htm"
+NadiaNadia  if 'French' == language:
+NadiaNadiaNadia file_name = 'Document-FR' + "-" + str(issue_number) + ".htm"
 
-            dest_path = str(issue_number) + "/" + language
-            path = settings.APPLICATION_SETTINGS['EMAIL_HOME'] + '/' + dest_path + '/' + file_name
-            #check if the file exists
-            if not os.path.exists(path):
-                raise CriticalError({"message": "The path " + path + " is invalid. Cannot send email."})
-            f = open(path, 'r', encoding='utf-8')
-            emailBody = f.read()
-            f.close()
+NadiaNadia  dest_path = str(issue_number) + "/" + language
+NadiaNadia  path = settings.APPLICATION_SETTINGS['EMAIL_HOME'] + '/' + dest_path + '/' + file_name
+NadiaNadia  #check if the file exists
+NadiaNadia  if not os.path.exists(path):
+NadiaNadiaNadia raise CriticalError({"message": "The path " + path + " is invalid. Cannot send email."})
+NadiaNadia  f = open(path, 'r', encoding='utf-8')
+NadiaNadia  emailBody = f.read()
+NadiaNadia  f.close()
 
-        cursor = self.connection.cursor()
-        result = {}
+Nadia   cursor = self.connection.cursor()
+Nadia   result = {}
 
-        for record in queuedEmails:
-            #for emails relay, lets check to see if it has been aborted
-            if emailBody:
-                sql = 'SELECT is_abort FROM web_email_audit WHERE issue_number = %d'
+Nadia   for record in queuedEmails:
+NadiaNadia  #for emails relay, lets check to see if it has been aborted
+NadiaNadia  if emailBody:
+NadiaNadiaNadia sql = 'SELECT is_abort FROM web_email_audit WHERE issue_number = %d'
 
-                cursor.execute(sql % (issue_number))
-                audits = cursor.fetchone()
-                
-                if audits and True == audits[0]:
-                    #abort command must have been issued, lets break from the for loop
-                    break
-                
-            recipient = record[0]
-            sender = record[1]
+NadiaNadiaNadia cursor.execute(sql % (issue_number))
+NadiaNadiaNadia audits = cursor.fetchone()
+NadiaNadiaNadia 
+NadiaNadiaNadia if audits and True == audits[0]:
+NadiaNadiaNadiaNadia#abort command must have been issued, lets break from the for loop
+NadiaNadiaNadiaNadiabreak
+NadiaNadiaNadia 
+NadiaNadia  recipient = record[0]
+NadiaNadia  sender = record[1]
 
-            # Create message container - the correct MIME type is multipart/alternative.
-            msg = MIMEMultipart('alternative')
-            msg['From'] = sender
-            msg['To'] = recipient
-            msg['Subject'] = record[2]
+NadiaNadia  # Create message container - the correct MIME type is multipart/alternative.
+NadiaNadia  msg = MIMEMultipart('alternative')
+NadiaNadia  msg['From'] = sender
+NadiaNadia  msg['To'] = recipient
+NadiaNadia  msg['Subject'] = record[2]
 
-            # Create the body of the message. Record the MIME types  - text/html.
-            if emailBody:
-                finalContent = emailBody
-                #go ahead to substitute the dynamic stuff
-                finalContent = finalContent.replace('{subscriber_email_address}', recipient)
+NadiaNadia  # Create the body of the message. Record the MIME types  - text/html.
+NadiaNadia  if emailBody:
+NadiaNadiaNadia finalContent = emailBody
+NadiaNadiaNadia #go ahead to substitute the dynamic stuff
+NadiaNadiaNadia finalContent = finalContent.replace('{subscriber_email_address}', recipient)
 
-                hash = hashlib.md5()
-                hash.update(str(random.random()).encode("utf-8"))
-                finalContent = finalContent.replace('{throwoff1}', hash.hexdigest())
+NadiaNadiaNadia hash = hashlib.md5()
+NadiaNadiaNadia hash.update(str(random.random()).encode("utf-8"))
+NadiaNadiaNadia finalContent = finalContent.replace('{throwoff1}', hash.hexdigest())
 
-                hash1 = hashlib.md5()
-                hash1.update(recipient.encode("utf-8"))
-                finalContent = finalContent.replace('{user_hash}', hash1.hexdigest())
+NadiaNadiaNadia hash1 = hashlib.md5()
+NadiaNadiaNadia hash1.update(recipient.encode("utf-8"))
+NadiaNadiaNadia finalContent = finalContent.replace('{user_hash}', hash1.hexdigest())
 
-                hash2 = hashlib.md5()
-                hash2.update(str(random.random()).encode("utf-8"))
-                finalContent = finalContent.replace('{throwoff2}', hash2.hexdigest())
-                
-                part = MIMEText(finalContent, 'html', 'utf-8')
-            else:
-                part = MIMEText(record[3], 'html', 'utf-8')
-                
-            msg.attach(part)
+NadiaNadiaNadia hash2 = hashlib.md5()
+NadiaNadiaNadia hash2.update(str(random.random()).encode("utf-8"))
+NadiaNadiaNadia finalContent = finalContent.replace('{throwoff2}', hash2.hexdigest())
+NadiaNadiaNadia 
+NadiaNadiaNadia part = MIMEText(finalContent, 'html', 'utf-8')
+NadiaNadia  else:
+NadiaNadiaNadia part = MIMEText(record[3], 'html', 'utf-8')
+NadiaNadiaNadia 
+NadiaNadia  msg.attach(part)
 
-            #if not abortSending:
-                #mark that we have invoked the SMTP Relay agent to send the email
-            params = {}
-            params['sent_at'] = datetime.now()
+NadiaNadia  #if not abortSending:
+NadiaNadiaNadia #mark that we have invoked the SMTP Relay agent to send the email
+NadiaNadia  params = {}
+NadiaNadia  params['sent_at'] = datetime.now()
 
-            values = ', '.join(['%s = %%(%s)s' % (x, x) for x in params])
+NadiaNadia  values = ', '.join(['%s = %%(%s)s' % (x, x) for x in params])
 
-            query = 'UPDATE email_schedule SET %s WHERE id = %d' % (values, record[4])
-            cursor.execute(query, params)
-            #send the email
-            status = self.sendEmail(sender, recipient, msg.as_string())
-            
-            if status:#means that everything went OK, so lets mark the email as sent
-                params = {}
-                params['delivery_date'] = datetime.now()
+NadiaNadia  query = 'UPDATE email_schedule SET %s WHERE id = %d' % (values, record[4])
+NadiaNadia  cursor.execute(query, params)
+NadiaNadia  #send the email
+NadiaNadia  status = self.sendEmail(sender, recipient, msg.as_string())
+NadiaNadia  
+NadiaNadia  if status:#means that everything went OK, so lets mark the email as sent
+NadiaNadiaNadia params = {}
+NadiaNadiaNadia params['delivery_date'] = datetime.now()
 
-                values = ', '.join(['%s = %%(%s)s' % (x, x) for x in params])
+NadiaNadiaNadia values = ', '.join(['%s = %%(%s)s' % (x, x) for x in params])
 
-                query = 'UPDATE email_schedule SET %s WHERE id = %d' % (values, record[4])
-                cursor.execute(query, params)
-                self.connection.commit()
+NadiaNadiaNadia query = 'UPDATE email_schedule SET %s WHERE id = %d' % (values, record[4])
+NadiaNadiaNadia cursor.execute(query, params)
+NadiaNadiaNadia self.connection.commit()
 
-                result[recipient + ' at id : ' + str(record[4])] = status#;audit this, because we want to know the number of recipients of the email
+NadiaNadiaNadia result[recipient + ' at id : ' + str(record[4])] = status#;audit this, because we want to know the number of recipients of the email
 
-        cursor.close ()
+Nadia   cursor.close ()
 
-        return result
+Nadia   return result
 
     def __retrieveQueue(self, eventId, eventTypeId):
-        """Retrieves all the queued emails"""
+Nadia   """Retrieves all the queued emails"""
 
-        isQueued = 'true'
-        extraCriteria = ''
-        eventJoin = ''
-        eventTypeJoin = ''
-        #check for cases (event types where the above is an exception
-        if self.__isEmailRelay(eventTypeId):
-            isQueued = 'false'
+Nadia   isQueued = 'true'
+Nadia   extraCriteria = ''
+Nadia   eventJoin = ''
+Nadia   eventTypeJoin = ''
+Nadia   #check for cases (event types where the above is an exception
+Nadia   if self.__isEmailRelay(eventTypeId):
+NadiaNadia  isQueued = 'false'
 
-        if eventId:
-            extraCriteria = ' AND e.id = ' + str(eventId)
-            eventJoin = ' INNER JOIN event e ON eq.event_id = e.id '
+Nadia   if eventId:
+NadiaNadia  extraCriteria = ' AND e.id = ' + str(eventId)
+NadiaNadia  eventJoin = ' INNER JOIN event e ON eq.event_id = e.id '
 
-        if eventTypeId:
-            extraCriteria = ' AND et.id = ' + str(eventTypeId)
-            eventTypeJoin = ' INNER JOIN event_type et ON e.event_type_id = et.id '
+Nadia   if eventTypeId:
+NadiaNadia  extraCriteria = ' AND et.id = ' + str(eventTypeId)
+NadiaNadia  eventTypeJoin = ' INNER JOIN event_type et ON e.event_type_id = et.id '
 
-        sql = """SELECT eq.to_email, eq.from_email, eq.subject, eq.message_body, eq.id
-                        FROM email_schedule eq
-                        %s
-                        %s
-                        WHERE
-                        eq.scheduled_for_relay = %s
-                        AND eq.delivery_date is null
-                        %s"""
+Nadia   sql = """SELECT eq.to_email, eq.from_email, eq.subject, eq.message_body, eq.id
+NadiaNadiaNadiaNadia    FROM email_schedule eq
+NadiaNadiaNadiaNadia    %s
+NadiaNadiaNadiaNadia    %s
+NadiaNadiaNadiaNadia    WHERE
+NadiaNadiaNadiaNadia    eq.scheduled_for_relay = %s
+NadiaNadiaNadiaNadia    AND eq.delivery_date is null
+NadiaNadiaNadiaNadia    %s"""
 
-        cursor = self.connection.cursor()
-        
-        cursor.execute(sql % (eventJoin, eventTypeJoin, isQueued, extraCriteria))
-        result = cursor.fetchall()
+Nadia   cursor = self.connection.cursor()
+Nadia   
+Nadia   cursor.execute(sql % (eventJoin, eventTypeJoin, isQueued, extraCriteria))
+Nadia   result = cursor.fetchall()
 
-        cursor.close()
-        
-        return result
+Nadia   cursor.close()
+Nadia   
+Nadia   return result
 
     def sendEmail(self, sender, recipient, message):
-        """This function will be delegated with sending emails."""
-        
-        try:
-            self.smtpObj.sendmail(sender, recipient, message)
+Nadia   """This function will be delegated with sending emails."""
+Nadia   
+Nadia   try:
+NadiaNadia  self.smtpObj.sendmail(sender, recipient, message)
 
-            return True
-        except SMTPException as se:
-            self.logger.exception('\nError while sending email to %s' % recipient, se)
+NadiaNadia  return True
+Nadia   except SMTPException as se:
+NadiaNadia  self.logger.exception('\nError while sending email to %s' % recipient, se)
 
-            return False
+NadiaNadia  return False
 
     def __isEmailRelay(self, eventTypeId):
 
-        return settings.APPLICATION_SETTINGS['TEST_EMAIL'] == eventTypeId or settings.APPLICATION_SETTINGS['ENGLISH_EMAIL'] == eventTypeId or settings.APPLICATION_SETTINGS['FRENCH_EMAIL'] == eventTypeId
+Nadia   return settings.APPLICATION_SETTINGS['TEST_EMAIL'] == eventTypeId or settings.APPLICATION_SETTINGS['ENGLISH_EMAIL'] == eventTypeId or settings.APPLICATION_SETTINGS['FRENCH_EMAIL'] == eventTypeId

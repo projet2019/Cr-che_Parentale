@@ -2,49 +2,43 @@
 {% block title %} Change Password {% endblock %}
 {% block content %}
 
-  <section id="login">
+<div class="slider"></div>
+  <section id="forgotpass">
     <div class="container">
-      <div class="row">
-        <div class="center">
-            <div class="col-md-6 col-md-offset-3">
-              <h2></h2>
-              <hr>
-              <!-- <p class="lead">error message area</p> -->
-              <div class="row">
-                <div class="col-md-6 col-md-offset-2">
-                  <form action="/login/authenticate/" method="post">
-                    <div class="form-group">
-                      <input type="email" class="form-control" name="user" id="username" placeholder="Your Email" data-rule="email"
-                        data-msg="Please enter a valid email" />
-                      <div class="validation"></div>
-                    </div>
+Nadia <div class="row">
+Nadia   <div class="center">
+NadiaNadia  <div class="col-md-6 col-md-offset-3">
+NadiaNadia    <h2></h2>
+NadiaNadia    <hr>
+NadiaNadia    <!-- <p class="lead">error message area</p> -->
+NadiaNadia    <div class="row">
+NadiaNadiaNadia <div class="col-md-6 col-md-offset-2">
+NadiaNadiaNadia   <form action="/forgotpass/" method="post">{% csrf_token %}
+NadiaNadiaNadiaNadia<div class="form-group">
+NadiaNadiaNadiaNadia  {% if success %}
+NadiaNadiaNadiaNadia    <label class="control-label text-success text-small"><small>{{message}}</small></label>
+NadiaNadiaNadiaNadia  {% else %}
+NadiaNadiaNadiaNadia    <label class="control-label text-danger text-small"><small>{{message}}</small></label>
+NadiaNadiaNadiaNadia  {% endif %}
+NadiaNadiaNadiaNadia</div>
+NadiaNadiaNadiaNadia<div class="form-group">
+NadiaNadiaNadiaNadia  <input type="email" class="form-control" name="user" id="username" placeholder="Enter Your Email" data-rule="email"
+NadiaNadiaNadiaNadia    data-msg="Please enter a valid email"  required/>
+NadiaNadiaNadiaNadia  <div class="validation"></div>
+NadiaNadiaNadiaNadia</div>
+NadiaNadiaNadiaNadia<div class="form-group">
+NadiaNadiaNadiaNadia  <button class="btn btn-primary btn-lg active" type="submit">Request New Password</button>
+NadiaNadiaNadiaNadia</div>
 
-                    <div class="form-group">
-                      <input type="password" name="pass" class="form-control" id="pass" placeholder="Your Password"
-                             data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                      <div class="validation"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <input type="password" name="confirmpass" class="form-control" id="confirmpass" placeholder="Confrim Your Password"
-                             data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                      <div class="validation"></div>
-                    </div>
-                    <div class="form-group">
-                      <button class="btn btn-primary btn-lg active" type="submit">Sign In</button>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-md-8"> <a href="#forgotpass"> Forgot Password </a> </div>
-                      <div class="col-md-4"> <a href="/signup/"> Sign Up </a> </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
+NadiaNadiaNadia   </form>
+NadiaNadiaNadia </div>
+NadiaNadia    </div>
+NadiaNadia  </div>
+Nadia   </div>
+Nadia </div>
     </div>
    </section>
+
+
 
 {% endblock %}

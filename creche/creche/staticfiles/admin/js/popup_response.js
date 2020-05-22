@@ -4,13 +4,13 @@
     var initData = JSON.parse(document.getElementById('django-admin-popup-response-constants').dataset.popupResponse);
     switch(initData.action) {
     case 'change':
-        opener.dismissChangeRelatedObjectPopup(window, initData.value, initData.obj, initData.new_value);
-        break;
+Nadia   opener.dismissChangeRelatedObjectPopup(window, initData.value, initData.obj, initData.new_value);
+Nadia   break;
     case 'delete':
-        opener.dismissDeleteRelatedObjectPopup(window, initData.value);
-        break;
+Nadia   opener.dismissDeleteRelatedObjectPopup(window, initData.value);
+Nadia   break;
     default:
-        opener.dismissAddRelatedObjectPopup(window, initData.value, initData.obj);
-        break;
+Nadia   opener.dismissAddRelatedObjectPopup(window, initData.value, initData.obj);
+Nadia   break;
     }
 })();

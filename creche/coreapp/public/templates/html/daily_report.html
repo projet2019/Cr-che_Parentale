@@ -1,46 +1,198 @@
 {% extends "base.html" %}
-{% block title %}Sign Up{% endblock %}
+{% block title %}Daily Child Report{% endblock %}
 {% block content %}
 
-<section id="signup">
-    <div class="container">
-      <div class="row">
-        <div class="center">
-            <div class="col-md-6 col-md-offset-3">
-              <h2></h2>
-              <hr>
-              <!-- <p class="lead">error message area</p> -->
-              <div class="row">
-                <div class="col-md-6 col-md-offset-2">
-                  <form action="/systemUser/save/" method="post">
-                    <div class="form-group">
-                      <input type="email" class="form-control" name="user" id="username" placeholder="Your Email"
-                             data-rule="email"  data-msg="Please enter a valid email" />
-                      <div class="validation"></div>
-                    </div>
+<div id="home">
 
-                    <div class="form-group">
-                      <input type="password" name="pass" class="form-control" id="pass" placeholder="Your Password"
-                             data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                      <div class="validation"></div>
-                    </div>
+Nadia   <section id="features">
+NadiaNadia  <div class="container">
+NadiaNadia    <div class="row">
+NadiaNadiaNadia <div class="center">
+NadiaNadiaNadia   <div class="col-md-6 col-md-offset-3">
+NadiaNadiaNadiaNadia<h2>Child Daily Report</h2>
+NadiaNadiaNadiaNadia<hr>
+NadiaNadiaNadiaNadia<p class="lead"></p>
+NadiaNadiaNadia   </div>
+NadiaNadiaNadia </div>
+NadiaNadiaNadia <div class="col-md-4 wow fadeInRight">
+NadiaNadiaNadiaNadia<form action="/childreport/" method="post">{% csrf_token %}
 
-                    <div class="form-group">
-                      <input type="password" name="confirmpass" class="form-control" id="confirmpass" placeholder="Confrim Your Password"
-                             data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                      <div class="validation"></div>
-                    </div>
+<div class="container">
+Nadia <div class="col-md-12">
+Nadia <div class="invoice">
+Nadia    <div class="invoice-header">
+NadiaNadia  <div class="invoice-from text-left">
+NadiaNadiaNadia<address class="m-t-5 m-b-5">
+NadiaNadiaNadia   <strong class="text-inverse">{{setup.creche_name}}</strong><br>
+NadiaNadiaNadia   {{setup.creche_avenue}}<br>
+NadiaNadiaNadia   {{setup.creche_road}}<br>
+NadiaNadiaNadia   Phone: {{setup.creche_telephone}}
+NadiaNadiaNadia</address>
+NadiaNadia  </div>
+NadiaNadia  <div class="invoice-to text-justify">
+NadiaNadiaNadia<address class="m-t-5 m-b-5">
+NadiaNadiaNadia   <strong class="text-inverse">Accueillante</strong><br>
+NadiaNadiaNadia   {{accueillante.names}}<br>
+NadiaNadiaNadia   Email: {{accueillante.email}}<br>
+NadiaNadiaNadia   Phone: {{accueillante.telephone}}<br>
+NadiaNadiaNadia   {{accueillante.full_address}}
+NadiaNadiaNadia</address>
+NadiaNadia  </div>
+NadiaNadia  <div class="invoice-date">
+NadiaNadiaNadia<small>&nbsp;</small>
+NadiaNadiaNadia<div class="date text-inverse m-t-5">{{day}}</div>
+NadiaNadiaNadia<div class="invoice-detail">
+NadiaNadiaNadia   &nbsp;<br>
+NadiaNadiaNadia   &nbsp;
+NadiaNadiaNadia</div>
+NadiaNadia  </div>
+Nadia    </div>
+Nadia    <!-- end invoice-header -->
+Nadia    <!-- begin invoice-content -->
+Nadia    <div class="invoice-content">
+NadiaNadia  <!-- begin table-responsive -->
+NadiaNadia  <div class="table-responsive">
+NadiaNadiaNadia<table class="table table-invoice">
+NadiaNadiaNadia   <thead>
+NadiaNadiaNadiaNadia <tr>
+NadiaNadiaNadiaNadia    <th class="text-center" width="20%">
+NadiaNadiaNadiaNadiaNadia<select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
+NadiaNadiaNadiaNadiaNadiaNadia  <option value="" >Select Child Names &dash; Regno</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% for ch in children.records %}
+NadiaNadiaNadiaNadiaNadiaNadia    <option value="{{ch.id}}" >{{ch.names}} &dash; {{ch.regno}}</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% endfor %}
+NadiaNadiaNadiaNadiaNadiaNadia</select></th>
+NadiaNadiaNadiaNadia    <th class="text-center" width="20%">
+NadiaNadiaNadiaNadiaNadia   <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
+NadiaNadiaNadiaNadiaNadiaNadia  <option value="" >Select Service</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% for k,v in services %}
+NadiaNadiaNadiaNadiaNadiaNadia    <option value="{{k}}" >{{v}}</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% endfor %}
+NadiaNadiaNadiaNadiaNadia   </select>
+NadiaNadiaNadiaNadia    </th>
+NadiaNadiaNadiaNadia    <th class="text-center" width="20%">
+NadiaNadiaNadiaNadiaNadia   <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
+NadiaNadiaNadiaNadiaNadiaNadia  <option value="" >Select Arrival Hour</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% for hr in hours %}
+NadiaNadiaNadiaNadiaNadiaNadia    <option value="{{hr}}" >{{hr}}</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% endfor %}
+NadiaNadiaNadiaNadiaNadia   </select>
+NadiaNadiaNadiaNadia    </th>
+NadiaNadiaNadiaNadia    <th class="text-right" width="20%">
+NadiaNadiaNadiaNadiaNadia   <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
+NadiaNadiaNadiaNadiaNadiaNadia  <option value="" >Select Departure Hour</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% for hr in hours %}
+NadiaNadiaNadiaNadiaNadiaNadia    <option value="{{hr}}" >{{hr}}</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% endfor %}
+NadiaNadiaNadiaNadiaNadia   </select>
+NadiaNadiaNadiaNadia    </th>
+NadiaNadiaNadiaNadia </tr>
+NadiaNadiaNadia   </thead>
+NadiaNadiaNadia   <tbody>
+NadiaNadiaNadiaNadia <tr><td>&nbsp;</td><td class="text-center">&nbsp;</td><td class="text-center">&nbsp;</td>
+NadiaNadiaNadiaNadia    <td class="text-right">&nbsp;</td>
+NadiaNadiaNadiaNadia </tr>
+NadiaNadiaNadiaNadia <tr>
+NadiaNadiaNadiaNadia    <td>
+NadiaNadiaNadiaNadiaNadia  <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
+NadiaNadiaNadiaNadiaNadiaNadia  <option value="" >Select Art</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% for hr in hours %}
+NadiaNadiaNadiaNadiaNadiaNadia    <option value="{{hr}}" >{{hr}}</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% endfor %}
+NadiaNadiaNadiaNadiaNadia   </select>
+NadiaNadiaNadiaNadia    </td>
+NadiaNadiaNadiaNadia    <td class="text-center">
+NadiaNadiaNadiaNadiaNadia    <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
+NadiaNadiaNadiaNadiaNadiaNadia  <option value="" >Select Lecture</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% for lt in lectures %}
+NadiaNadiaNadiaNadiaNadiaNadia    <option value="{{lt.id}}" >{{lt.name}}</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% endfor %}
+NadiaNadiaNadiaNadiaNadia   </select>
+NadiaNadiaNadiaNadia    </td>
+NadiaNadiaNadiaNadia    <td class="text-center">
+NadiaNadiaNadiaNadiaNadia    <select class="form-control selectpicker"  name="child_id" data-live-search="true" multiple required>
+NadiaNadiaNadiaNadiaNadiaNadia  <option value="" >Select Patisserie</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% for pt in patisseries %}
+NadiaNadiaNadiaNadiaNadiaNadia    <option value="{{pt.id}}" >{{pt.name}}</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% endfor %}
+NadiaNadiaNadiaNadiaNadia   </select>
+NadiaNadiaNadiaNadia    </td>
+NadiaNadiaNadiaNadia    <td class="text-right">
+NadiaNadiaNadiaNadiaNadia    <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
+NadiaNadiaNadiaNadiaNadiaNadia  <option value="" >Select Picnic</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% for st in sorties %}
+NadiaNadiaNadiaNadiaNadiaNadia    <option value="{{st.id}}" >{{st.name}}</option>
+NadiaNadiaNadiaNadiaNadiaNadia  {% endfor %}
+NadiaNadiaNadiaNadiaNadia   </select>
+NadiaNadiaNadiaNadia    </td>
+NadiaNadiaNadiaNadia </tr>
 
-                    <div class="form-group">
-                      <button class="btn btn-primary btn-lg active" type="submit">Register</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-   </section>
+NadiaNadiaNadia   </tbody>
+NadiaNadiaNadia</table>
+NadiaNadia  </div>
+NadiaNadia  <!-- end table-responsive -->
+NadiaNadia  <!-- begin invoice-price -->
+NadiaNadia  <div class="invoice-price">
+NadiaNadiaNadia<div class="invoice-price-left">
+NadiaNadiaNadia   <div class="invoice-price-row">
+NadiaNadiaNadiaNadia <div class="sub-price">
+NadiaNadiaNadiaNadia    <small>&nbsp;</small>
+NadiaNadiaNadiaNadia    <span class="text-inverse">Remarque: </span>
+NadiaNadiaNadiaNadia </div>
+NadiaNadiaNadiaNadia <div class="sub-price">
+NadiaNadiaNadiaNadia    <i class="fa text-muted">&nbsp;</i>
+NadiaNadiaNadiaNadia </div>
+NadiaNadiaNadiaNadia <div class="sub-price">
+NadiaNadiaNadiaNadia    <small>&nbsp;</small>
+NadiaNadiaNadiaNadia    <span class="text-inverse">
+NadiaNadiaNadiaNadiaNadia   <textarea class="form-control" name="full_address" rows="3" cols="50" data-rule="required" data-msg="Enter Remarque"
+NadiaNadiaNadiaNadiaNadiaNadia    placeholder="Remarque"></textarea>
+NadiaNadiaNadiaNadia    </span>
+NadiaNadiaNadiaNadia </div>
+NadiaNadiaNadia   </div>
+NadiaNadiaNadia</div>
+NadiaNadiaNadia<div class="">
+NadiaNadiaNadia   <small>&nbsp;</small>
+NadiaNadiaNadia    <span class="text-inverse">
+NadiaNadiaNadiaNadia    &nbsp;
+NadiaNadiaNadia    </span>
+NadiaNadiaNadia    <div class="form-group">
+NadiaNadiaNadiaNadia  <button class="btn btn-primary btn-lg active" type="submit">Send Report</button>
+NadiaNadiaNadia    </div>
+NadiaNadiaNadia</div>
+NadiaNadia  </div>
+NadiaNadia  <!-- end invoice-price -->
+Nadia    </div>
+Nadia    <!-- end invoice-content -->
+Nadia    <!-- begin invoice-note -->
+Nadia    <div class="invoice-note">
+NadiaNadia  &nbsp;
+Nadia    </div>
+Nadia    <!-- end invoice-note -->
+Nadia    <!-- begin invoice-footer -->
+Nadia    <div class="invoice-footer">
+NadiaNadia  <p class="text-center m-b-5 f-w-600">
+NadiaNadiaNadia&nbsp;
+NadiaNadia  </p>
+NadiaNadia  <p class="text-center">
+NadiaNadiaNadia<span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> {{setup.creche_web}}</span>
+NadiaNadiaNadia<span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> {{setup.creche_telephone}}</span>
+NadiaNadiaNadia<span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> {{setup.creche_email}}</span>
+NadiaNadia  </p>
+Nadia    </div>
+Nadia    <!-- end invoice-footer -->
+Nadia </div>
+   </div>
+</div>
+
+
+NadiaNadiaNadiaNadia</form>
+NadiaNadiaNadia </div>
+
+
+NadiaNadia    </div>
+NadiaNadia  </div>
+Nadia   </section>
+  </div>
 
 {% endblock %}

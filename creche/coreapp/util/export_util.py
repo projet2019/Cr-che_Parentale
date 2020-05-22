@@ -4,7 +4,9 @@
 
 ##
 ##
-
+## @author   Joel
+## nadia@gmail.com/joel@gmail.com
+##
 
 import csv
 from decimal import *
@@ -20,120 +22,120 @@ class ExportUtil:
     @staticmethod
     def export(fieldnames, records, exportType):
 
-        ext = 'csv'
-        mime = 'text/csv'
+Nadia   ext = 'csv'
+Nadia   mime = 'text/csv'
 
-        if '200' == exportType:
-            mime = 'text/xml'
-            ext = 'xml'
-        if '300' == exportType:
-            mime = 'text/html'
-        if '400' == exportType:
-            mime = 'application/pdf'
-            ext = 'pdf'
-        if '500' == exportType:
-            mime = 'application/vnd.ms-excel'
-            ext = 'xls'
+Nadia   if '200' == exportType:
+NadiaNadia  mime = 'text/xml'
+NadiaNadia  ext = 'xml'
+Nadia   if '300' == exportType:
+NadiaNadia  mime = 'text/html'
+Nadia   if '400' == exportType:
+NadiaNadia  mime = 'application/pdf'
+NadiaNadia  ext = 'pdf'
+Nadia   if '500' == exportType:
+NadiaNadia  mime = 'application/vnd.ms-excel'
+NadiaNadia  ext = 'xls'
 
     # Create the HttpResponse object with the appropriate header.
-        response = HttpResponse(mimetype=mime)
-        if not '300' == exportType:
-            response['Content-Disposition'] = 'attachment; filename=export.' + ext
+Nadia   response = HttpResponse(mimetype=mime)
+Nadia   if not '300' == exportType:
+NadiaNadia  response['Content-Disposition'] = 'attachment; filename=export.' + ext
 
-        if '200' == exportType:
-            response = ExportUtil.exportToXML(response, records)
-        elif '300' == exportType:
-            response = ExportUtil.exportToHtml(response, records)
-        elif '400' == exportType:
-            response = ExportUtil.exportToPdf(response, records)
-        elif '500' == exportType:
-            response = ExportUtil.exportToXls(response, records , fieldnames)
-        else:
-            response = ExportUtil.exportToCSV(response, records, fieldnames)
+Nadia   if '200' == exportType:
+NadiaNadia  response = ExportUtil.exportToXML(response, records)
+Nadia   elif '300' == exportType:
+NadiaNadia  response = ExportUtil.exportToHtml(response, records)
+Nadia   elif '400' == exportType:
+NadiaNadia  response = ExportUtil.exportToPdf(response, records)
+Nadia   elif '500' == exportType:
+NadiaNadia  response = ExportUtil.exportToXls(response, records , fieldnames)
+Nadia   else:
+NadiaNadia  response = ExportUtil.exportToCSV(response, records, fieldnames)
 
-        return response
+Nadia   return response
 
     @staticmethod
     def exportToCSV(response, records, fieldnames):
-        csv.register_dialect('apwstringsquoted', quoting=csv.QUOTE_ALL)
+Nadia   csv.register_dialect('apwstringsquoted', quoting=csv.QUOTE_ALL)
 
-        writer = csv.DictWriter(response, fieldnames, dialect='apwstringsquoted')
-        # headers
-        headers = {}
-        for n in fieldnames:
-            headers[n] = n
-        writer.writerow(headers)
+Nadia   writer = csv.DictWriter(response, fieldnames, dialect='apwstringsquoted')
+Nadia   # headers
+Nadia   headers = {}
+Nadia   for n in fieldnames:
+NadiaNadia  headers[n] = n
+Nadia   writer.writerow(headers)
 
-        writer.writerows(row for row in records)
+Nadia   writer.writerows(row for row in records)
 
-        return response
+Nadia   return response
     
     @staticmethod
     def exportToPdf(response, records):
-        template = Template(filename=settings.TEMPLATE_DIRS[0] + '/html_table_export.html')
-        template.output_encoding = 'utf-8'
+Nadia   template = Template(filename=settings.TEMPLATE_DIRS[0] + '/html_table_export.html')
+Nadia   template.output_encoding = 'utf-8'
 
-        html_text = template.render(params={'records': records})
+Nadia   html_text = template.render(params={'records': records})
 
-        pdf = xhtml2pdf.CreatePDF(html_text, response)
-        if not pdf.err:
-            xhtml2pdf.startViewer(response)
+Nadia   pdf = xhtml2pdf.CreatePDF(html_text, response)
+Nadia   if not pdf.err:
+NadiaNadia  xhtml2pdf.startViewer(response)
 
-        return response
+Nadia   return response
 
     @staticmethod
     def exportToHtml(response, records):
-        template = Template(filename=settings.TEMPLATE_DIRS[0] + '/html_table_export.html')
-        template.output_encoding = 'utf-8'
-        
-        html_text = template.render(params={'records': records})
-        
-        response.write(html_text)
+Nadia   template = Template(filename=settings.TEMPLATE_DIRS[0] + '/html_table_export.html')
+Nadia   template.output_encoding = 'utf-8'
+Nadia   
+Nadia   html_text = template.render(params={'records': records})
+Nadia   
+Nadia   response.write(html_text)
 
-        return response
+Nadia   return response
 
     @staticmethod
     def exportToXML(response, records, name="records"):
-        "The keys are element names and the values are text"
-        xml = Document()
+Nadia   "The keys are element names and the values are text"
+Nadia   xml = Document()
 
-        items = xml.createElement(name)
-        
-        xml.appendChild(items)
+Nadia   items = xml.createElement(name)
+Nadia   
+Nadia   xml.appendChild(items)
 
-        for record in records:
-            for key, val in record.items():
-                node = xml.createElement(str(key))
-                node.appendChild(xml.createTextNode(str(val)))
-                items.appendChild(node)
-                
-        response.write(xml.toprettyxml())
-            
-        return response
+Nadia   for record in records:
+NadiaNadia  for key, val in record.items():
+NadiaNadiaNadia node = xml.createElement(str(key))
+NadiaNadiaNadia node.appendChild(xml.createTextNode(str(val)))
+NadiaNadiaNadia items.appendChild(node)
+NadiaNadiaNadia 
+Nadia   response.write(xml.toprettyxml())
+NadiaNadia  
+Nadia   return response
 
     @staticmethod
     def exportToXls(response, data, headings):
-        
-        book = xlwt.Workbook(encoding='utf-8')
-        sheet = book.add_sheet('export dd')
+Nadia   
+Nadia   book = xlwt.Workbook(encoding='utf-8')
+Nadia   sheet = book.add_sheet('export dd')
 
-#        headings = []
-#        for key, value in data[0].items():
-#            headings.append(key)
-#        
-        rowx = 0
-        for colx, value in enumerate(headings):
-            sheet.write(rowx, colx, value)
-        sheet.set_panes_frozen(True) # frozen headings instead of split panes
-        sheet.set_horz_split_pos(rowx+1) # in general, freeze after last heading row
-        sheet.set_remove_splits(True) # if user does unfreeze, don't leave a split there
+#Nadia   headings = []
+#Nadia   for key, value in data[0].items():
+#NadiaNadia  headings.append(key)
+#Nadia   
+Nadia   rowx = 0
+Nadia   for colx, value in enumerate(headings):
+NadiaNadia  sheet.write(rowx, colx, value)
+Nadia   sheet.set_panes_frozen(True) # frozen headings instead of split panes
+Nadia   sheet.set_horz_split_pos(rowx+1) # in general, freeze after last heading row
+Nadia   sheet.set_remove_splits(True) # if user does unfreeze, don't leave a split there
 
-        for row in data:
-            rowx += 1
+Nadia   for row in data:
+NadiaNadia  rowx += 1
 
-            for c, key in enumerate(row):
-                sheet.write(rowx, c, row[key])
+NadiaNadia  for c, key in enumerate(row):
+NadiaNadiaNadia sheet.write(rowx, c, row[key])
 
-        book.save(response)
+Nadia   book.save(response)
 
-        return response
+Nadia   return response
