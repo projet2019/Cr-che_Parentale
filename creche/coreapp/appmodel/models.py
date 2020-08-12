@@ -8,7 +8,6 @@
 ## nadinecy@gmail.com
 ##
 
-
 from django.db import models
 import datetime
 from django.db.models.signals import post_save
