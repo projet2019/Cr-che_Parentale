@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Login {% endblock %}
 {% block content %}
-
+<div class="slider"></div>
   <section id="login">
     <div class="container">
       <div class="row">
@@ -12,16 +12,23 @@
               <!-- <p class="lead">error message area</p> -->
               <div class="row">
                 <div class="col-md-6 col-md-offset-2">
-                  <form action="/login/authenticate/" method="post">
+                  <form action="/login/" method="post">{% csrf_token %}
+                    <div class="form-group">
+                      {% if success %}
+                        <label class="control-label text-success text-small"><small>{{message}}</small></label>
+                      {% else %}
+                        <label class="control-label text-danger text-small"><small>{{message}}</small></label>
+                      {% endif %}
+                    </div>
                     <div class="form-group">
                       <input type="email" class="form-control" name="user" id="username" placeholder="Your Email" data-rule="email"
-                        data-msg="Please enter a valid email" />
+                        data-msg="Please enter a valid email" required/>
                       <div class="validation"></div>
                     </div>
 
                     <div class="form-group">
                       <input type="password" name="pass" class="form-control" id="pass" placeholder="Your Password" data-rule="minlen:4"
-                        data-msg="Please enter at least 4 chars" />
+                        data-msg="Please enter at least 4 chars" required/>
                       <div class="validation"></div>
                     </div>
 
@@ -30,7 +37,7 @@
                     </div>
 
                     <div class="form-group">
-                      <div class="col-md-8"> <a href="#forgotpass"> Forgot Password </a> </div>
+                      <div class="col-md-8"> <a href="/forgotpass"> Forgot Password </a> </div>
                       <div class="col-md-4"> <a href="/signup/"> Sign Up </a> </div>
                     </div>
                   </form>
