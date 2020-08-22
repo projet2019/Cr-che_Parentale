@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>{% block title %} Creche Parentale - {{mdl.description}} {% endblock %}</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/animate.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/prettyPhoto.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/prettyPhoto.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="row">
+        <div class="site-logo">
+          <a href="index.html" class="brand">Creche Parentale</a>
+        </div>
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/childreport">Daily Child Report</a></li>
+            {% if request.session.user %}
+              <li><a href="/logout">Logout</a></li>
+            {% else %}
+              <li><a href="/login">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <!-- /.Navbar-collapse -->
+      </div>
+    </div>
+  </nav>
+
+  <div id="home">
+        <div class="slider"></div>
+        <section id="portfolio">
+        <div class="container">
+          <div class="center">
+            <div class="col-md-6 col-md-offset-3">
+              <hr>
+              <h2>{{mdl.display_name}}</h2>
+              <hr>
+              <p class="lead"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+            <div class="col-lg-12">
+                <ul class="portfolio-filter text-center">
+                  <li><a class="btn btn-default active" href="#" data-filter=".parentchild">Add Parent and Child</a></li>
+                  <li><a class="btn btn-default" href="#" data-filter=".parents">List Parent</a></li>
+                </ul>
+                <!--/#portfolio-filter-->
+                <hr>
+                <div class="row">
+                  <div class="portfolio-items">
+                    <form action="/parent/" method="post">{% csrf_token %}
+                      <div class="portfolio-item parentchild col-xs-12">
+                        <div class="recent-work-wrap">
+                          <div class="col-md-6 ">
+                              <h2> Add Parent &amp; Child</h2>
+                              <div class="form-group">
+                                {% if parent_child.success %}
+                                  <label class="control-label text-success text-small"><small>{{parent_child.message}}</small></label>
+                                {% else %}
+                                  <label class="control-label text-danger text-small"><small>{{parent_child.message}}</small></label>
+                                {% endif %}
+                              </div>
+                              <div class="form-group">
+                                <input type="hidden" class="form-control" name="form_name"  value="parent_child" required />
+                                <input type="text" class="form-control" name="parent_names"  placeholder="Parent Names" required />
+                              </div>
+                              <div class="form-group">
+                                <input type="email" name="email" class="form-control" placeholder="Email" required />
+                              </div>
+                              <div class="form-group">
+                                <input type="tel" name="telephone" class="form-control" placeholder="Telephone" required />
+                              </div>
+                              <div class="form-group">
+                                <input type="text" name="id_number" class="form-control" placeholder="Identity Number" required />
+                              </div>
+                              <div class="form-group">
+                                <select class="form-control selectpicker"  name="relationship" required>
+                                  {% for k,v in relationship %}
+                                    <option value="{{k}}" >{{v}}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                <textarea class="form-control" name="full_address" rows="5" data-rule="required" data-msg="Please write parent address"
+                                  placeholder="Full Address"></textarea>
+                                <div class="validation"></div>
+                              </div>
+                          </div>
+                          <div class="col-md-6 ">
+                            <h2>&nbsp;</h2>
+                            <div class="form-group">&nbsp;</div>
+                            <div class="form-group">
+                              <input type="text" class="form-control" name="child_names"  placeholder="Child Names" required />
+                            </div>
+                            <div class="form-group">
+                              <label>Date of Birth:</label>
+                              <input type="date" name="dob" class="form-control" value="Date of Birth" pattern="\d{4}-\d{2}-\d{2}" required />
+                            </div>
+                            <div class="form-group">
+                              <select class="form-control selectpicker"  name="gender" required>
+                                {% for k,v in genders %}
+                                  <option value="{{k}}" >{{v}}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <select class="form-control selectpicker"  name="group" required>
+                                {% for k,v in groups %}
+                                  <option value="{{k}}" >{{v}}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+
+                            <div class="form-group">
+                              <button class="btn btn-primary btn-lg active" type="submit">Save Parent &amp; Child</button>
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                    </form>
+                    <!--/.portfolio-item-->
+
+                    <div class="portfolio-item parents col-xs-12">
+                      <div class="recent-work-wrap">
+                        <div class="col-md-12 col-md-offset-2">
+                          <h2> Parent List</h2>
+                               <div class="table-responsive">
+                                          <table class="table">
+                                            <thead>
+                                              <tr>
+                                                {% for col in parents.records|dict_cols %}
+                                                  <th scope="col">{{col|title}}</th>
+                                                {% endfor %}
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for dt in parents.records %}
+                                                <tr>
+                                                  {% for col in parents.records|dict_cols %}
+                                                    <td>{{dt|dict_key:col}}</td>
+                                                  {% endfor %}
+                                                </tr>
+                                              {% endfor %}
+
+                                            </tbody>
+                                          </table>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.portfolio-item-->
+
+                  </div>
+
+                </div>
+            </div>
+        </div>
+        </section>
+  </div>
+
+
+  <footer id="footer" class="midnight-blue">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="text-center">
+            <a href="#home" class="scrollup"><i class="fa fa-angle-up fa-3x"></i></a>
+          </div>
+          &copy; OnePage Theme. All Rights Reserved.
+          <div class="credits">
+            <!--
+              All the links in the footer should remain intact.
+              You can delete the links only if you purchased the pro version.
+              Licensing information: https://bootstrapmade.com/license/
+              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=OnePage
+            -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
+
+        <div class="top-bar">
+          <div class="col-lg-12">
+            <div class="social">
+              <ul class="social-share">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--/#footer-->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+	 <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	 <script type="text/javascript" src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+	 <script type="text/javascript" src="{% static 'js/jquery.isotope.min.js' %}"></script>
+	 <script type="text/javascript" src="{% static 'js/wow.min.js' %}"></script>
+	 <script type="text/javascript" src="{% static 'js/jquery.easing.min.js' %}"></script>
+	 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+	 <script type="text/javascript" src="{% static 'contactform/contactform.js' %}"></script>
+
+</body>
+
+</html>
