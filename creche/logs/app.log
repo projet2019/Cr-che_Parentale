@@ -1,4 +1,4 @@
-2020-08-12 20:10:18,546 - coreapp - ERROR - CrechePrincipal matching query does not exist.
+2020-08-23 11:48:29,348 - coreapp - ERROR - CrechePrincipal matching query does not exist.
 Traceback (most recent call last):
   File "/home/nadia/PycharmProjects/Creche_Parentale/creche/coreapp/controller/report_controller.py", line 78, in get_principal
     result = service.get_principal(email = user.get('mail'))
