@@ -15,7 +15,6 @@ from datetime import datetime
 from django.db import connection
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from coreapp.util.password_hasher import PasswordHasher
 from django.db.models.signals import pre_delete

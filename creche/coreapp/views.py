@@ -94,6 +94,9 @@ def dashboard(request, **kwargs):
 def users(request, **kwargs):
     users = loads(list_users(request).content.decode())
     principals = loads(list_principals(request).content.decode())
+    for i, elem in enumerate(principals['records']):
+        created = elem['date_created'][0:10]
+        principals['records'][i]['date_created'] = created
     data = {"mdl": get_module('/user'),
             'cols': ["id", "mail", "status", "password", "full_name", "description", "can_use_admin"],
             'users': users, "roles" : PRINCIPAL_ROLE, "principals": principals}
@@ -102,7 +105,7 @@ def users(request, **kwargs):
         print("ADD PRINCIPAL", request.POST)
         principal = savePrincipal(request)
         data.update({"principal": loads(principal.content.decode())})
-    print( data)
+    # print( data)
     return render(request, 'user_management.html', context = data)
 
 def childreport(request, **kwargs):
@@ -145,6 +148,9 @@ def bills(request, **kwargs):
 def parents(request, **kwargs):
     parents = loads(list_parents(request).content.decode())
     children = loads(list_children(request).content.decode())
+    for i, elem in enumerate(parents['records']):
+        created = elem['date_created'][0:10]
+        parents['records'][i]['date_created'] = created
     data = {"mdl": get_module('/parent'), "relationship": PARENT_CHILD_RELATION,
             'cols': ["id", "bill_no"], 'groups': CHILD_CLASSES, 'genders': GENDER,
             "parents": parents, "children": children}
@@ -158,7 +164,7 @@ def parents(request, **kwargs):
         parent = saveParent(request)
         data.update({"parent": loads(parent.content.decode())})
 
-    print(data)
+    # print(data)
     return render(request, 'parent_management.html', context=data)
 
 

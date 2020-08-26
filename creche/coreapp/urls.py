@@ -10,7 +10,7 @@
 
 from django.conf.urls import url
 from django.urls import path, include
-
+from django.contrib import admin
 from coreapp.views import home, login, forgotpass, signup, childreport, logout, dashboard, users, bills, parents
 
 ##Login
@@ -21,7 +21,7 @@ from coreapp.controller.login_controller import authenticate
 
 
 urlpatterns = [
-	
+	path('admin/', admin.site.urls),
     url(r'^$', home),
     url(r'^signup/', signup),
     url(r'^login/', login),
@@ -39,8 +39,6 @@ urlpatterns = [
     url(r'^content/', signup),
     url(r'^bill/', bills),
     url(r'^event/', signup),
-    url(r'^profile/', signup),
-
-                       
+    url(r'^profile/', signup),                      
     
 ]

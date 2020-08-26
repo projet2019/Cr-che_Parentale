@@ -9,7 +9,7 @@
               <div class="row">
                 <div class="center">
                   <div class="col-md-6 col-md-offset-3">
-                    <h2>Child Daily Report</h2>
+                    <h4>Child Daily Report</h4>
                     <hr>
                     <p class="lead"></p>
                   </div>
@@ -39,11 +39,9 @@
                </address>
             </div>
             <div class="invoice-date">
-               <small>&nbsp;</small>
+               <small></small>
                <div class="date text-inverse m-t-5">{{day}}</div>
                <div class="invoice-detail">
-                  &nbsp;<br>
-                  &nbsp;
                </div>
             </div>
          </div>
@@ -51,7 +49,6 @@
          <!-- begin invoice-content -->
          <div class="invoice-content">
             <!-- begin table-responsive -->
-            <div class="table-responsive">
                <table class="table table-invoice">
                   <thead>
                      <tr>
@@ -62,11 +59,11 @@
                                   <option value="{{ch.id}}" >{{ch.names}} &dash; {{ch.regno}}</option>
                                 {% endfor %}
                               </select></th>
-                        <th class="text-center" width="20%">
-                            <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
-                                <option value="" >Select Service</option>
-                                {% for k,v in services %}
-                                  <option value="{{k}}" >{{v}}</option>
+                        <th>
+                           <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
+                                <option value="" >Select Art</option>
+                                {% for hr in hours %}
+                                  <option value="{{hr}}" >{{hr}}</option>
                                 {% endfor %}
                             </select>
                         </th>
@@ -89,18 +86,18 @@
                      </tr>
                   </thead>
                   <tbody>
-                     <tr><td>&nbsp;</td><td class="text-center">&nbsp;</td><td class="text-center">&nbsp;</td>
-                        <td class="text-right">&nbsp;</td>
+                     <tr><td></td><td class="text-center"></td><td class="text-center"></td>
+                        <td class="text-right"></td>
                      </tr>
                      <tr>
-                        <td>
+                        <td class="text-center" width="20%">
                            <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
-                                <option value="" >Select Art</option>
-                                {% for hr in hours %}
-                                  <option value="{{hr}}" >{{hr}}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
+                               <option value="" >Select Service</option>
+                               {% for k,v in services %}
+                                 <option value="{{k}}" >{{v}}</option>
+                               {% endfor %}
+                           </select>
+                       </td>
                         <td class="text-center">
                              <select class="form-control selectpicker"  name="child_id" data-live-search="true" required>
                                 <option value="" >Select Lecture</option>
@@ -129,21 +126,20 @@
 
                   </tbody>
                </table>
-            </div>
             <!-- end table-responsive -->
             <!-- begin invoice-price -->
             <div class="invoice-price">
                <div class="invoice-price-left">
                   <div class="invoice-price-row">
                      <div class="sub-price">
-                        <small>&nbsp;</small>
+                        <small></small>
                         <span class="text-inverse">Remarque: </span>
                      </div>
                      <div class="sub-price">
-                        <i class="fa text-muted">&nbsp;</i>
+                        <i class="fa text-muted"></i>
                      </div>
                      <div class="sub-price">
-                        <small>&nbsp;</small>
+                        <small></small>
                         <span class="text-inverse">
                             <textarea class="form-control" name="full_address" rows="3" cols="50" data-rule="required" data-msg="Enter Remarque"
                                   placeholder="Remarque"></textarea>
@@ -152,27 +148,37 @@
                   </div>
                </div>
                <div class="">
-                  <small>&nbsp;</small>
+                  <small></small>
                    <span class="text-inverse">
-                        &nbsp;
+                        
                    </span>
                    <div class="form-group">
                       <button class="btn btn-primary btn-lg active" type="submit">Send Report</button>
                    </div>
                </div>
             </div>
+         <br>
+         <br>
+         <br>
+         <br>
+         <br>
+         <br>         <br>
+         <br>
+         <br>         <br>
+         <br>
+         <br>
             <!-- end invoice-price -->
          </div>
          <!-- end invoice-content -->
          <!-- begin invoice-note -->
          <div class="invoice-note">
-            &nbsp;
+            
          </div>
          <!-- end invoice-note -->
          <!-- begin invoice-footer -->
          <div class="invoice-footer">
             <p class="text-center m-b-5 f-w-600">
-               &nbsp;
+               
             </p>
             <p class="text-center">
                <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> {{setup.creche_web}}</span>
