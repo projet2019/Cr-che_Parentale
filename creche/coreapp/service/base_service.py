@@ -16,7 +16,7 @@ from datetime import datetime
 from decimal import Decimal
 import logging
 from creche import settings
-import ordereddict
+from collections import OrderedDict
 import simplejson as json
 
 

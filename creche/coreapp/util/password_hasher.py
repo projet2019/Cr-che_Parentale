@@ -4,11 +4,8 @@
 
 ##
 ##
-<<<<<<< HEAD
-=======
 ## @author Nadia
 ## nadia@gmail.com/joel@gmail.com
->>>>>>> origin
 ##
 
 import math
